@@ -351,7 +351,7 @@
 
     text { font-family: Georgia, "Times New Roman", Times, serif; }
     .sans { font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
-    .roman { font-family: "Didot", "Bodoni 72", "Bodoni MT", "Times New Roman", Times, serif; font-weight: 400; }
+    .roman { font-family: "Didot", "Bodoni 72", "Bodoni MT", "Times New Roman", Times, serif; font-weight: 700; }
     .breguet { font-family: "Bodoni 72", "Didot", "Bodoni MT", Georgia, serif; font-weight: 700; }
     .script { font-family: "Snell Roundhand", "Apple Chancery", "Brush Script MT", "Segoe Script", cursive; font-style: italic; }
 
@@ -768,6 +768,7 @@
                 <circle cx="100" cy="100" r="90.6" fill="#3a3f46"/>
                 <circle cx="100" cy="100" r="89.6" fill="url(#dialGrad)"/>
                 <g id="g-scales"></g>
+                <g id="g-numerals" class="lume-night"></g>
                 <g id="g-subdials"></g>
                 <!-- Gran data panoràmica a les 6 -->
                 <g id="g-bigdate">
@@ -779,7 +780,6 @@
                   <rect x="88.2" y="121.6" width="23.6" height="3" fill="rgba(0,0,0,0.12)"/>
                 </g>
                 <g id="g-text"></g>
-                <g id="g-numerals" class="lume-night"></g>
                 <g id="g-hands" class="hands-fx">
                   <g id="g-ssec"></g>
                   <g id="g-cmin" class="jump"></g>
@@ -963,7 +963,7 @@
 
       // Textos
       const tx = $('m-text');
-      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'LONGINES');
+      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'MALVINES');
       // Petit emblema propi: rombe entre dues línies
       el('path', { d: 'M131.5 105.2 l1.1 1.1 l-1.1 1.1 l-1.1 -1.1 Z', class: 'ink' }, tx);
       el('line', { x1: 124.5, y1: 106.3, x2: 129.6, y2: 106.3, class: 'tk', 'stroke-width': 0.3 }, tx);
@@ -1011,7 +1011,8 @@
     //   · Pistó 2 h: start/stop · Pistó 4 h: zero (aturat) o FLYBACK
     //     (en marxa: torna a zero i torna a arrencar a l'instant).
     // =================================================================
-    const G = { c9: [64, 104], c3: [136, 104] };
+    const G = { c9: [59, 100], c3: [141, 100] };
+    const G_R = 32.6;   // radi de les subesferes laterals (prou grans per mossegar II, IIII, VIII i X)
     const TACHY = [60, 65, 70, 75, 80, 85, 90, 95, 100, 110, 120, 130, 140, 150, 160, 170, 180, 200, 220, 240, 270, 300, 350, 400, 500];
 
     (function buildGiulietta() {
@@ -1048,26 +1049,30 @@
         const [x, y] = P(100, 100, 68.4, i * 30);
         el('text', {
           x: 0, y: 0, 'text-anchor': 'middle', 'dominant-baseline': 'central',
-          'font-size': 13, 'letter-spacing': '0.5', class: 'ink-blue roman',
-          transform: `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${i * 30}) scale(0.62 1.22)`
+          'font-size': 13.4, 'letter-spacing': '0.3', 'font-weight': '700', class: 'ink-blue roman',
+          transform: `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${i * 30}) scale(0.66 1.22)`
         }, nums, r);
       });
 
       const sd = $('g-subdials');
       // Les 9: petita segonera
+      const k = G_R / 18.6;
       let [cx, cy] = G.c9;
-      subdialBase(sd, cx, cy, 18.6);
-      for (let i = 0; i < 60; i++) tick(sd, cx, cy, i % 5 === 0 ? 15.6 : 16.8, 18, i * 6, i % 5 === 0 ? 0.45 : 0.18);
-      for (let v = 10; v <= 60; v += 10) label(sd, cx, cy, 12.6, v * 6, String(v), 3.6, 'ink sans');
+      subdialBase(sd, cx, cy, G_R);
+      for (let i = 0; i < 60; i++) tick(sd, cx, cy, i % 5 === 0 ? G_R - 4.4 : G_R - 2.2, G_R - 0.7, i * 6, i % 5 === 0 ? 0.6 : 0.24);
+      for (let v = 10; v <= 60; v += 10) label(sd, cx, cy, G_R - 9.2, v * 6, String(v), 5, 'ink sans');
       // Les 3: comptador de 30 minuts
       [cx, cy] = G.c3;
-      subdialBase(sd, cx, cy, 18.6);
-      for (let i = 0; i < 30; i++) tick(sd, cx, cy, i % 5 === 0 ? 15.6 : 16.8, 18, i * 12, i % 5 === 0 ? 0.45 : 0.22);
-      for (let v = 5; v <= 30; v += 5) label(sd, cx, cy, 12.6, v * 12, String(v), 3.6, 'ink sans');
+      subdialBase(sd, cx, cy, G_R);
+      for (let i = 0; i < 30; i++) {
+        tick(sd, cx, cy, i % 5 === 0 ? G_R - 4.4 : G_R - 2.4, G_R - 0.7, i * 12, i % 5 === 0 ? 0.6 : 0.28);
+        if (i % 5) for (let f = 1; f < 5; f++) tick(sd, cx, cy, G_R - 1.6, G_R - 0.7, i * 12 + f * 2.4, 0.14);
+      }
+      for (let v = 5; v <= 30; v += 5) label(sd, cx, cy, G_R - 9.2, v * 12, String(v), 5, 'ink sans');
 
       // Textos
       const tx = $('g-text');
-      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Glashütte');
+      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Giulietta');
       el('text', { x: 100, y: 76.6, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 2.9, 'letter-spacing': 0.6, class: 'ink sans' }, tx, 'FLYBACK');
       const bt = el('text', { 'font-size': 2.4, 'letter-spacing': 0.3, class: 'ink sans', 'text-anchor': 'middle' }, tx);
       bt.setAttribute('text-anchor', 'end');
@@ -1096,8 +1101,8 @@
       el('rect', { x: 99.65, y: 20, width: 0.7, height: 96, fill: 'url(#blued)' }, cs);
       el('path', { d: 'M100 15.5 L101.1 21 L98.9 21 Z', fill: 'url(#blued)' }, cs);
       el('circle', { cx: 100, cy: 112.5, r: 1.7, fill: 'none', stroke: 'url(#blued)', 'stroke-width': 0.8 }, cs);
-      subHand($('g-ssec'), ...G.c9, 15.5, 0.6, 3.5);
-      subHand($('g-cmin'), ...G.c3, 15.5, 0.75, 3.5);
+      subHand($('g-ssec'), ...G.c9, G_R - 4.5, 0.8, 5.5);
+      subHand($('g-cmin'), ...G.c3, G_R - 4.5, 0.95, 5.5);
     })();
 
     // =================================================================
