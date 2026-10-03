@@ -751,12 +751,12 @@
               </svg>
             </div>
 
-            <!-- ================= CARA POSTERIOR: GIULIETTA ================= -->
+            <!-- ================= CARA POSTERIOR:  ================= -->
             <div class="face face-back inactive hidden-face" id="face-g">
               <button type="button" class="crown" aria-label="Corona: canvia entre versió diürna i nocturna" title="Corona: dia / nit"></button>
-              <button type="button" class="pusher p-top" data-watch="g" data-act="start" aria-label="Giulietta: engega o atura el cronògraf"></button>
-              <button type="button" class="pusher p-bot" data-watch="g" data-act="reset" aria-label="Giulietta: LAP/0 (volta i zero en marxa, zero aturat)"></button>
-              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf Giulietta flyback amb gran data">
+              <button type="button" class="pusher p-top" data-watch="g" data-act="start" aria-label=": engega o atura el cronògraf"></button>
+              <button type="button" class="pusher p-bot" data-watch="g" data-act="reset" aria-label=": LAP/0 (volta i zero en marxa, zero aturat)"></button>
+              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf  flyback amb gran data">
                 <defs>
                   <clipPath id="g-date-clip-t"><rect x="88.2" y="121.6" width="11.8" height="14.8"/></clipPath>
                   <clipPath id="g-date-clip-u"><rect x="100" y="121.6" width="11.8" height="14.8"/></clipPath>
@@ -963,7 +963,7 @@
 
       // Textos
       const tx = $('m-text');
-      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'MALVINES');
+      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'LONGINES');
       // Petit emblema propi: rombe entre dues línies
       el('path', { d: 'M131.5 105.2 l1.1 1.1 l-1.1 1.1 l-1.1 -1.1 Z', class: 'ink' }, tx);
       el('line', { x1: 124.5, y1: 106.3, x2: 129.6, y2: 106.3, class: 'tk', 'stroke-width': 0.3 }, tx);
@@ -1002,7 +1002,7 @@
     })();
 
     // =================================================================
-    //  ESFERA GIULIETTA — cronògraf flyback amb gran data panoràmica.
+    //  ESFERA  — cronògraf flyback amb gran data panoràmica.
     //   · Centre: hores, minuts i segons del crono.
     //   · Les 9: petita segonera contínua (marxa del rellotge).
     //   · Les 3: comptador de 30 minuts que SALTA d'un cop cada minut.
@@ -1015,7 +1015,7 @@
     const G_R = 32.6;   // radi de les subesferes laterals (prou grans per mossegar II, IIII, VIII i X)
     const TACHY = [60, 65, 70, 75, 80, 85, 90, 95, 100, 110, 120, 130, 140, 150, 160, 170, 180, 200, 220, 240, 270, 300, 350, 400, 500];
 
-    (function buildGiulietta() {
+    (function build() {
       const sc = $('g-scales');
       // Taquímetre
       el('circle', { cx: 100, cy: 100, r: 87.4, fill: 'none', class: 'tk', 'stroke-width': 0.3 }, sc);
@@ -1072,7 +1072,7 @@
 
       // Textos
       const tx = $('g-text');
-      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Giulietta');
+      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Glashütte');
       el('text', { x: 100, y: 76.6, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 2.9, 'letter-spacing': 0.6, class: 'ink sans' }, tx, 'FLYBACK');
       const bt = el('text', { 'font-size': 2.4, 'letter-spacing': 0.3, class: 'ink sans', 'text-anchor': 'middle' }, tx);
       bt.setAttribute('text-anchor', 'end');
