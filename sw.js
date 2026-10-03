@@ -1,7 +1,7 @@
 // Service worker dels Cronògrafs: l'app funciona sense connexió.
 // - Fitxers propis: primer la xarxa (per rebre actualitzacions), si no, la còpia desada.
 // - API externes (temps, festius, ubicació): primer la xarxa, si no, l'última resposta desada.
-const VERSION = 'cronografs-v5';
+const VERSION = 'cronografs-v6';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 
 self.addEventListener('install', event => {
