@@ -351,6 +351,7 @@
 
     text { font-family: Georgia, "Times New Roman", Times, serif; }
     .sans { font-family: -apple-system, "Helvetica Neue", Helvetica, Arial, sans-serif; }
+    .roman { font-family: "Didot", "Bodoni 72", "Bodoni MT", "Times New Roman", Times, serif; font-weight: 400; }
     .breguet { font-family: "Bodoni 72", "Didot", "Bodoni MT", Georgia, serif; font-weight: 700; }
     .script { font-family: "Snell Roundhand", "Apple Chancery", "Brush Script MT", "Segoe Script", cursive; font-style: italic; }
 
@@ -757,10 +758,10 @@
               <button type="button" class="pusher p-bot" data-watch="g" data-act="reset" aria-label="Giulietta: LAP/0 (volta i zero en marxa, zero aturat)"></button>
               <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf Giulietta flyback amb gran data">
                 <defs>
-                  <clipPath id="g-date-clip-t"><rect x="88.2" y="121.6" width="11" height="14.8"/></clipPath>
-                  <clipPath id="g-date-clip-u"><rect x="100.8" y="121.6" width="11" height="14.8"/></clipPath>
+                  <clipPath id="g-date-clip-t"><rect x="88.2" y="121.6" width="11.8" height="14.8"/></clipPath>
+                  <clipPath id="g-date-clip-u"><rect x="100" y="121.6" width="11.8" height="14.8"/></clipPath>
                   <path id="g-arc-top" d="M100 100 m0 -83.3 a83.3 83.3 0 1 1 -0.01 0"/>
-                  <path id="g-arc-bottom" d="M27.5 100 A72.5 72.5 0 0 0 172.5 100"/>
+                  <path id="g-arc-bottom" d="M30.6 100 A69.4 69.4 0 0 0 169.4 100"/>
                 </defs>
                 <circle cx="100" cy="100" r="100" fill="url(#steelRing)"/>
                 <circle cx="100" cy="100" r="95.5" fill="url(#steelBevel)"/>
@@ -771,10 +772,10 @@
                 <!-- Gran data panoràmica a les 6 -->
                 <g id="g-bigdate">
                   <rect x="86.6" y="120" width="26.8" height="18" rx="0.8" fill="url(#winFrame)"/>
-                  <rect x="88.2" y="121.6" width="11" height="14.8" class="win" stroke-width="0.15"/>
-                  <rect x="100.8" y="121.6" width="11" height="14.8" class="win" stroke-width="0.15"/>
+                  <rect x="88.2" y="121.6" width="23.6" height="14.8" class="win" stroke-width="0.15"/>
                   <g clip-path="url(#g-date-clip-t)"><g id="g-tens" class="big-date-roll"></g></g>
                   <g clip-path="url(#g-date-clip-u)"><g id="g-units" class="big-date-roll"></g></g>
+                  <rect x="99.72" y="121.6" width="0.56" height="14.8" fill="#2b2f36"/>
                   <rect x="88.2" y="121.6" width="23.6" height="3" fill="rgba(0,0,0,0.12)"/>
                 </g>
                 <g id="g-text"></g>
@@ -962,7 +963,7 @@
 
       // Textos
       const tx = $('m-text');
-      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'LONGINES');
+      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'MALVINES');
       // Petit emblema propi: rombe entre dues línies
       el('path', { d: 'M131.5 105.2 l1.1 1.1 l-1.1 1.1 l-1.1 -1.1 Z', class: 'ink' }, tx);
       el('line', { x1: 124.5, y1: 106.3, x2: 129.6, y2: 106.3, class: 'tk', 'stroke-width': 0.3 }, tx);
@@ -1041,11 +1042,15 @@
       // Xifres romanes radials (el III i el IX queden sota les subesferes)
       const nums = $('g-numerals');
       const roman = ['XII', 'I', 'II', '', 'IIII', 'V', 'VI', 'VII', 'VIII', '', 'X', 'XI'];
+      // Estil Glashütte: xifres altes i estretes, d'alt contrast, a tocar de la pista
       roman.forEach((r, i) => {
         if (!r) return;
-        const t = label(nums, 100, 100, 64.5, i * 30, r, 12.5, 'ink-blue', i * 30);
-        t.setAttribute('font-weight', '700');
-        t.setAttribute('letter-spacing', '-0.4');
+        const [x, y] = P(100, 100, 68.4, i * 30);
+        el('text', {
+          x: 0, y: 0, 'text-anchor': 'middle', 'dominant-baseline': 'central',
+          'font-size': 13, 'letter-spacing': '0.5', class: 'ink-blue roman',
+          transform: `translate(${x.toFixed(2)} ${y.toFixed(2)}) rotate(${i * 30}) scale(0.62 1.22)`
+        }, nums, r);
       });
 
       const sd = $('g-subdials');
@@ -1062,16 +1067,20 @@
 
       // Textos
       const tx = $('g-text');
-      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Glashütte');
+      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Giulietta');
       el('text', { x: 100, y: 76.6, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 2.9, 'letter-spacing': 0.6, class: 'ink sans' }, tx, 'FLYBACK');
       const bt = el('text', { 'font-size': 2.4, 'letter-spacing': 0.3, class: 'ink sans', 'text-anchor': 'middle' }, tx);
-      const tp2 = el('textPath', { href: '#g-arc-bottom', startOffset: '50%' }, bt, 'MADE IN GERMANY');
+      bt.setAttribute('text-anchor', 'end');
+      const tp2 = el('textPath', { href: '#g-arc-bottom', startOffset: '46.6%' }, bt, 'MADE IN');
       tp2.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#g-arc-bottom');
+      const bt2 = el('text', { 'font-size': 2.4, 'letter-spacing': 0.3, class: 'ink sans', 'text-anchor': 'start' }, tx);
+      const tp3 = el('textPath', { href: '#g-arc-bottom', startOffset: '53.4%' }, bt2, 'GERMANY');
+      tp3.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#g-arc-bottom');
 
       // Discs de la gran data: desenes 0–3 (+0 de tornada) i unitats 0–9 (+0)
       const tens = $('g-tens'), units = $('g-units');
-      for (let i = 0; i <= 4; i++) el('text', { x: 93.7, y: 129.4 + i * 16, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 13, 'font-weight': '700', class: 'sans win-ink' }, tens, String(i % 4));
-      for (let i = 0; i <= 10; i++) el('text', { x: 106.3, y: 129.4 + i * 16, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 13, 'font-weight': '700', class: 'sans win-ink' }, units, String(i % 10));
+      for (let i = 0; i <= 4; i++) el('text', { x: 94.1, y: 129.4 + i * 16, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 13, 'font-weight': '700', class: 'sans win-ink' }, tens, String(i % 4));
+      for (let i = 0; i <= 10; i++) el('text', { x: 105.9, y: 129.4 + i * 16, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 13, 'font-weight': '700', class: 'sans win-ink' }, units, String(i % 10));
 
       // Agulles "pera" d'acer pavonat
       function pear(id, L, rx, ry) {
