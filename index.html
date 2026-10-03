@@ -368,7 +368,8 @@
       -webkit-backdrop-filter: blur(10px);
       max-width: 100%;
     }
-    .chrono-info { display: flex; flex-direction: column; line-height: 1.15; min-width: 0; flex: 1 1 auto; overflow: hidden; }
+    .chrono-info { display: flex; flex-direction: column; line-height: 1.15; flex: 1 0 auto; }
+    .chrono-time { white-space: nowrap; }
     .chrono-name { overflow: hidden; text-overflow: ellipsis;
       font-size: 0.62rem;
       font-weight: 800;
@@ -536,7 +537,7 @@
         padding-top: max(10px, env(safe-area-inset-top)); padding-bottom: max(14px, env(safe-area-inset-bottom)); }
       .calendar-section { max-width: 420px; max-height: none; padding: 14px; overflow: visible; }
       .calendar-header { margin-bottom: 8px; }
-      .month-year-title { font-size: 1.05rem; }
+      .month-year-title { font-size: clamp(0.92rem, 4.6vw, 1.05rem); }
       .calendar-grid { gap: 3px; }
       .weekday-header { font-size: 0.62rem; padding-bottom: 4px; }
       .calendar-day-cell { font-size: 0.85rem; aspect-ratio: 1 / 0.6; }
@@ -549,7 +550,10 @@
       .data-panel { margin-top: 6px; padding-top: 6px; }
       .data-location { margin-bottom: 4px; font-size: 0.62rem; }
       .data-item { padding: 4px 8px; }
-      .chrono-bar { width: auto; min-width: 0; }
+      .watch-section { width: 100%; max-width: 420px; }
+      .chrono-bar { width: 100%; justify-content: space-between; }
+      .chrono-bar .chip-btn { flex: 1 1 0; }
+      #btn-flip { flex: 0 0 auto !important; }
       .data-item { padding: 6px 8px; min-width: 74px; }
       .data-label { font-size: 0.56rem; }
       .data-value { font-size: 0.86rem; }
@@ -578,7 +582,10 @@
       .calendar-section { width: 300px; max-width: 300px; max-height: calc(100dvh - 16px); overflow: hidden; padding: 8px 12px; display: flex; flex-direction: column; }
       .calendar-day-cell { aspect-ratio: auto; height: clamp(18px, calc((100dvh - 168px) / 6), 40px); }
       .data-scroll { padding-bottom: 2px; }
-      .chrono-bar { width: auto; min-width: 0; }
+      .chrono-bar { width: 100%; }
+      .watch-section { width: calc(var(--S) * 1.22); max-width: none; }
+      .chrono-bar .chip-btn { flex: 0 0 auto; }
+      .calendar-section { flex: 0 0 auto; }
       .calendar-header { margin-bottom: 4px; }
       .month-year-title { font-size: 0.85rem; }
       .calendar-grid { gap: 1px; }
@@ -955,7 +962,7 @@
 
       // Textos
       const tx = $('m-text');
-      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'LONGINES');
+      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'MALVINES');
       // Petit emblema propi: rombe entre dues línies
       el('path', { d: 'M131.5 105.2 l1.1 1.1 l-1.1 1.1 l-1.1 -1.1 Z', class: 'ink' }, tx);
       el('line', { x1: 124.5, y1: 106.3, x2: 129.6, y2: 106.3, class: 'tk', 'stroke-width': 0.3 }, tx);
@@ -1055,7 +1062,7 @@
 
       // Textos
       const tx = $('g-text');
-      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Glashütte');
+      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Giulietta');
       el('text', { x: 100, y: 76.6, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 2.9, 'letter-spacing': 0.6, class: 'ink sans' }, tx, 'FLYBACK');
       const bt = el('text', { 'font-size': 2.4, 'letter-spacing': 0.3, class: 'ink sans', 'text-anchor': 'middle' }, tx);
       const tp2 = el('textPath', { href: '#g-arc-bottom', startOffset: '50%' }, bt, 'MADE IN GERMANY');
