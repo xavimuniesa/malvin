@@ -1,7 +1,7 @@
 // Service worker dels Cronògrafs: l'app funciona sense connexió.
 // - Fitxers propis: primer la xarxa (per rebre actualitzacions), si no, la còpia desada.
 // - API externes (temps, festius, ubicació): primer la xarxa, si no, l'última resposta desada.
-const VERSION = 'cronografs-v7';
+const VERSION = 'cronografs-v8';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 
 self.addEventListener('install', event => {
@@ -23,8 +23,10 @@ self.addEventListener('fetch', event => {
   const own = url.origin === self.location.origin;
   const bucket = own ? VERSION : VERSION + '-api';
 
+  // Fitxers propis: sempre es revalida amb el servidor (sense la memòria cau HTTP
+  // de GitHub Pages, que pot servir una versió antiga durant 10 minuts)
   event.respondWith(
-    fetch(req)
+    fetch(own ? new Request(req, { cache: 'no-cache' }) : req)
       .then(res => {
         if (res && res.ok) {
           const copy = res.clone();

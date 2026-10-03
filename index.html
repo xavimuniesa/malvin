@@ -134,7 +134,7 @@
     body { background-image: var(--bg-glow); background-attachment: fixed; }
 
     /* Mida del rellotge (diàmetre de la caixa). Les anses i els polsadors en surten. */
-    :root { --S: clamp(220px, min(42vw, calc(100dvh - 150px)), 660px); }
+    :root { --S: clamp(220px, min(calc((100vw - 520px) / 1.22), calc(100dvh - 163px)), 760px); }
 
     .app-container {
       width: 100%;
@@ -356,7 +356,7 @@
 
     /* Barra del cronògraf sota el rellotge */
     .chrono-bar {
-      width: min(100%, max(300px, calc(var(--S) * 1.05)));
+      width: min(100%, 360px);   /* amplada fixa: el calendari no es mou quan canvia el text */
       display: flex;
       align-items: center;
       gap: 8px;
@@ -377,6 +377,7 @@
       text-transform: uppercase;
       white-space: nowrap;
     }
+    .chrono-time.flash { color: var(--accent); }
     .chrono-time {
       font-size: 1.05rem;
       font-weight: 700;
@@ -420,7 +421,9 @@
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
       transition: background 0.4s ease, border-color 0.4s ease;
     }
-    .calendar-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
+    .calendar-header { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-bottom: 16px; }
+    .month-year-title { white-space: nowrap; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+    .calendar-header-actions { flex: 0 0 auto; }
     .month-year-title {
       font-size: 1.25rem;
       font-weight: 700;
@@ -481,10 +484,11 @@
     /* Marca de fase lunar (nova, quart creixent, plena, quart minvant) */
     .moon-mark {
       position: absolute;
-      bottom: 4%;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 0.62rem;
+      /* al costat del número (no a sota): no el trepitja quan les files són baixes */
+      top: 50%;
+      left: calc(50% + 0.95em);
+      transform: translateY(-50%);
+      font-size: 0.5rem;
       line-height: 1;
       color: var(--accent);
       pointer-events: none;
@@ -527,15 +531,25 @@
 
     /* ---------------- Mòbil vertical (iPhone) ---------------- */
     @media (max-width: 720px) {
-      :root { --S: clamp(200px, min(76vw, 52dvh), 420px); }
-      .app-container { flex-direction: column; justify-content: flex-start; padding: 10px; gap: 12px;
+      :root { --S: clamp(200px, min(84vw, calc(100dvh - 440px - env(safe-area-inset-top) - env(safe-area-inset-bottom))), 460px); }
+      .app-container { flex-direction: column; justify-content: center; padding: 10px; gap: 10px;
         padding-top: max(10px, env(safe-area-inset-top)); padding-bottom: max(14px, env(safe-area-inset-bottom)); }
       .calendar-section { max-width: 420px; max-height: none; padding: 14px; overflow: visible; }
       .calendar-header { margin-bottom: 8px; }
       .month-year-title { font-size: 1.05rem; }
       .calendar-grid { gap: 3px; }
       .weekday-header { font-size: 0.62rem; padding-bottom: 4px; }
-      .calendar-day-cell { font-size: 0.85rem; aspect-ratio: 1 / 0.82; }
+      .calendar-day-cell { font-size: 0.85rem; aspect-ratio: 1 / 0.6; }
+      .calendar-section { padding: 10px 12px; }
+      .calendar-header { margin-bottom: 4px; }
+      .weekday-header { padding-bottom: 2px; }
+      .chrono-bar { padding: 4px 4px 4px 12px; }
+      .calendar-header-actions { gap: 4px; }
+      .calendar-header .chip-btn { padding: 6px 9px; font-size: 0.64rem; }
+      .data-panel { margin-top: 6px; padding-top: 6px; }
+      .data-location { margin-bottom: 4px; font-size: 0.62rem; }
+      .data-item { padding: 4px 8px; }
+      .chrono-bar { width: auto; min-width: 0; }
       .data-item { padding: 6px 8px; min-width: 74px; }
       .data-label { font-size: 0.56rem; }
       .data-value { font-size: 0.86rem; }
@@ -557,16 +571,19 @@
 
     /* Mòbil apaïsat */
     @media (orientation: landscape) and (max-height: 620px) {
-      :root { --S: clamp(180px, min(36vw, calc(100dvh - 100px)), 360px); }
-      .app-container { flex-direction: row; padding: 8px 16px; gap: 16px; }
+      :root { --S: clamp(170px, min(40vw, calc(100dvh - 75px)), 380px); }
+      .app-container { flex-direction: row; gap: 16px; min-height: 100dvh;
+        padding: 8px max(16px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
       .watch-section { gap: 4px; }
-      .calendar-section { max-width: 280px; max-height: calc(100dvh - 16px); padding: 10px 12px; }
+      .calendar-section { width: 300px; max-width: 300px; max-height: calc(100dvh - 16px); overflow: hidden; padding: 8px 12px; display: flex; flex-direction: column; }
+      .calendar-day-cell { aspect-ratio: auto; height: clamp(18px, calc((100dvh - 168px) / 6), 40px); }
+      .data-scroll { padding-bottom: 2px; }
+      .chrono-bar { width: auto; min-width: 0; }
       .calendar-header { margin-bottom: 4px; }
       .month-year-title { font-size: 0.85rem; }
       .calendar-grid { gap: 1px; }
       .weekday-header { font-size: 0.5rem; padding-bottom: 2px; }
       .calendar-day-cell { font-size: 0.62rem; }
-      .day-info { font-size: 0.62rem; margin-top: 4px; }
       .data-panel { margin-top: 6px; padding-top: 6px; }
       .data-location { font-size: 0.55rem; margin-bottom: 4px; }
       .data-item { padding: 3px 5px; min-width: 60px; }
@@ -577,7 +594,6 @@
       .chrono-bar .chip-btn { padding: 5px 7px; }
       #btn-start { min-width: 46px; }
       #btn-reset { min-width: 60px; }
-      .chrono-name { font-size: 0.55rem; letter-spacing: 0.6px; }
       .theme-label { display: none; }
       .month-year-title { white-space: nowrap; }
       .chip-btn { padding: 5px 8px; font-size: 0.6rem; }
@@ -776,9 +792,7 @@
       <!-- Barra del cronògraf de l'esfera visible -->
       <div class="chrono-bar">
         <div class="chrono-info">
-          <span class="chrono-name" id="chrono-name">MALVINES · crono</span>
           <span class="chrono-time" id="chrono-time">00:00:00,0</span>
-          <span class="chrono-extra" id="chrono-extra">Polsador superior: start/stop</span>
         </div>
         <button type="button" class="chip-btn" id="btn-start">Start</button>
         <button type="button" class="chip-btn" id="btn-reset">Zero</button>
@@ -805,7 +819,6 @@
         <div class="weekday-header">Dg</div>
       </div>
       <div class="calendar-grid" id="days-container"></div>
-      <div class="day-info" id="day-info"></div>
 
       <div class="data-panel">
         <span class="data-location" id="data-location">Localitzant…</span>
@@ -1446,12 +1459,12 @@
           c.laps = (c.laps || 0) + 1;
           startSnap(w, now);
           c.acc = 0; c.start = now;
-          flashExtra(`Volta ${c.laps}: ${fmt(lap)}`, 4000);
+          flashExtra(`V${c.laps} ${fmt(lap)}`, 3000);
           click(true);
         } else {
           // El 7751 no permet posar a zero en marxa: el polsador queda bloquejat
           click(false);
-          flashExtra('Atura\'l abans de posar-lo a zero');
+          flashExtra('Atura primer', 1500);
           return;
         }
       }
@@ -1627,23 +1640,14 @@
     function updateChronoBar(now) {
       const c = chronos[visible];
       const e = elapsed(c, now);
-      $('chrono-name').textContent = (visible === 'm' ? 'MALVINES · 7751' : 'Giulietta · LAP/0');
-      $('chrono-time').textContent = fmt(e);
+      // La volta (LAP/0) es mostra uns segons al mateix lloc del temps
+      const flashing = extraFlash && extraFlash.until > now;
+      $('chrono-time').textContent = flashing ? extraFlash.msg : fmt(e);
+      $('chrono-time').classList.toggle('flash', !!flashing);
       const bs = $('btn-start');
       bs.textContent = c.running ? 'Stop' : 'Start';
       bs.classList.toggle('on', c.running);
       $('btn-reset').textContent = visible === 'g' ? 'LAP/0' : 'Zero';
-      let extra;
-      if (extraFlash && extraFlash.until > now) extra = extraFlash.msg;
-      else if (visible === 'g') {
-        const s = e / 1000;
-        extra = (s >= 7.2 && s <= 60) ? `${Math.round(3600 / s)} km/h · llamp a ${(s * 0.343).toFixed(1).replace('.', ',')} km`
-              : (s > 0 && s < 7.2) ? `>500 km/h · llamp a ${(s * 0.343).toFixed(1).replace('.', ',')} km`
-              : (s > 60) ? `Llamp a ${(s * 0.343).toFixed(1).replace('.', ',')} km` : 'Taquímetre 1000 m';
-      } else {
-        extra = c.running ? 'Minuts a les 12 · hores a les 6' : (e > 0 ? 'Aturat · Zero per reiniciar' : 'Triple calendari i lluna');
-      }
-      $('chrono-extra').textContent = extra;
     }
 
     // =================================================================
@@ -1756,6 +1760,7 @@
     }
 
     function showDayInfo(iso) {
+      if (!$('day-info')) return;   // línia d'informació retirada (el nom del festiu queda al títol del dia)
       const [y, m, d] = iso.split('-').map(Number);
       const date = new Date(y, m - 1, d, 12);
       const parts = [`<b>${dayNamesCa[date.getDay()]} ${d} ${deMes(m - 1)}</b>`];
