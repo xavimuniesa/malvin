@@ -120,6 +120,64 @@
       --crystal-op: 0.14;
     }
 
+    /* Mode Zz (son): pràcticament fosc, tons càlids i molt apagats, sense halos */
+    html[data-theme="zz"] {
+      --bg: #000000;
+      --bg-glow: none;
+      --text: #7a6352;
+      --panel-bg: rgba(8, 7, 6, 0.92);
+      --panel-border: #1c1714;
+      --weekday-color: #4d3e34;
+      --cell-color: #6e5848;
+      --weekend-color: #7d6250;
+      --month-title-color: #7a6352;
+      --data-item-bg: rgba(255, 210, 170, 0.02);
+      --data-label-color: #4d3e34;
+      --data-value-color: #8a6e58;
+      --muted: #55453a;
+      --btn-bg: #0c0a09;
+      --btn-border: #2a221d;
+      --btn-hover-bg: #15110f;
+      --accent: #9a7458;
+      --today-ring: #7a5a44;
+      --today-ring-glow: transparent;
+      --watch-shadow: 0 0 0 transparent;
+      --dial-a: #15120f;
+      --dial-b: #0d0b0a;
+      --dial-c: #050404;
+      --guil: rgba(255, 220, 190, 0.025);
+      --sub-a: #110e0c;
+      --sub-b: #080606;
+      --snail: rgba(255, 220, 190, 0.03);
+      --ink-blue: #8a6a52;
+      --ink: #6a5546;
+      --ink-soft: #4a3c32;
+      --diumenge: #8a4a46;
+      --festiu: #9a7458;
+      --dissabte: #7d6a5a;
+      --hol-a: #3a2c24;
+      --hol-b: #241a15;
+      --hol-glow: transparent;
+      --win-bg: #3a332d;
+      --win-ink: #0a0807;
+      --hand-a: #9a7a60;
+      --hand-b: #6a4f3c;
+      --hshadow: #000000;
+      --hshadow-op: 0.6;
+      --glow: #000000;
+      --glow-op: 0;
+      --crystal-op: 0;
+    }
+    /* l'acer de la caixa també s'apaga */
+    html[data-theme="zz"] .watch-stage { opacity: 0.45; }
+    html[data-theme="zz"] .calendar-section, html[data-theme="zz"] .chrono-bar { opacity: 0.8; }
+    html[data-theme="zz"] .calendar-day-cell.holiday { color: #a08470; }
+    html[data-theme="zz"] .hint { display: none; }
+    html[data-theme="zz"] .win-ink.diumenge { fill: #5a1a18 !important; }
+    html[data-theme="zz"] .win-ink.festiu { fill: #1a1410 !important; }
+    html[data-theme="zz"] .win-ink.dissabte { fill: #2a2420 !important; }
+    .zz-icon { font-family: "Didot", "Bodoni 72", Georgia, serif; font-weight: 700; font-style: italic; font-size: 0.9rem; line-height: 0.95rem; }
+
     html, body {
       width: 100%;
       min-height: 100%;
@@ -134,7 +192,12 @@
     body { background-image: var(--bg-glow); background-attachment: fixed; }
 
     /* Mida del rellotge (diàmetre de la caixa). Les anses i els polsadors en surten. */
-    :root { --S: clamp(220px, min(calc((100vw - 520px) / 1.22), calc(100dvh - 163px)), 760px); }
+    :root {
+      --bar: 0px;
+      --S0: clamp(220px, min(calc((100vw - 520px) / 1.22), calc(100dvh - 109px)), 800px);
+      --S:  clamp(220px, min(calc((100vw - 520px) / 1.22), calc(100dvh - 109px - var(--bar))), 800px);
+    }
+    html.chrono-open { --bar: 54px; }
 
     .app-container {
       width: 100%;
@@ -151,7 +214,7 @@
     }
 
     .watch-section {
-      width: calc(var(--S) * 1.22);
+      width: calc(var(--S0) * 1.22);
       flex: 0 0 auto;
       display: flex;
       flex-direction: column;
@@ -182,6 +245,7 @@
       border-radius: 50%;
       container-type: inline-size;
       cursor: pointer;
+      transition: width 0.35s ease, height 0.35s ease;
     }
 
     .face {
@@ -355,7 +419,10 @@
     .breguet { font-family: "Bodoni 72", "Didot", "Bodoni MT", Georgia, serif; font-weight: 700; }
     .script { font-family: "Snell Roundhand", "Apple Chancery", "Brush Script MT", "Segoe Script", cursive; font-style: italic; }
 
-    /* Barra del cronògraf sota el rellotge */
+    /* Barra del cronògraf: només apareix en prémer la corona */
+    .chrono-bar { display: none !important; }
+    html.chrono-open .chrono-bar { display: flex !important; animation: barIn 0.35s ease; }
+    @keyframes barIn { from { opacity: 0; transform: translateY(-8px); } to { opacity: 1; transform: none; } }
     .chrono-bar {
       width: min(100%, 360px);   /* amplada fixa: el calendari no es mou quan canvia el text */
       display: flex;
@@ -410,10 +477,11 @@
 
     /* Calendari (mateix comportament que l'índex del PRS 516) */
     .calendar-section {
+      position: relative;
       max-width: 380px;
       width: 100%;
       max-height: calc(100dvh - 40px);
-      overflow-y: auto;
+      overflow: hidden;
       background: var(--panel-bg);
       backdrop-filter: blur(10px);
       -webkit-backdrop-filter: blur(10px);
@@ -509,55 +577,110 @@
     }
     .day-info b { color: var(--text); font-weight: 700; }
 
-    .data-panel { margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--panel-border); }
-    .data-location { display: block; text-align: center; font-size: 0.78rem; font-weight: 600; letter-spacing: 0.5px; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
-    .data-scroll { display: flex; gap: 8px; overflow-x: auto; scroll-snap-type: x proximity; -webkit-overflow-scrolling: touch; padding-bottom: 6px; scrollbar-width: thin; }
-    .data-scroll::-webkit-scrollbar { height: 4px; }
-    .data-scroll::-webkit-scrollbar-thumb { background: var(--panel-border); border-radius: 4px; }
-    .data-item {
-      flex: 0 0 auto;
-      min-width: 84px;
-      scroll-snap-align: start;
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-      background: var(--data-item-bg);
-      border: 1px solid var(--panel-border);
-      border-radius: 10px;
-      padding: 8px 10px;
-    }
-    .data-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.5px; text-transform: uppercase; color: var(--data-label-color); white-space: nowrap; }
-    .data-value { font-size: 1.02rem; font-weight: 700; color: var(--data-value-color); font-variant-numeric: tabular-nums; white-space: nowrap; }
 
     .hint { font-size: 0.66rem; color: var(--muted); text-align: center; opacity: 0.8; }
 
+    /* ---- Quadre amb dues pàgines: calendari ⇄ dades (lliscament lateral) ---- */
+    .calendar-section { padding-bottom: 26px !important; }
+    .cal-page, .data-page { transition: transform 0.45s cubic-bezier(.4,.1,.2,1), opacity 0.35s ease; }
+    .data-page {
+      position: absolute;
+      inset: 0;
+      padding: inherit;
+      display: flex;
+      flex-direction: column;
+      container-type: size;
+      transform: translateX(105%);
+      opacity: 0;
+      pointer-events: none;
+    }
+    .calendar-section.show-data .cal-page { transform: translateX(-105%); opacity: 0; pointer-events: none; }
+    .calendar-section.show-data .data-page { transform: none; opacity: 1; pointer-events: auto; }
+    .data-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: min(2.2cqh, 12px); }
+    .data-title {
+      font-size: min(5.2cqw, 6.5cqh);
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      color: var(--month-title-color);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+    }
+    .dgroups { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-between; gap: min(1.8cqh, 10px); min-height: 0; }
+    .dgroup h3 {
+      display: flex; align-items: center; gap: 8px;
+      font-family: "Didot", "Bodoni 72", Georgia, serif;
+      font-size: min(3cqw, 3.4cqh);
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: min(1cqh, 6px);
+    }
+    .dgroup h3::after { content: ''; flex: 1; height: 1px; background: var(--panel-border); }
+    .dgrid { display: grid; grid-template-columns: 1fr 1fr; gap: min(1.4cqh, 9px) min(2.4cqw, 10px); }
+    .dgrid.c3 { grid-template-columns: repeat(3, 1fr); }
+    .dgrid.c4 { grid-template-columns: repeat(4, 1fr); }
+    .ditem {
+      display: flex; flex-direction: column; justify-content: center; min-width: 0;
+      background: var(--data-item-bg);
+      border: 1px solid var(--panel-border);
+      border-radius: 10px;
+      padding: min(1.6cqh, 10px) min(2.4cqw, 10px);
+      gap: min(0.6cqh, 3px);
+    }
+    .dl {
+      font-size: min(2.5cqw, 3.1cqh);
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--data-label-color);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .dv {
+      font-family: "Didot", "Bodoni 72", "Bodoni MT", Georgia, serif;
+      font-size: min(6.4cqw, 7.4cqh);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--accent);
+      font-variant-numeric: lining-nums tabular-nums;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    /* Agafador per obrir/tancar les dades amb un toc */
+    .pane-handle {
+      position: absolute; left: 50%; bottom: 5px; transform: translateX(-50%);
+      width: 64px; height: 16px; border: 0; padding: 0; background: transparent; cursor: pointer; z-index: 3;
+    }
+    .pane-handle::before {
+      content: ''; position: absolute; left: 14px; right: 14px; top: 6px; height: 4px; border-radius: 4px;
+      background: var(--panel-border);
+    }
+    .pane-handle:hover::before { background: var(--accent); }
+
+
     /* ---------------- Mòbil vertical (iPhone) ---------------- */
     @media (max-width: 720px) {
-      :root { --S: clamp(200px, min(84vw, calc(100dvh - 440px - env(safe-area-inset-top) - env(safe-area-inset-bottom))), 460px); }
+      :root {
+        --S0: clamp(200px, min(84vw, calc(100dvh - 400px - env(safe-area-inset-top) - env(safe-area-inset-bottom))), 480px);
+        --S:  clamp(200px, min(84vw, calc(100dvh - 400px - var(--bar) - env(safe-area-inset-top) - env(safe-area-inset-bottom))), 480px);
+      }
+      html.chrono-open { --bar: 52px; }
       .app-container { flex-direction: column; justify-content: center; padding: 10px; gap: 10px;
         padding-top: max(10px, env(safe-area-inset-top)); padding-bottom: max(14px, env(safe-area-inset-bottom)); }
-      .calendar-section { max-width: 420px; max-height: none; padding: 14px; overflow: visible; }
+      .calendar-section { max-width: 420px; max-height: none; padding: 14px; }
       .calendar-header { margin-bottom: 8px; }
       .month-year-title { font-size: clamp(0.92rem, 4.6vw, 1.05rem); }
       .calendar-grid { gap: 3px; }
       .weekday-header { font-size: 0.62rem; padding-bottom: 4px; }
-      .calendar-day-cell { font-size: 0.85rem; aspect-ratio: 1 / 0.6; }
+      .calendar-day-cell { font-size: 0.9rem; aspect-ratio: auto; height: clamp(28px, calc((100dvh - var(--S) * 1.06 - var(--bar) - 158px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) / 6), 52px); }
       .calendar-section { padding: 10px 12px; }
       .calendar-header { margin-bottom: 4px; }
       .weekday-header { padding-bottom: 2px; }
       .chrono-bar { padding: 4px 4px 4px 12px; }
       .calendar-header-actions { gap: 4px; }
       .calendar-header .chip-btn { padding: 6px 9px; font-size: 0.64rem; }
-      .data-panel { margin-top: 6px; padding-top: 6px; }
-      .data-location { margin-bottom: 4px; font-size: 0.62rem; }
-      .data-item { padding: 4px 8px; }
       .watch-section { width: 100%; max-width: 420px; }
       .chrono-bar { width: 100%; justify-content: space-between; }
       .chrono-bar .chip-btn { flex: 1 1 0; }
       #btn-flip { flex: 0 0 auto !important; }
-      .data-item { padding: 6px 8px; min-width: 74px; }
-      .data-label { font-size: 0.56rem; }
-      .data-value { font-size: 0.86rem; }
       .hint { display: none; }
       .chrono-bar { gap: 5px; padding: 6px 6px 6px 12px; }
       .chrono-bar .chip-btn { padding: 7px 8px; font-size: 0.62rem; }
@@ -569,22 +692,25 @@
 
     /* Tauleta vertical */
     @media (orientation: portrait) and (min-width: 721px) and (max-width: 1100px) {
-      :root { --S: clamp(280px, min(70vw, 52dvh), 580px); }
+      :root { --S0: clamp(280px, min(70vw, calc(100dvh - 600px)), 620px); --S: clamp(280px, min(70vw, calc(100dvh - 600px - var(--bar))), 620px); }
       .app-container { flex-direction: column; gap: 22px; }
       .calendar-section { max-width: 460px; max-height: none; }
     }
 
     /* Mòbil apaïsat */
     @media (orientation: landscape) and (max-height: 620px) {
-      :root { --S: clamp(170px, min(40vw, calc(100dvh - 75px)), 380px); }
+      :root {
+        --S0: clamp(170px, min(40vw, calc(100dvh - 36px)), 400px);
+        --S:  clamp(170px, min(40vw, calc(100dvh - 36px - var(--bar))), 400px);
+      }
+      html.chrono-open { --bar: 40px; }
       .app-container { flex-direction: row; gap: 16px; min-height: 100dvh;
         padding: 8px max(16px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
       .watch-section { gap: 4px; }
       .calendar-section { width: 300px; max-width: 300px; max-height: calc(100dvh - 16px); overflow: hidden; padding: 8px 12px; display: flex; flex-direction: column; }
-      .calendar-day-cell { aspect-ratio: auto; height: clamp(18px, calc((100dvh - 168px) / 6), 40px); }
-      .data-scroll { padding-bottom: 2px; }
+      .calendar-day-cell { aspect-ratio: auto; height: clamp(18px, calc((100dvh - 120px) / 6), 44px); }
       .chrono-bar { width: 100%; }
-      .watch-section { width: calc(var(--S) * 1.22); max-width: none; }
+      .watch-section { width: calc(var(--S0) * 1.22); max-width: none; }
       .chrono-bar .chip-btn { flex: 0 0 auto; }
       .calendar-section { flex: 0 0 auto; }
       .calendar-header { margin-bottom: 4px; }
@@ -592,11 +718,6 @@
       .calendar-grid { gap: 1px; }
       .weekday-header { font-size: 0.5rem; padding-bottom: 2px; }
       .calendar-day-cell { font-size: 0.62rem; }
-      .data-panel { margin-top: 6px; padding-top: 6px; }
-      .data-location { font-size: 0.55rem; margin-bottom: 4px; }
-      .data-item { padding: 3px 5px; min-width: 60px; }
-      .data-label { font-size: 0.45rem; }
-      .data-value { font-size: 0.66rem; }
       .chrono-time { font-size: 0.85rem; }
       .chrono-bar { gap: 5px; padding: 5px 5px 5px 11px; }
       .chrono-bar .chip-btn { padding: 5px 7px; }
@@ -695,7 +816,7 @@
             <div class="body-ellipse" id="body-ellipse"></div>
             <div class="body-band" id="body-band"></div>
             <div class="face face-front" id="face-m">
-              <button type="button" class="crown" aria-label="Corona: canvia entre versió diürna i nocturna" title="Corona: dia / nit"></button>
+              <button type="button" class="crown" aria-label="Corona: mostra o amaga el cronòmetre" title="Corona: cronòmetre"></button>
               <button type="button" class="pusher p-top" data-watch="m" data-act="start" aria-label="MALVINES: engega o atura el cronògraf"></button>
               <button type="button" class="pusher p-bot" data-watch="m" data-act="reset" aria-label="MALVINES: posa a zero el cronògraf"></button>
               <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf MALVINES amb triple calendari i fase lunar">
@@ -751,12 +872,12 @@
               </svg>
             </div>
 
-            <!-- ================= CARA POSTERIOR:  ================= -->
+            <!-- ================= CARA POSTERIOR: GIULIETTA ================= -->
             <div class="face face-back inactive hidden-face" id="face-g">
-              <button type="button" class="crown" aria-label="Corona: canvia entre versió diürna i nocturna" title="Corona: dia / nit"></button>
-              <button type="button" class="pusher p-top" data-watch="g" data-act="start" aria-label=": engega o atura el cronògraf"></button>
-              <button type="button" class="pusher p-bot" data-watch="g" data-act="reset" aria-label=": LAP/0 (volta i zero en marxa, zero aturat)"></button>
-              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf  flyback amb gran data">
+              <button type="button" class="crown" aria-label="Corona: mostra o amaga el cronòmetre" title="Corona: cronòmetre"></button>
+              <button type="button" class="pusher p-top" data-watch="g" data-act="start" aria-label="Giulietta: engega o atura el cronògraf"></button>
+              <button type="button" class="pusher p-bot" data-watch="g" data-act="reset" aria-label="Giulietta: LAP/0 (volta i zero en marxa, zero aturat)"></button>
+              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf Giulietta flyback amb gran data">
                 <defs>
                   <clipPath id="g-date-clip-t"><rect x="88.2" y="121.6" width="11.8" height="14.8"/></clipPath>
                   <clipPath id="g-date-clip-u"><rect x="100" y="121.6" width="11.8" height="14.8"/></clipPath>
@@ -806,11 +927,12 @@
         <button type="button" class="chip-btn" id="btn-reset">Zero</button>
         <button type="button" class="chip-btn" id="btn-flip" title="Gira el rellotge">↻</button>
       </div>
-      <div class="hint">Toca l'esfera per girar · Corona: dia/nit · Espai: start/stop · R: zero · LAP/0 · F: girar</div>
+      <div class="hint">Toca l'esfera per girar · Corona: cronòmetre · Llisca amunt: dades · Espai: start/stop · R: LAP/0 · F: girar</div>
     </div>
 
     <!-- Calendari -->
     <div class="calendar-section">
+      <div class="cal-page" id="cal-page">
       <div class="calendar-header">
         <div class="month-year-title" id="month-year-title" title="Doble toc per tornar al mes actual">—</div>
         <div class="calendar-header-actions">
@@ -827,22 +949,45 @@
         <div class="weekday-header">Dg</div>
       </div>
       <div class="calendar-grid" id="days-container"></div>
+      </div>
 
-      <div class="data-panel">
-        <span class="data-location" id="data-location">Localitzant…</span>
-        <div class="data-scroll">
-          <div class="data-item"><span class="data-label">Temp.</span><span class="data-value" id="data-temp">—</span></div>
-          <div class="data-item"><span class="data-label">Sensació</span><span class="data-value" id="data-feels">—</span></div>
-          <div class="data-item"><span class="data-label">Humitat</span><span class="data-value" id="data-humidity">—</span></div>
-          <div class="data-item"><span class="data-label">Precip. 6 h</span><span class="data-value" id="data-precip">—</span></div>
-          <div class="data-item"><span class="data-label">Lluna</span><span class="data-value" id="data-moon">—</span></div>
-          <div class="data-item"><span class="data-label">Pròx. plena</span><span class="data-value" id="data-fullmoon">—</span></div>
-          <div class="data-item"><span class="data-label">Dist. Lluna</span><span class="data-value" id="data-moondist">—</span></div>
-          <div class="data-item"><span class="data-label">Pròx. eclipsi</span><span class="data-value" id="data-eclipse">—</span></div>
-          <div class="data-item"><span class="data-label">Sol</span><span class="data-value" id="data-sun">—</span></div>
-          <div class="data-item"><span class="data-label">Pròx. festiu</span><span class="data-value" id="data-holiday">—</span></div>
-          <div class="data-item"><span class="data-label">Altitud</span><span class="data-value" id="data-altitude">—</span></div>
+      <!-- Finestra de dades: apareix lliscant cap amunt, de la mateixa mida que el calendari -->
+      <div class="data-page" id="data-page" aria-hidden="true">
+        <div class="data-head">
+          <div class="data-title" id="data-location">Localitzant…</div>
+          <button type="button" class="chip-btn" id="data-back">Calendari</button>
         </div>
+        <div class="dgroups">
+          <section class="dgroup">
+            <h3>Temps</h3>
+            <div class="dgrid c4">
+              <div class="ditem"><span class="dl">Temp.</span><span class="dv" id="data-temp">—</span></div>
+              <div class="ditem"><span class="dl">Sensació</span><span class="dv" id="data-feels">—</span></div>
+              <div class="ditem"><span class="dl">Humitat</span><span class="dv" id="data-humidity">—</span></div>
+              <div class="ditem"><span class="dl">Pluja 6 h</span><span class="dv" id="data-precip">—</span></div>
+            </div>
+          </section>
+          <section class="dgroup">
+            <h3>Sol i Lluna</h3>
+            <div class="dgrid c2">
+              <div class="ditem"><span class="dl">Lluna</span><span class="dv" id="data-moon">—</span></div>
+              <div class="ditem"><span class="dl">Sol</span><span class="dv" id="data-sun">—</span></div>
+              <div class="ditem"><span class="dl">Pròxima plena</span><span class="dv" id="data-fullmoon">—</span></div>
+              <div class="ditem"><span class="dl">Distància Lluna</span><span class="dv" id="data-moondist">—</span></div>
+            </div>
+          </section>
+          <section class="dgroup">
+            <h3>Calendari i lloc</h3>
+            <div class="dgrid c3">
+              <div class="ditem"><span class="dl">Pròx. festiu</span><span class="dv" id="data-holiday">—</span></div>
+              <div class="ditem"><span class="dl">Pròx. eclipsi</span><span class="dv" id="data-eclipse">—</span></div>
+              <div class="ditem"><span class="dl">Altitud</span><span class="dv" id="data-altitude">—</span></div>
+            </div>
+          </section>
+        </div>
+      </div>
+
+      <button type="button" class="pane-handle" id="pane-handle" aria-label="Mostra les dades (o llisca cap amunt)"></button>
       </div>
     </div>
   </div>
@@ -963,7 +1108,7 @@
 
       // Textos
       const tx = $('m-text');
-      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'LONGINES');
+      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'MALVINES');
       // Petit emblema propi: rombe entre dues línies
       el('path', { d: 'M131.5 105.2 l1.1 1.1 l-1.1 1.1 l-1.1 -1.1 Z', class: 'ink' }, tx);
       el('line', { x1: 124.5, y1: 106.3, x2: 129.6, y2: 106.3, class: 'tk', 'stroke-width': 0.3 }, tx);
@@ -1002,7 +1147,7 @@
     })();
 
     // =================================================================
-    //  ESFERA  — cronògraf flyback amb gran data panoràmica.
+    //  ESFERA GIULIETTA — cronògraf flyback amb gran data panoràmica.
     //   · Centre: hores, minuts i segons del crono.
     //   · Les 9: petita segonera contínua (marxa del rellotge).
     //   · Les 3: comptador de 30 minuts que SALTA d'un cop cada minut.
@@ -1015,7 +1160,7 @@
     const G_R = 32.6;   // radi de les subesferes laterals (prou grans per mossegar II, IIII, VIII i X)
     const TACHY = [60, 65, 70, 75, 80, 85, 90, 95, 100, 110, 120, 130, 140, 150, 160, 170, 180, 200, 220, 240, 270, 300, 350, 400, 500];
 
-    (function build() {
+    (function buildGiulietta() {
       const sc = $('g-scales');
       // Taquímetre
       el('circle', { cx: 100, cy: 100, r: 87.4, fill: 'none', class: 'tk', 'stroke-width': 0.3 }, sc);
@@ -1072,7 +1217,7 @@
 
       // Textos
       const tx = $('g-text');
-      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Glashütte');
+      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Giulietta');
       el('text', { x: 100, y: 76.6, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 2.9, 'letter-spacing': 0.6, class: 'ink sans' }, tx, 'FLYBACK');
       const bt = el('text', { 'font-size': 2.4, 'letter-spacing': 0.3, class: 'ink sans', 'text-anchor': 'middle' }, tx);
       bt.setAttribute('text-anchor', 'end');
@@ -1402,26 +1547,55 @@
     }
 
     // =================================================================
-    //  CRONÒGRAFS: estat independent per esfera, persistent entre visites
+    //  CRONÒGRAF COMPARTIT (les dues esferes mostren el mateix compte)
+    //  Mecanisme clàssic de dos polsadors, com el de l'índex de referència:
+    //   · START: engega / atura. Si les agulles estaven congelades (LAP),
+    //     en aturar avancen de pressa fins al punt exacte on s'ha aturat.
+    //   · LAP en marxa: 1r toc congela les agulles (el temps continua
+    //     corrent per sota); 2n toc les fa avançar de pressa, sense salt,
+    //     fins a atrapar el temps real.
+    //   · LAP aturat (0): tornada a zero lenta i harmònica; cada agulla hi
+    //     va pel camí més curt (enrere si no ha passat de la meitat).
     // =================================================================
     const BEATS = 8; // 28.800 alternances/hora → 8 salts per segon
-    const CHRONO_KEY = 'malv_giul_chrono_v1';
-    function loadChronos() {
-      try { const s = JSON.parse(localStorage.getItem(CHRONO_KEY)); if (s && s.m && s.g) return s; } catch (e) {}
-      return { m: { acc: 0, start: 0, running: false }, g: { acc: 0, start: 0, running: false } };
-    }
-    const chronos = loadChronos();
-    function saveChronos() { try { localStorage.setItem(CHRONO_KEY, JSON.stringify(chronos)); } catch (e) {} }
-    function elapsed(c, now) { return c.acc + (c.running ? now - c.start : 0); }
-    const snaps = { m: null, g: null }; // animació de tornada a zero (cor/heart-cam)
+    const CHRONO_KEY = 'malv_giul_chrono_v2';
+    const CATCH_DEG_S = 110;                  // velocitat de les agulles en atrapar (°/s), com a la referència
+    const CATCH_RATE = CATCH_DEG_S / 6;       // la segonera fa 6°/s: atrapa a ~18x
+    const CATCH_MAX_MS = 3000;                // mai més de 3 s per atrapar
+    const CH = (() => {
+      try { const s = JSON.parse(localStorage.getItem(CHRONO_KEY)); if (s && typeof s.acc === 'number') return s; } catch (e) {}
+      return { acc: 0, start: 0, running: false, frozen: false, frozenMs: 0 };
+    })();
+    function saveChrono() { try { localStorage.setItem(CHRONO_KEY, JSON.stringify(CH)); } catch (e) {} }
+    function liveMs(now) { return CH.acc + (CH.running ? now - CH.start : 0); }
+    let catchAnim = null;   // { fromMs, t0, rate, fixed }  (fixed = destí fix; null = destí viu)
+    let resetAnim = null;   // { t0, dur, from:{...}, to:{...} } en graus
 
-    function chronoAngles(w, e) {
-      const q = Math.floor(e / (1000 / BEATS)) * (1000 / BEATS);
-      const sec = (q / 1000 % 60) * 6;
-      if (w === 'm') {
-        return { sec, min: (e / 60000 % 30) * 12, hr: (e / 3600000 % 12) * 30 };
+    function displayMs(now) {
+      if (catchAnim) {
+        const target = catchAnim.fixed !== null ? catchAnim.fixed : liveMs(now);
+        const v = catchAnim.fromMs + (now - catchAnim.t0) * catchAnim.rate;
+        if (v >= target) { catchAnim = null; return target; }
+        return v;
       }
-      return { sec, min: (Math.floor(e / 60000) % 30) * 12 };
+      return CH.frozen ? CH.frozenMs : liveMs(now);
+    }
+    // Angles de les agulles del crono per a un temps donat
+    function chronoAngles(w, e, smooth) {
+      const q = smooth ? e : Math.floor(e / (1000 / BEATS)) * (1000 / BEATS);
+      const sec = (q / 1000 % 60) * 6;
+      if (w === 'm') return { sec, min: (e / 60000 % 30) * 12, hr: (e / 3600000 % 12) * 30 };
+      return { sec, min: (Math.floor(e / 60000) % 30) * 12 };   // Giulietta: comptador de minuts que salta
+    }
+    function startCatch(fromMs, now, fixed) {
+      const target = fixed !== null ? fixed : liveMs(now);
+      const gap = target - fromMs;
+      if (gap <= 30) { catchAnim = null; return; }
+      // durada si la segonera va a 110°/s; per a destins vius cal restar l'avanç real
+      let rate = CATCH_RATE;
+      const dur = fixed !== null ? gap / rate : gap / (rate - 1);
+      if (dur > CATCH_MAX_MS) rate = fixed !== null ? gap / CATCH_MAX_MS : gap / CATCH_MAX_MS + 1;
+      catchAnim = { fromMs, t0: now, rate, fixed };
     }
 
     // Àudio: clic mecànic curt quan es prem un polsador
@@ -1443,54 +1617,57 @@
       if (navigator.vibrate) navigator.vibrate(strong ? 18 : 10);
     }
 
-    function pressVisual(w, act) {
-      const btn = document.querySelector(`.pusher[data-watch="${w}"][data-act="${act}"]`);
-      if (!btn) return;
-      btn.classList.add('pressed');
-      setTimeout(() => btn.classList.remove('pressed'), 140);
-    }
-
-    // Tornada a zero harmònica: totes les agulles del crono hi arriben alhora,
-    // amb un moviment sinusoidal (arrencada i frenada suaus) i pel camí més curt.
-    // La durada creix amb el recorregut més llarg (0,5–1,2 s).
-    function angDist(from, to) { return ((to - from) % 360 + 540) % 360 - 180; }
-    function startSnap(w, now) {
-      const a = chronoAngles(w, elapsed(chronos[w], now));
-      const longest = Math.max(...Object.values(a).map(v => Math.abs(angDist(v, 0))));
-      snaps[w] = { t0: performance.now(), from: a, dur: 500 + 700 * longest / 180 };
+    function pressVisual(act) {
+      document.querySelectorAll(`.pusher[data-act="${act}"]`).forEach(btn => {
+        btn.classList.add('pressed');
+        setTimeout(() => btn.classList.remove('pressed'), 140);
+      });
     }
 
     function chronoAction(w, act) {
-      const c = chronos[w], now = Date.now();
-      pressVisual(w, act);
+      const now = Date.now();
+      pressVisual(act);
       if (act === 'start') {
-        if (c.running) { c.acc += now - c.start; c.running = false; }
-        else { c.start = now; c.running = true; }
+        if (CH.running) {
+          const shown = displayMs(now);
+          CH.acc = liveMs(now); CH.running = false;
+          // si les agulles estaven congelades o atrapant, avancen fins al punt d'aturada
+          if (CH.frozen || catchAnim) startCatch(shown, now, CH.acc); else catchAnim = null;
+          CH.frozen = false;
+        } else {
+          resetAnim = null;
+          CH.start = now; CH.running = true; CH.frozen = false;
+        }
         click(false);
       } else {
-        if (!c.running) {
-          if (c.acc === 0) return;
-          startSnap(w, now);
-          c.acc = 0;
-          c.laps = 0;
-          click(true);
-        } else if (w === 'g') {
-          // LAP/0 (flyback): desa la volta, torna a zero i rearrenca sense aturar
-          const lap = elapsed(c, now);
-          c.laps = (c.laps || 0) + 1;
-          startSnap(w, now);
-          c.acc = 0; c.start = now;
-          flashExtra(`V${c.laps} ${fmt(lap)}`, 3000);
+        if (CH.running) {
+          if (!CH.frozen) {
+            CH.frozenMs = displayMs(now);            // congela les agulles (LAP)
+            CH.frozen = true; catchAnim = null;
+          } else {
+            CH.frozen = false;                       // allibera: atrapen el temps real
+            startCatch(CH.frozenMs, now, null);
+          }
           click(true);
         } else {
-          // El 7751 no permet posar a zero en marxa: el polsador queda bloquejat
-          click(false);
-          flashExtra('Atura primer', 1500);
-          return;
+          if (CH.acc === 0 && !catchAnim) return;
+          // 0: tornada lenta, cada agulla pel camí més curt
+          const e = displayMs(now);
+          const from = {}, to = {};
+          [['m', chronoAngles('m', e, true)], ['g', chronoAngles('g', e, true)]].forEach(([wk, a]) => {
+            Object.keys(a).forEach(k => { from[wk + k] = a[k]; to[wk + k] = a[k] < 180 ? 0 : 360; });
+          });
+          const travel = Math.max(...Object.keys(from).map(k => Math.abs(to[k] - from[k])));
+          resetAnim = { t0: now, dur: Math.max(450, travel / CATCH_DEG_S * 1000 * 1.25), from, to };
+          catchAnim = null;
+          CH.acc = 0; CH.frozen = false; CH.frozenMs = 0;
+          click(true);
         }
       }
-      saveChronos();
+      saveChrono();
+      updateChronoBar(now);
     }
+    function chronoAnimating() { return !!(catchAnim || resetAnim); }
 
     // =================================================================
     //  BUCLE PRINCIPAL D'AGULLES
@@ -1514,7 +1691,7 @@
       const ms = nowD.getMilliseconds();
       const step = Math.floor(now / (1000 / BEATS));
 
-      if (step !== lastStep || snaps.m || snaps.g) {
+      if (step !== lastStep || chronoAnimating()) {
         lastStep = step;
         const sQ = nowD.getSeconds() + Math.floor(ms * BEATS / 1000) / BEATS;
         const min = nowD.getMinutes() + (nowD.getSeconds() + ms / 1000) / 60;
@@ -1529,23 +1706,19 @@
         R('g-ssec', sQ * 6, ...G.c9);
         R('m-date-hand', datePointer.cur / 31 * 360);
 
-        // Cronògrafs
-        ['m', 'g'].forEach(w => {
-          const a = chronoAngles(w, elapsed(chronos[w], now));
-          const sn = snaps[w];
-          let A = a;
-          if (sn) {
-            const t = Math.min(1, (performance.now() - sn.t0) / sn.dur);
-            const k = (1 - Math.cos(Math.PI * t)) / 2;
-            // la destinació és la posició viva: en un LAP/0 en marxa, l'agulla
-            // enllaça amb el nou compte sense cap salt
-            const go = key => sn.from[key] + angDist(sn.from[key], a[key]) * k;
-            A = { sec: go('sec'), min: go('min'), hr: sn.from.hr !== undefined ? go('hr') : 0 };
-            if (t >= 1) snaps[w] = null;
-          }
-          if (w === 'm') { R('m-csec', A.sec); R('m-cmin', A.min, ...M.c12); R('m-chr', A.hr, ...M.c6); }
-          else { R('g-csec', A.sec); R('g-cmin', A.min, ...G.c3); }
-        });
+        // Cronògraf (compartit)
+        const e = displayMs(now);
+        const smooth = chronoAnimating();
+        let A = { m: chronoAngles('m', e, smooth), g: chronoAngles('g', e, smooth) };
+        if (resetAnim) {
+          const t = Math.min(1, (now - resetAnim.t0) / resetAnim.dur);
+          const k = (1 - Math.cos(Math.PI * t)) / 2;          // arrencada i frenada suaus
+          const go = key => resetAnim.from[key] + (resetAnim.to[key] - resetAnim.from[key]) * k;
+          A = { m: { sec: go('msec'), min: go('mmin'), hr: go('mhr') }, g: { sec: go('gsec'), min: go('gmin') } };
+          if (t >= 1) resetAnim = null;
+        }
+        R('m-csec', A.m.sec); R('m-cmin', A.m.min, ...M.c12); R('m-chr', A.m.hr, ...M.c6);
+        R('g-csec', A.g.sec); R('g-cmin', A.g.min, ...G.c3);
 
         updateChronoBar(now);
         checkDateChange(nowD);
@@ -1659,16 +1832,16 @@
     }
     function flashExtra(msg, ms) { extraFlash = { msg, until: Date.now() + (ms || 2600) }; }
     function updateChronoBar(now) {
-      const c = chronos[visible];
-      const e = elapsed(c, now);
-      // La volta (LAP/0) es mostra uns segons al mateix lloc del temps
-      const flashing = extraFlash && extraFlash.until > now;
-      $('chrono-time').textContent = flashing ? extraFlash.msg : fmt(e);
-      $('chrono-time').classList.toggle('flash', !!flashing);
+      // Les xifres segueixen les agulles: congelades amb LAP (en blau), i
+      // atrapant el temps real quan s'alliberen
+      $('chrono-time').textContent = fmt(Math.max(0, displayMs(now)));
+      $('chrono-time').classList.toggle('flash', CH.frozen);
       const bs = $('btn-start');
-      bs.textContent = c.running ? 'Stop' : 'Start';
-      bs.classList.toggle('on', c.running);
-      $('btn-reset').textContent = visible === 'g' ? 'LAP/0' : 'Zero';
+      bs.textContent = CH.running ? 'Stop' : 'Start';
+      bs.classList.toggle('on', CH.running);
+      const br = $('btn-reset');
+      br.textContent = 'LAP/0';
+      br.classList.toggle('on', CH.frozen);
     }
 
     // =================================================================
@@ -1749,7 +1922,7 @@
       faceG.classList.toggle('inactive', visible !== 'g');
       renderFlip(theta);
     }
-    watchFlip.addEventListener('click', flip);
+    watchFlip.addEventListener('click', () => { if (Date.now() - lastSwipeAt > 400) flip(); });
     document.querySelectorAll('.pusher').forEach(b => {
       b.addEventListener('click', e => { e.stopPropagation(); chronoAction(b.dataset.watch, b.dataset.act); });
     });
@@ -1758,12 +1931,15 @@
     $('btn-flip').addEventListener('click', flip);
     document.addEventListener('keydown', e => {
       if (e.target.closest && e.target.closest('input, textarea')) return;
-      if (e.code === 'Space') { e.preventDefault(); chronoAction(visible, 'start'); }
-      else if (e.key === 'r' || e.key === 'R') chronoAction(visible, 'reset');
+      if (e.code === 'Space') { e.preventDefault(); setChronoBar(true); chronoAction(visible, 'start'); }
+      else if (e.key === 'r' || e.key === 'R') { setChronoBar(true); chronoAction(visible, 'reset'); }
+      else if (e.key === 'ArrowUp') showData(true);
+      else if (e.key === 'ArrowDown') showData(false);
       else if (e.key === 'f' || e.key === 'F') flip();
     });
     let resizeT;
     window.addEventListener('resize', () => { clearTimeout(resizeT); resizeT = setTimeout(buildEdge, 150); });
+    watchFlip.addEventListener('transitionend', e => { if (e.target === watchFlip && e.propertyName === 'width') buildEdge(); });
     buildEdge();
     // En engegar, apareix una de les dues esferes a l'atzar (sense animació)
     if (Math.random() < 0.5) flipInstant();
@@ -1874,20 +2050,51 @@
     $('calendar-today-btn').addEventListener('click', e => { e.stopPropagation(); goToCurrentMonth(); });
     $('month-year-title').addEventListener('dblclick', goToCurrentMonth);
 
+    // Gestos: cap amunt / cap avall (a qualsevol lloc) obre / tanca les dades;
+    // a esquerra / dreta sobre el calendari canvia de mes.
+    // Els valors que no hi caben redueixen la lletra (fins al 55 %) en lloc de tallar-se
+    function fitValue(el) {
+      el.style.fontSize = '';
+      const base = parseFloat(getComputedStyle(el).fontSize);
+      let f = base;
+      while (el.scrollWidth > el.clientWidth + 0.5 && f > base * 0.55) { f -= 0.5; el.style.fontSize = f + 'px'; }
+    }
+    function fitAllValues() { document.querySelectorAll('.dv, .data-title').forEach(fitValue); }
+    new MutationObserver(muts => muts.forEach(m => { const t = m.target.nodeType === 1 ? m.target : m.target.parentElement; if (t && (t.classList.contains('dv') || t.classList.contains('data-title'))) fitValue(t); }))
+      .observe($('data-page'), { subtree: true, childList: true, characterData: true });
+    window.addEventListener('resize', () => setTimeout(fitAllValues, 200));
+    let lastSwipeAt = 0;
+    const panel = document.querySelector('.calendar-section');
+    function showData(on) {
+      panel.classList.toggle('show-data', on);
+      if (on) requestAnimationFrame(fitAllValues);
+      $('data-page').setAttribute('aria-hidden', on ? 'false' : 'true');
+      $('pane-handle').setAttribute('aria-label', on ? 'Torna al calendari (o llisca cap avall)' : 'Mostra les dades (o llisca cap amunt)');
+    }
+    $('pane-handle').addEventListener('click', e => { e.stopPropagation(); showData(!panel.classList.contains('show-data')); });
+    $('data-back').addEventListener('click', e => { e.stopPropagation(); showData(false); });
     (function setupSwipe() {
-      const target = document.querySelector('.calendar-section');
-      let sx = 0, sy = 0, tracking = false;
-      const onStart = (x, y, t) => { if (t && t.closest && (t.closest('.data-panel') || t.closest('button'))) { tracking = false; return; } sx = x; sy = y; tracking = true; };
+      let sx = 0, sy = 0, tracking = false, onPanel = false;
+      const onStart = (x, y, t) => {
+        if (t && t.closest && t.closest('button')) { tracking = false; return; }
+        sx = x; sy = y; tracking = true; onPanel = !!(t && t.closest && t.closest('.calendar-section'));
+      };
       const onEnd = (x, y) => {
         if (!tracking) return; tracking = false;
         const dx = x - sx, dy = y - sy;
-        if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
-        shiftCalendarMonth(dx < 0 ? 1 : -1);
+        if (Math.abs(dy) >= 45 && Math.abs(dy) > Math.abs(dx) * 1.2) {
+          lastSwipeAt = Date.now();
+          showData(dy < 0);
+        } else if (onPanel && Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy)) {
+          lastSwipeAt = Date.now();
+          if (!panel.classList.contains('show-data')) shiftCalendarMonth(dx < 0 ? 1 : -1);
+          else showData(false);
+        }
       };
-      target.addEventListener('touchstart', e => { const t = e.changedTouches[0]; onStart(t.clientX, t.clientY, e.target); }, { passive: true });
-      target.addEventListener('touchend', e => { const t = e.changedTouches[0]; onEnd(t.clientX, t.clientY); }, { passive: true });
-      target.addEventListener('mousedown', e => onStart(e.clientX, e.clientY, e.target));
-      target.addEventListener('mouseup', e => onEnd(e.clientX, e.clientY));
+      document.addEventListener('touchstart', e => { const t = e.changedTouches[0]; onStart(t.clientX, t.clientY, e.target); }, { passive: true });
+      document.addEventListener('touchend', e => { const t = e.changedTouches[0]; onEnd(t.clientX, t.clientY); }, { passive: true });
+      document.addEventListener('mousedown', e => onStart(e.clientX, e.clientY, e.target));
+      document.addEventListener('mouseup', e => onEnd(e.clientX, e.clientY));
       // Doble toc al títol (iOS no sempre envia dblclick)
       let last = 0;
       $('month-year-title').addEventListener('touchend', e => {
@@ -1900,45 +2107,56 @@
     //  TEMA DIÜRN / NOCTURN (automàtic amb el sol o fix amb el botó)
     // =================================================================
     const THEME_KEY = 'malv_giul_theme';
+    // Modes: 'auto' (dia/nit amb el sol i Zz de 23 h a 7 h), 'day', 'night', 'zz'
+    const MODES = ['auto', 'day', 'night', 'zz'];
+    const ZZ_FROM = 23, ZZ_TO = 7;
     const SUN_ICON = '<svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.55 1.55M17.15 17.15l1.55 1.55M5.3 18.7l1.55-1.55M17.15 6.85l1.55-1.55"/></svg>';
     const MOON_ICON = '<svg class="theme-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 14.6A8.4 8.4 0 0 1 9.4 3.8a8.4 8.4 0 1 0 10.8 10.8z"/></svg>';
+    const ZZ_ICON = '<span class="zz-icon" aria-hidden="true">Zz</span>';
     let sunTimes = null;
-    function getStoredTheme() { try { const v = localStorage.getItem(THEME_KEY); return v === 'day' || v === 'night' ? v : null; } catch (e) { return null; } }
-    function setStoredTheme(v) { try { v ? localStorage.setItem(THEME_KEY, v) : localStorage.removeItem(THEME_KEY); } catch (e) {} }
+    function getMode() { try { const v = localStorage.getItem(THEME_KEY); return MODES.includes(v) ? v : 'auto'; } catch (e) { return 'auto'; } }
+    function setMode(v) { try { v === 'auto' ? localStorage.removeItem(THEME_KEY) : localStorage.setItem(THEME_KEY, v); } catch (e) {} }
     function autoTheme() {
       const now = new Date();
-      if (sunTimes && isoOf(sunTimes.sunrise) === isoOf(now)) return now >= sunTimes.sunrise && now < sunTimes.sunset ? 'day' : 'night';
       const h = now.getHours();
+      if (h >= ZZ_FROM || h < ZZ_TO) return 'zz';               // son: llum mínima
+      if (sunTimes && isoOf(sunTimes.sunrise) === isoOf(now)) return now >= sunTimes.sunrise && now < sunTimes.sunset ? 'day' : 'night';
       return h >= 7 && h < 20 ? 'day' : 'night';
     }
     function applyTheme() {
-      const stored = getStoredTheme();
-      const theme = stored || autoTheme();
+      const mode = getMode();
+      const theme = mode === 'auto' ? autoTheme() : mode;
       document.documentElement.setAttribute('data-theme', theme);
-      document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'day' ? '#e6ebf2' : '#0b0d12');
+      document.querySelector('meta[name="theme-color"]').setAttribute('content', theme === 'day' ? '#e6ebf2' : theme === 'zz' ? '#000000' : '#0b0d12');
       const btn = $('theme-toggle-btn');
-      btn.innerHTML = (theme === 'day' ? SUN_ICON : MOON_ICON) + `<span class="theme-label">${theme === 'day' ? 'Dia' : 'Nit'}</span>` + (stored ? '' : '<span class="theme-auto-badge">A</span>');
-      btn.title = stored ? `Tema ${theme === 'day' ? 'diürn' : 'nocturn'} fix (toca per canviar)` : 'Tema automàtic segons el sol (toca per fixar-lo)';
+      const icon = theme === 'day' ? SUN_ICON : theme === 'zz' ? ZZ_ICON : MOON_ICON;
+      const name = theme === 'day' ? 'Dia' : theme === 'zz' ? 'Son' : 'Nit';
+      btn.innerHTML = icon + `<span class="theme-label">${name}</span>` + (mode === 'auto' ? '<span class="theme-auto-badge">A</span>' : '');
+      btn.title = mode === 'auto'
+        ? `Automàtic: dia/nit amb el sol, mode Zz de ${ZZ_FROM} h a ${ZZ_TO} h (toca per canviar)`
+        : `Mode ${name} fix (toca per canviar)`;
     }
+    // Cicle del botó: automàtic → dia → nit → Zz → automàtic
     function cycleTheme() {
-      const stored = getStoredTheme(), auto = autoTheme();
-      if (!stored) setStoredTheme(auto === 'day' ? 'night' : 'day');
-      else if (stored !== auto) setStoredTheme(auto);
-      else setStoredTheme(null);
+      const m = getMode();
+      setMode(MODES[(MODES.indexOf(m) + 1) % MODES.length]);
       applyTheme();
     }
     $('theme-toggle-btn').addEventListener('click', e => { e.stopPropagation(); cycleTheme(); });
-    // La corona del rellotge també canvia dia/nit (i fixa el tema; el botó del calendari torna a automàtic)
+    document.addEventListener('keydown', e => { if (e.key === 'n' || e.key === 'N') cycleTheme(); });
+
+    // La corona obre i tanca la barra del cronòmetre (l'esfera s'encongeix per fer-hi lloc)
+    function setChronoBar(open) {
+      document.documentElement.classList.toggle('chrono-open', open);
+    }
     document.querySelectorAll('.crown').forEach(c => c.addEventListener('click', e => {
       e.stopPropagation();
-      const cur = document.documentElement.getAttribute('data-theme');
-      setStoredTheme(cur === 'day' ? 'night' : 'day');
-      applyTheme();
+      setChronoBar(!document.documentElement.classList.contains('chrono-open'));
       click(false);
       c.classList.add('pressed');
       setTimeout(() => c.classList.remove('pressed'), 150);
     }));
-    document.addEventListener('keydown', e => { if (e.key === 'n' || e.key === 'N') { const cur = document.documentElement.getAttribute('data-theme'); setStoredTheme(cur === 'day' ? 'night' : 'day'); applyTheme(); } });
+    document.addEventListener('keydown', e => { if (e.key === 'c' || e.key === 'C') setChronoBar(!document.documentElement.classList.contains('chrono-open')); });
     applyTheme();
     setInterval(applyTheme, 60 * 1000);
 
@@ -1967,7 +2185,7 @@
         if (w.current.apparent_temperature !== undefined) $('data-feels').textContent = `${Math.round(w.current.apparent_temperature)}°C`;
       }
       const p = precipitationNextHours(w);
-      if (p) $('data-precip').textContent = `${p.prob}% ${p.type}`;
+      if (p) $('data-precip').textContent = p.type === 'neu' ? `${p.prob}% ❄` : `${p.prob}%`;
       if (w.daily && w.daily.sunrise) {
         sunTimes = { sunrise: new Date(w.daily.sunrise[0]), sunset: new Date(w.daily.sunset[0]) };
         const f = d => `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
