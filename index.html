@@ -124,58 +124,61 @@
     html[data-theme="zz"] {
       --bg: #000000;
       --bg-glow: none;
-      --text: #7a6352;
-      --panel-bg: rgba(8, 7, 6, 0.92);
-      --panel-border: #1c1714;
-      --weekday-color: #4d3e34;
-      --cell-color: #6e5848;
-      --weekend-color: #7d6250;
-      --month-title-color: #7a6352;
-      --data-item-bg: rgba(255, 210, 170, 0.02);
-      --data-label-color: #4d3e34;
-      --data-value-color: #8a6e58;
-      --muted: #55453a;
-      --btn-bg: #0c0a09;
-      --btn-border: #2a221d;
-      --btn-hover-bg: #15110f;
-      --accent: #9a7458;
-      --today-ring: #7a5a44;
+      --text: #8e4a3c;
+      --panel-bg: rgba(8, 5, 4, 0.94);
+      --panel-border: #22120e;
+      --weekday-color: #55291f;
+      --cell-color: #7e3e31;
+      --weekend-color: #93463a;
+      --month-title-color: #904c3d;
+      --data-item-bg: rgba(255, 120, 90, 0.025);
+      --data-label-color: #5c2e24;
+      --data-value-color: #b55543;
+      --muted: #63342a;
+      --btn-bg: #0b0605;
+      --btn-border: #2e1612;
+      --btn-hover-bg: #160a08;
+      --accent: #c4523e;
+      --today-ring: #a03f30;
       --today-ring-glow: transparent;
       --watch-shadow: 0 0 0 transparent;
-      --dial-a: #15120f;
-      --dial-b: #0d0b0a;
-      --dial-c: #050404;
-      --guil: rgba(255, 220, 190, 0.025);
-      --sub-a: #110e0c;
-      --sub-b: #080606;
-      --snail: rgba(255, 220, 190, 0.03);
-      --ink-blue: #8a6a52;
-      --ink: #6a5546;
-      --ink-soft: #4a3c32;
-      --diumenge: #8a4a46;
-      --festiu: #9a7458;
-      --dissabte: #7d6a5a;
-      --hol-a: #3a2c24;
-      --hol-b: #241a15;
+      --dial-a: #120a08;
+      --dial-b: #0b0605;
+      --dial-c: #040202;
+      --guil: rgba(255, 140, 110, 0.03);
+      --sub-a: #0f0807;
+      --sub-b: #070403;
+      --snail: rgba(255, 140, 110, 0.035);
+      --ink-blue: #a8483a;
+      --ink: #7c3a2e;
+      --ink-soft: #52261d;
+      --diumenge: #b53a32;
+      --festiu: #c4523e;
+      --dissabte: #8a4a3e;
+      --hol-a: #47190f;
+      --hol-b: #2c0d08;
       --hol-glow: transparent;
-      --win-bg: #3a332d;
-      --win-ink: #0a0807;
-      --hand-a: #9a7a60;
-      --hand-b: #6a4f3c;
+      --win-bg: #3a1e18;
+      --win-ink: #0a0403;
+      /* agulles: vermell ataronjat ben visible (el que cal llegir de nit) */
+      --hand-a: #ff7a58;
+      --hand-b: #d8442c;
       --hshadow: #000000;
-      --hshadow-op: 0.6;
-      --glow: #000000;
-      --glow-op: 0;
+      --hshadow-op: 0.7;
+      --glow: #ff5a3a;
+      --glow-op: 0.35;
       --crystal-op: 0;
     }
-    /* l'acer de la caixa també s'apaga */
-    html[data-theme="zz"] .watch-stage { opacity: 0.45; }
-    html[data-theme="zz"] .calendar-section, html[data-theme="zz"] .chrono-bar { opacity: 0.8; }
-    html[data-theme="zz"] .calendar-day-cell.holiday { color: #a08470; }
+    /* en Zz s'apaga l'acer (caixa, corona, polsadors), no pas les agulles */
+    html[data-theme="zz"] .case-steel { opacity: 0.22; }
+    html[data-theme="zz"] .crown, html[data-theme="zz"] .pusher, html[data-theme="zz"] .body-ellipse, html[data-theme="zz"] .body-band { opacity: 0.25; }
+    html[data-theme="zz"] .calendar-section, html[data-theme="zz"] .chrono-bar { opacity: 0.85; }
+    html[data-theme="zz"] .calendar-day-cell.holiday { color: #d07a66; }
     html[data-theme="zz"] .hint { display: none; }
-    html[data-theme="zz"] .win-ink.diumenge { fill: #5a1a18 !important; }
-    html[data-theme="zz"] .win-ink.festiu { fill: #1a1410 !important; }
-    html[data-theme="zz"] .win-ink.dissabte { fill: #2a2420 !important; }
+    html[data-theme="zz"] .win-ink.diumenge { fill: #6a1410 !important; }
+    html[data-theme="zz"] .win-ink.festiu { fill: #1a0806 !important; }
+    html[data-theme="zz"] .win-ink.dissabte { fill: #2a1410 !important; }
+    html[data-theme="zz"] .card-alert { filter: brightness(0.55) saturate(1.2); }
     .zz-icon { font-family: "Didot", "Bodoni 72", Georgia, serif; font-weight: 700; font-style: italic; font-size: 0.9rem; line-height: 0.95rem; }
 
     html, body {
@@ -190,6 +193,11 @@
     }
 
     body { background-image: var(--bg-glow); background-attachment: fixed; }
+    /* Pantalles tàctils: la pàgina no es desplaça ni rebota en lliscar */
+    @media (pointer: coarse) {
+      html, body { height: 100%; overflow: hidden; overscroll-behavior: none; }
+      .app-container { touch-action: none; }
+    }
 
     /* Mida del rellotge (diàmetre de la caixa). Les anses i els polsadors en surten. */
     :root {
@@ -580,70 +588,93 @@
 
     .hint { font-size: 0.66rem; color: var(--muted); text-align: center; opacity: 0.8; }
 
-    /* ---- Quadre amb dues pàgines: calendari ⇄ dades (lliscament lateral) ---- */
+    /* ---- Quadre amb dues pàgines: calendari ⇄ dades ---- */
     .calendar-section { padding-bottom: 26px !important; }
     .cal-page, .data-page { transition: transform 0.45s cubic-bezier(.4,.1,.2,1), opacity 0.35s ease; }
     .data-page {
-      position: absolute;
-      inset: 0;
-      padding: inherit;
-      display: flex;
-      flex-direction: column;
-      container-type: size;
-      transform: translateX(105%);
-      opacity: 0;
-      pointer-events: none;
+      position: absolute; inset: 0; padding: inherit;
+      display: flex; flex-direction: column;
+      transform: translateY(40px); opacity: 0; pointer-events: none;
     }
-    .calendar-section.show-data .cal-page { transform: translateX(-105%); opacity: 0; pointer-events: none; }
+    .calendar-section.show-data .cal-page { transform: translateY(-40px); opacity: 0; pointer-events: none; }
     .calendar-section.show-data .data-page { transform: none; opacity: 1; pointer-events: auto; }
-    .data-head { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: min(2.2cqh, 12px); }
-    .data-title {
-      font-size: min(5.2cqw, 6.5cqh);
-      font-weight: 700;
-      letter-spacing: 0.5px;
-      color: var(--month-title-color);
-      white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0;
+    .cards { position: relative; flex: 1 1 auto; min-height: 0; }
+    .card {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; justify-content: center; gap: min(3cqh, 14px);
+      container-type: size;
+      transition: transform 0.45s cubic-bezier(.4,.1,.2,1), opacity 0.35s ease;
+      text-align: center;
     }
-    .dgroups { flex: 1 1 auto; display: flex; flex-direction: column; justify-content: space-between; gap: min(1.8cqh, 10px); min-height: 0; }
-    .dgroup h3 {
-      display: flex; align-items: center; gap: 8px;
+    .card[hidden] { display: none; }
+    .card-kicker {
       font-family: "Didot", "Bodoni 72", Georgia, serif;
-      font-size: min(3cqw, 3.4cqh);
-      font-weight: 700;
-      letter-spacing: 0.22em;
-      text-transform: uppercase;
+      font-size: min(4.2cqw, 6cqh); font-weight: 700; letter-spacing: 0.24em; text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: min(1cqh, 6px);
+      display: flex; align-items: center; gap: 10px;
     }
-    .dgroup h3::after { content: ''; flex: 1; height: 1px; background: var(--panel-border); }
-    .dgrid { display: grid; grid-template-columns: 1fr 1fr; gap: min(1.4cqh, 9px) min(2.4cqw, 10px); }
-    .dgrid.c3 { grid-template-columns: repeat(3, 1fr); }
-    .dgrid.c4 { grid-template-columns: repeat(4, 1fr); }
-    .ditem {
-      display: flex; flex-direction: column; justify-content: center; min-width: 0;
-      background: var(--data-item-bg);
-      border: 1px solid var(--panel-border);
-      border-radius: 10px;
-      padding: min(1.6cqh, 10px) min(2.4cqw, 10px);
-      gap: min(0.6cqh, 3px);
-    }
+    .card-kicker::before, .card-kicker::after { content: ''; flex: 1; height: 1px; background: var(--panel-border); }
     .dl {
-      font-size: min(2.5cqw, 3.1cqh);
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
+      display: block;
+      font-size: min(3.4cqw, 5cqh); font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
       color: var(--data-label-color);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .dv {
-      font-family: "Didot", "Bodoni 72", "Bodoni MT", Georgia, serif;
-      font-size: min(6.4cqw, 7.4cqh);
-      font-weight: 700;
-      line-height: 1.1;
-      color: var(--accent);
+    .dv, .big-v {
+      display: block;
+      font-family: "Didot", "Bodoni 72", "Bodoni MT", Georgia, serif; font-weight: 700;
+      color: var(--accent); line-height: 1.08;
       font-variant-numeric: lining-nums tabular-nums;
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
+    .dv { font-size: min(7.4cqw, 10cqh); }
+    .big-v { font-size: min(13cqw, 19cqh); }
+    .note { display: block; font-size: min(3.6cqw, 5.4cqh); color: var(--muted); margin-top: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .kv2, .kv3 { display: grid; gap: 8px; }
+    .kv2 { grid-template-columns: 1fr 1fr; }
+    .kv3 { grid-template-columns: repeat(3, 1fr); }
+    .kv2 > div, .kv3 > div, .cal-row, .card-foot, .place-alt {
+      min-width: 0; padding: min(2cqh, 10px) 8px;
+      background: var(--data-item-bg); border: 1px solid var(--panel-border); border-radius: 12px;
+    }
+    .place-name {
+      font-family: "Didot", "Bodoni 72", Georgia, serif; font-weight: 700;
+      font-size: min(15cqw, 24cqh); line-height: 1.02; color: var(--month-title-color);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .place-region { font-size: min(6cqw, 9cqh); font-weight: 600; color: var(--muted); letter-spacing: 0.04em; }
+    .place-alt { align-self: center; padding-left: 26px; padding-right: 26px; }
+    .wx-main { display: flex; align-items: center; justify-content: center; gap: min(5cqw, 18px); }
+    .wx-icon { width: min(26cqw, 34cqh); height: min(26cqw, 34cqh); color: var(--accent); }
+    .wx-icon svg { width: 100%; height: 100%; display: block; }
+    .wx-temp { font-size: min(20cqw, 30cqh); }
+    .wx-sky { font-size: min(5cqw, 7.5cqh); font-weight: 600; color: var(--muted); margin-top: -1cqh; }
+    .moon-v { font-size: min(10cqw, 15cqh); }
+    .year-bar { height: min(3cqh, 10px); border-radius: 99px; background: var(--data-item-bg); border: 1px solid var(--panel-border); overflow: hidden; }
+    .year-bar span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--accent), var(--today-ring)); border-radius: 99px; }
+    /* Fitxa d'avisos: cromàticament diferent i d'alerta */
+    .card-alert {
+      --al-a: #f6d24a; --al-b: #e3a816; --al-ink: #2a2105;
+      background: linear-gradient(160deg, var(--al-a), var(--al-b));
+      color: var(--al-ink);
+      border-radius: 16px; padding: min(4cqh, 16px) 14px; justify-content: flex-start;
+      box-shadow: inset 0 0 0 2px rgba(0,0,0,0.12);
+    }
+    .card-alert.lvl-orange { --al-a: #ffa24a; --al-b: #e0651a; --al-ink: #2b1203; }
+    .card-alert.lvl-red { --al-a: #f0504a; --al-b: #b51d1a; --al-ink: #ffffff; }
+    .alert-head { display: flex; align-items: center; justify-content: center; gap: 10px;
+      font-size: min(6.5cqw, 9cqh); font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; }
+    .alert-head svg { width: min(9cqw, 13cqh); height: min(9cqw, 13cqh); animation: alertPulse 1.6s ease-in-out infinite; }
+    @keyframes alertPulse { 50% { transform: scale(1.12); } }
+    .alert-list { display: flex; flex-direction: column; gap: 8px; text-align: left; flex: 1; justify-content: center; }
+    .alert-item { background: rgba(255,255,255,0.22); border-radius: 10px; padding: 6px 10px; }
+    .alert-item b { display: block; font-size: min(5.2cqw, 7.5cqh); }
+    .alert-item span { display: block; font-size: min(3.8cqw, 5.4cqh); opacity: 0.85; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .alert-src { font-size: min(3cqw, 4.4cqh); opacity: 0.75; }
+    .card-dots { display: flex; justify-content: center; gap: 7px; height: 12px; align-items: center; margin-top: 4px; }
+    .card-dots button { width: 7px; height: 7px; border-radius: 50%; border: 0; padding: 0; background: var(--panel-border); cursor: pointer; }
+    .card-dots button.on { background: var(--accent); transform: scale(1.25); }
+    .card-dots button.alert { background: #e0651a; }
     /* Agafador per obrir/tancar les dades amb un toc */
     .pane-handle {
       position: absolute; left: 50%; bottom: 5px; transform: translateX(-50%);
@@ -659,26 +690,35 @@
     /* ---------------- Mòbil vertical (iPhone) ---------------- */
     @media (max-width: 720px) {
       :root {
-        --S0: clamp(200px, min(84vw, calc(100dvh - 400px - env(safe-area-inset-top) - env(safe-area-inset-bottom))), 480px);
-        --S:  clamp(200px, min(84vw, calc(100dvh - 400px - var(--bar) - env(safe-area-inset-top) - env(safe-area-inset-bottom))), 480px);
+        /* alçada útil (sense franges de l'iPhone ni marges): 55 % rellotge, 45 % calendari */
+        --H: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 26px);
+        --S0: clamp(180px, min(84vw, calc((var(--H) * 0.55 - 6px) / 1.07)), 480px);
+        --S:  clamp(170px, min(84vw, calc((var(--H) * 0.55 - 6px - var(--bar)) / 1.07)), 480px);
       }
       html.chrono-open { --bar: 52px; }
-      .app-container { flex-direction: column; justify-content: center; padding: 10px; gap: 10px;
-        padding-top: max(10px, env(safe-area-inset-top)); padding-bottom: max(14px, env(safe-area-inset-bottom)); }
-      .calendar-section { max-width: 420px; max-height: none; padding: 14px; }
+      .app-container {
+        display: grid; grid-template-rows: 55fr 45fr; grid-template-columns: 100%; justify-items: center; align-items: center;
+        height: 100dvh; min-height: 0; gap: 8px;
+        padding: max(8px, env(safe-area-inset-top)) 10px max(10px, env(safe-area-inset-bottom));
+      }
+      .calendar-section {
+        height: 100%; width: min(100%, calc(var(--S0) * 1.08)); max-width: none; max-height: none;
+        padding: 10px 12px; display: flex; flex-direction: column;
+      }
+      .cal-page { flex: 1 1 auto; min-height: 0; display: flex; flex-direction: column; }
+      #days-container { flex: 1 1 auto; min-height: 0; grid-template-rows: repeat(6, 1fr); }
       .calendar-header { margin-bottom: 8px; }
       .month-year-title { font-size: clamp(0.92rem, 4.6vw, 1.05rem); }
       .calendar-grid { gap: 3px; }
       .weekday-header { font-size: 0.62rem; padding-bottom: 4px; }
-      .calendar-day-cell { font-size: 0.9rem; aspect-ratio: auto; height: clamp(28px, calc((100dvh - var(--S) * 1.06 - var(--bar) - 158px - env(safe-area-inset-top) - env(safe-area-inset-bottom)) / 6), 52px); }
-      .calendar-section { padding: 10px 12px; }
+      .calendar-day-cell { font-size: 0.9rem; aspect-ratio: auto; height: auto; min-height: 0; }
       .calendar-header { margin-bottom: 4px; }
       .weekday-header { padding-bottom: 2px; }
       .chrono-bar { padding: 4px 4px 4px 12px; }
       .calendar-header-actions { gap: 4px; }
       .calendar-header .chip-btn { padding: 6px 9px; font-size: 0.64rem; }
-      .watch-section { width: 100%; max-width: 420px; }
-      .chrono-bar { width: 100%; justify-content: space-between; }
+      .watch-section { width: 100%; max-width: 420px; align-self: center; }
+      .chrono-bar { width: min(100%, calc(var(--S0) * 1.08)); justify-content: space-between; }
       .chrono-bar .chip-btn { flex: 1 1 0; }
       #btn-flip { flex: 0 0 auto !important; }
       .hint { display: none; }
@@ -704,6 +744,9 @@
         --S:  clamp(170px, min(40vw, calc(100dvh - 36px - var(--bar))), 400px);
       }
       html.chrono-open { --bar: 40px; }
+      .app-container { display: flex; height: auto; grid-template-rows: none; grid-template-columns: none; }
+      .calendar-section { height: auto !important; width: 300px !important; }
+      .chrono-bar { width: 100% !important; }
       .app-container { flex-direction: row; gap: 16px; min-height: 100dvh;
         padding: 8px max(16px, env(safe-area-inset-right)) max(8px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left)); }
       .watch-section { gap: 4px; }
@@ -951,40 +994,65 @@
       <div class="calendar-grid" id="days-container"></div>
       </div>
 
-      <!-- Finestra de dades: apareix lliscant cap amunt, de la mateixa mida que el calendari -->
+      <!-- Dades: fitxes que es passen lateralment; lliscar avall torna al calendari -->
       <div class="data-page" id="data-page" aria-hidden="true">
-        <div class="data-head">
-          <div class="data-title" id="data-location">Localitzant…</div>
-          <button type="button" class="chip-btn" id="data-back">Calendari</button>
+        <div class="cards" id="cards">
+          <section class="card card-place">
+            <div class="card-kicker">On ets</div>
+            <div class="place-name" id="data-location">Localitzant…</div>
+            <div class="place-region" id="data-region"></div>
+            <div class="place-alt"><span class="dl">Altitud</span><span class="big-v" id="data-altitude">—</span></div>
+          </section>
+          <section class="card card-alert" id="card-alert" hidden>
+            <div class="alert-head">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.8 22.6 21H1.4z" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round"/><path d="M12 9.5v5.2" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><circle cx="12" cy="17.6" r="1.4" fill="currentColor"/></svg>
+              <span id="alert-level">Avís</span>
+            </div>
+            <div class="alert-list" id="alert-list"></div>
+            <div class="alert-src">Avisos oficials · AEMET / MeteoAlarm</div>
+          </section>
+          <section class="card card-weather">
+            <div class="card-kicker">Temps ara</div>
+            <div class="wx-main"><div class="wx-icon" id="data-sky-icon"></div><div class="big-v wx-temp" id="data-temp">—</div></div>
+            <div class="wx-sky" id="data-sky-text">—</div>
+            <div class="kv3">
+              <div><span class="dl">Sensació</span><span class="dv" id="data-feels">—</span></div>
+              <div><span class="dl">Humitat</span><span class="dv" id="data-humidity">—</span></div>
+              <div><span class="dl">Pluja 6 h</span><span class="dv" id="data-precip">—</span></div>
+            </div>
+          </section>
+          <section class="card card-sun">
+            <div class="card-kicker">Sol</div>
+            <div class="kv2">
+              <div><span class="dl">Sortida</span><span class="big-v" id="data-sunrise">—</span></div>
+              <div><span class="dl">Posta</span><span class="big-v" id="data-sunset">—</span></div>
+            </div>
+            <div class="card-foot"><span class="dl">Durada del dia</span><span class="dv" id="data-daylen">—</span><span class="note" id="data-daydiff"></span></div>
+          </section>
+          <section class="card card-year">
+            <div class="card-kicker" id="data-yeartitle">L'any</div>
+            <div class="kv2">
+              <div><span class="dl">Transcorreguts</span><span class="big-v" id="data-doy">—</span></div>
+              <div><span class="dl">Pendents</span><span class="big-v" id="data-left">—</span></div>
+            </div>
+            <div class="year-bar"><span id="data-yearbar"></span></div>
+            <div class="note" id="data-yearpct"></div>
+          </section>
+          <section class="card card-moon">
+            <div class="card-kicker">Lluna</div>
+            <div class="big-v moon-v" id="data-moon">—</div>
+            <div class="kv2">
+              <div><span class="dl">Pròxima plena</span><span class="dv" id="data-fullmoon">—</span></div>
+              <div><span class="dl">Distància</span><span class="dv" id="data-moondist">—</span></div>
+            </div>
+          </section>
+          <section class="card card-cal">
+            <div class="card-kicker">Calendari</div>
+            <div class="cal-row"><span class="dl">Pròxim festiu</span><span class="dv" id="data-holiday">—</span><span class="note" id="data-holiday-name"></span></div>
+            <div class="cal-row"><span class="dl">Pròxim eclipsi</span><span class="dv" id="data-eclipse">—</span><span class="note" id="data-eclipse-name"></span></div>
+          </section>
         </div>
-        <div class="dgroups">
-          <section class="dgroup">
-            <h3>Temps</h3>
-            <div class="dgrid c4">
-              <div class="ditem"><span class="dl">Temp.</span><span class="dv" id="data-temp">—</span></div>
-              <div class="ditem"><span class="dl">Sensació</span><span class="dv" id="data-feels">—</span></div>
-              <div class="ditem"><span class="dl">Humitat</span><span class="dv" id="data-humidity">—</span></div>
-              <div class="ditem"><span class="dl">Pluja 6 h</span><span class="dv" id="data-precip">—</span></div>
-            </div>
-          </section>
-          <section class="dgroup">
-            <h3>Sol i Lluna</h3>
-            <div class="dgrid c2">
-              <div class="ditem"><span class="dl">Lluna</span><span class="dv" id="data-moon">—</span></div>
-              <div class="ditem"><span class="dl">Sol</span><span class="dv" id="data-sun">—</span></div>
-              <div class="ditem"><span class="dl">Pròxima plena</span><span class="dv" id="data-fullmoon">—</span></div>
-              <div class="ditem"><span class="dl">Distància Lluna</span><span class="dv" id="data-moondist">—</span></div>
-            </div>
-          </section>
-          <section class="dgroup">
-            <h3>Calendari i lloc</h3>
-            <div class="dgrid c3">
-              <div class="ditem"><span class="dl">Pròx. festiu</span><span class="dv" id="data-holiday">—</span></div>
-              <div class="ditem"><span class="dl">Pròx. eclipsi</span><span class="dv" id="data-eclipse">—</span></div>
-              <div class="ditem"><span class="dl">Altitud</span><span class="dv" id="data-altitude">—</span></div>
-            </div>
-          </section>
-        </div>
+        <div class="card-dots" id="card-dots"></div>
       </div>
 
       <button type="button" class="pane-handle" id="pane-handle" aria-label="Mostra les dades (o llisca cap amunt)"></button>
@@ -1108,7 +1176,7 @@
 
       // Textos
       const tx = $('m-text');
-      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'LONGINES');
+      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'MALVINES');
       // Petit emblema propi: rombe entre dues línies
       el('path', { d: 'M131.5 105.2 l1.1 1.1 l-1.1 1.1 l-1.1 -1.1 Z', class: 'ink' }, tx);
       el('line', { x1: 124.5, y1: 106.3, x2: 129.6, y2: 106.3, class: 'tk', 'stroke-width': 0.3 }, tx);
@@ -1217,7 +1285,7 @@
 
       // Textos
       const tx = $('g-text');
-      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Glashütte');
+      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Giulietta');
       el('text', { x: 100, y: 76.6, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 2.9, 'letter-spacing': 0.6, class: 'ink sans' }, tx, 'FLYBACK');
       const bt = el('text', { 'font-size': 2.4, 'letter-spacing': 0.3, class: 'ink sans', 'text-anchor': 'middle' }, tx);
       bt.setAttribute('text-anchor', 'end');
@@ -1542,7 +1610,8 @@
       $('data-fullmoon').parentElement.title = fullMoonKind(f) === 'super' ? 'Superlluna' : '';
       $('data-moondist').textContent = `${Math.round(moonDistanceKm(now)).toLocaleString('ca-ES')} km`;
       const ne = nextEclipse(now);
-      $('data-eclipse').textContent = ne ? `${ne.at.getDate()}/${ne.at.getMonth() + 1}/${String(ne.at.getFullYear()).slice(2)} ${ne.body === 'sol' ? '☉' : '☾'}` : '—';
+      $('data-eclipse').textContent = ne ? `${ne.at.getDate()} ${deMes(ne.at.getMonth())} ${ne.at.getFullYear()}` : '—';
+      $('data-eclipse-name').textContent = ne ? `${ne.body === 'sol' ? '☉' : '☾'} ${ne.name.replace('Eclipsi ', '').replace(/^./, c => c.toUpperCase())}` : '';
       $('data-eclipse').parentElement.title = ne ? `${ne.name} · ${ne.where}` : '';
     }
 
@@ -1817,7 +1886,8 @@
       const next = [...set].filter(x => x >= today).sort()[0];
       if (!next) { $('data-holiday').textContent = '—'; return; }
       const [, mm, dd] = next.split('-');
-      $('data-holiday').textContent = `${+dd}/${+mm}`;
+      $('data-holiday').textContent = `${+dd} ${deMes(+mm - 1)}`;
+      $('data-holiday-name').textContent = holidayName(next);
       $('data-holiday').parentElement.title = holidayName(next);
     }
 
@@ -1847,6 +1917,7 @@
     // =================================================================
     //  GIR 3D AMB CILINDRE D'ACER
     // =================================================================
+    document.querySelectorAll('circle[fill="url(#steelRing)"], circle[fill="url(#steelBevel)"], rect[fill="url(#winFrame)"]').forEach(c => c.classList.add('case-steel'));
     const watchFlip = $('watchFlip');
     const faceM = $('face-m'), faceG = $('face-g');
     let turns = 0;
@@ -2059,20 +2130,47 @@
       let f = base;
       while (el.scrollWidth > el.clientWidth + 0.5 && f > base * 0.55) { f -= 0.5; el.style.fontSize = f + 'px'; }
     }
-    function fitAllValues() { document.querySelectorAll('.dv, .data-title').forEach(fitValue); }
-    new MutationObserver(muts => muts.forEach(m => { const t = m.target.nodeType === 1 ? m.target : m.target.parentElement; if (t && (t.classList.contains('dv') || t.classList.contains('data-title'))) fitValue(t); }))
+    function fitAllValues() { document.querySelectorAll('.dv, .big-v, .place-name').forEach(fitValue); }
+    new MutationObserver(muts => muts.forEach(m => { const t = m.target.nodeType === 1 ? m.target : m.target.parentElement; if (t && (t.classList.contains('dv') || t.classList.contains('big-v') || t.classList.contains('place-name'))) fitValue(t); }))
       .observe($('data-page'), { subtree: true, childList: true, characterData: true });
     window.addEventListener('resize', () => setTimeout(fitAllValues, 200));
     let lastSwipeAt = 0;
     const panel = document.querySelector('.calendar-section');
+    // ---- Fitxes de dades (es passen lateralment) ----
+    let cardIdx = 0;
+    const visibleCards = () => [...document.querySelectorAll('#cards .card')].filter(c => !c.hidden);
+    function layoutCards() {
+      const vis = visibleCards();
+      cardIdx = Math.max(0, Math.min(cardIdx, vis.length - 1));
+      vis.forEach((c, i) => {
+        c.style.transform = `translateX(${(i - cardIdx) * 110}%)`;
+        c.style.opacity = i === cardIdx ? '1' : '0';
+        c.style.pointerEvents = i === cardIdx ? 'auto' : 'none';
+      });
+      const dots = $('card-dots');
+      dots.replaceChildren(...vis.map((c, i) => {
+        const d = document.createElement('button');
+        d.type = 'button';
+        d.className = (i === cardIdx ? 'on ' : '') + (c.id === 'card-alert' ? 'alert' : '');
+        d.setAttribute('aria-label', `Fitxa ${i + 1}`);
+        d.addEventListener('click', e => { e.stopPropagation(); cardIdx = i; layoutCards(); });
+        return d;
+      }));
+      requestAnimationFrame(fitAllValues);
+    }
+    function goCard(dir) { cardIdx += dir; layoutCards(); }
     function showData(on) {
+      if (on && !panel.classList.contains('show-data')) cardIdx = 0;
       panel.classList.toggle('show-data', on);
-      if (on) requestAnimationFrame(fitAllValues);
       $('data-page').setAttribute('aria-hidden', on ? 'false' : 'true');
       $('pane-handle').setAttribute('aria-label', on ? 'Torna al calendari (o llisca cap avall)' : 'Mostra les dades (o llisca cap amunt)');
+      if (on) layoutCards();
     }
     $('pane-handle').addEventListener('click', e => { e.stopPropagation(); showData(!panel.classList.contains('show-data')); });
-    $('data-back').addEventListener('click', e => { e.stopPropagation(); showData(false); });
+    document.addEventListener('keydown', e => {
+      if (!panel.classList.contains('show-data')) return;
+      if (e.key === 'ArrowRight') goCard(1); else if (e.key === 'ArrowLeft') goCard(-1);
+    });
     (function setupSwipe() {
       let sx = 0, sy = 0, tracking = false, onPanel = false;
       const onStart = (x, y, t) => {
@@ -2082,17 +2180,20 @@
       const onEnd = (x, y) => {
         if (!tracking) return; tracking = false;
         const dx = x - sx, dy = y - sy;
+        const dataOpen = panel.classList.contains('show-data');
         if (Math.abs(dy) >= 45 && Math.abs(dy) > Math.abs(dx) * 1.2) {
           lastSwipeAt = Date.now();
-          showData(dy < 0);
+          showData(dy < 0);                                     // amunt: dades · avall: calendari
         } else if (onPanel && Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy)) {
           lastSwipeAt = Date.now();
-          if (!panel.classList.contains('show-data')) shiftCalendarMonth(dx < 0 ? 1 : -1);
-          else showData(false);
+          if (dataOpen) goCard(dx < 0 ? 1 : -1);                 // fitxa següent / anterior
+          else shiftCalendarMonth(dx < 0 ? 1 : -1);              // mes següent / anterior
         }
       };
       document.addEventListener('touchstart', e => { const t = e.changedTouches[0]; onStart(t.clientX, t.clientY, e.target); }, { passive: true });
       document.addEventListener('touchend', e => { const t = e.changedTouches[0]; onEnd(t.clientX, t.clientY); }, { passive: true });
+      // Res no es desplaça ni rebota en lliscar: la pàgina queda fixa
+      document.addEventListener('touchmove', e => { if (e.touches.length === 1) e.preventDefault(); }, { passive: false });
       document.addEventListener('mousedown', e => onStart(e.clientX, e.clientY, e.target));
       document.addEventListener('mouseup', e => onEnd(e.clientX, e.clientY));
       // Doble toc al títol (iOS no sempre envia dblclick)
@@ -2165,6 +2266,108 @@
     // =================================================================
     const FALLBACK = { lat: 41.3874, lon: 2.1686 };
     let currentCoords = null;
+    let lastLoc = null;
+
+    // ---- Estat del cel (codis WMO d'Open-Meteo) amb icones de línia ----
+    const ICONS = {
+      sun: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><circle cx="24" cy="24" r="8.5"/><path d="M24 5v5M24 38v5M5 24h5M38 24h5M10.6 10.6l3.5 3.5M33.9 33.9l3.5 3.5M10.6 37.4l3.5-3.5M33.9 14.1l3.5-3.5"/></svg>',
+      moon: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M38 29.5A15 15 0 0 1 18.5 10a15 15 0 1 0 19.5 19.5z"/></svg>',
+      partly: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="17" r="6.5"/><path d="M18 5v3M7.4 9.4l2.1 2.1M5 20h3M26.6 9.4l-2.1 2.1"/><path d="M16 38h20a7 7 0 0 0 0-14 9.5 9.5 0 0 0-18 2.5A6 6 0 0 0 16 38z"/></svg>',
+      cloud: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linejoin="round"><path d="M14 36h22a8 8 0 0 0 0-16 11 11 0 0 0-21 3A6.5 6.5 0 0 0 14 36z"/></svg>',
+      fog: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M14 26h22a8 8 0 0 0 0-14 11 11 0 0 0-21 3A6 6 0 0 0 14 26z" stroke-linejoin="round"/><path d="M8 32h32M12 38h24M16 44h16"/></svg>',
+      drizzle: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 28h22a8 8 0 0 0 0-16 11 11 0 0 0-21 3A6.5 6.5 0 0 0 14 28z"/><path d="M17 34v2M24 36v2M31 34v2M20 41v1M28 41v1"/></svg>',
+      rain: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 27h22a8 8 0 0 0 0-16 11 11 0 0 0-21 3A6.5 6.5 0 0 0 14 27z"/><path d="M17 32l-3 8M25 32l-3 8M33 32l-3 8"/></svg>',
+      snow: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 26h22a8 8 0 0 0 0-16 11 11 0 0 0-21 3A6.5 6.5 0 0 0 14 26z"/><path d="M16 33v8M12.5 37h7M24 33v8M20.5 37h7M32 33v8M28.5 37h7"/></svg>',
+      storm: '<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 26h22a8 8 0 0 0 0-16 11 11 0 0 0-21 3A6.5 6.5 0 0 0 14 26z"/><path d="M25 29l-5 8h7l-4 8"/></svg>'
+    };
+    function skyInfo(code, isDay) {
+      if (code === 0) return { icon: isDay ? ICONS.sun : ICONS.moon, text: 'Cel serè' };
+      if (code <= 2) return { icon: isDay ? ICONS.partly : ICONS.cloud, text: code === 1 ? 'Poc ennuvolat' : 'Mig ennuvolat' };
+      if (code === 3) return { icon: ICONS.cloud, text: 'Cel cobert' };
+      if (code <= 48) return { icon: ICONS.fog, text: 'Boira' };
+      if (code <= 57) return { icon: ICONS.drizzle, text: 'Plugim' };
+      if (code <= 67) return { icon: ICONS.rain, text: 'Pluja' };
+      if (code <= 77) return { icon: ICONS.snow, text: 'Neu' };
+      if (code <= 82) return { icon: ICONS.rain, text: 'Ruixats' };
+      if (code <= 86) return { icon: ICONS.snow, text: 'Ruixats de neu' };
+      return { icon: ICONS.storm, text: 'Tempesta' };
+    }
+
+    // ---- Dies de l'any ----
+    function updateYearCard() {
+      const now = new Date(), y = now.getFullYear();
+      const start = new Date(y, 0, 1), total = (new Date(y + 1, 0, 1) - start) / 864e5;
+      const doy = Math.floor((new Date(y, now.getMonth(), now.getDate()) - start) / 864e5) + 1;
+      $('data-yeartitle').textContent = `L'any ${y}`;
+      $('data-doy').textContent = doy;
+      $('data-left').textContent = total - doy;
+      $('data-yearbar').style.width = `${(doy / total * 100).toFixed(1)}%`;
+      $('data-yearpct').textContent = `${(doy / total * 100).toFixed(1).replace('.', ',')} % de l'any · ${total} dies`;
+    }
+
+    // ---- Avisos meteorològics oficials (MeteoAlarm: AEMET i serveis europeus) ----
+    const MA_FEEDS = { AT: 'austria', BE: 'belgium', BA: 'bosnia-herzegovina', BG: 'bulgaria', HR: 'croatia', CY: 'cyprus', CZ: 'czechia', DK: 'denmark',
+      EE: 'estonia', FI: 'finland', FR: 'france', DE: 'germany', GR: 'greece', HU: 'hungary', IS: 'iceland', IE: 'ireland', IL: 'israel', IT: 'italy',
+      LV: 'latvia', LT: 'lithuania', LU: 'luxembourg', MT: 'malta', MD: 'moldova', ME: 'montenegro', NL: 'netherlands', MK: 'republic-of-north-macedonia',
+      NO: 'norway', PL: 'poland', PT: 'portugal', RO: 'romania', RS: 'serbia', SK: 'slovakia', SI: 'slovenia', ES: 'spain', SE: 'sweden',
+      CH: 'switzerland', GB: 'united-kingdom' };
+    const MA_TYPES = { 1: 'Vent', 2: 'Neu i gel', 3: 'Tempestes', 4: 'Boira', 5: 'Calor extrema', 6: 'Fred extrem', 7: 'Fenòmens costaners',
+      8: "Risc d'incendi", 9: 'Allaus', 10: 'Pluja', 12: 'Inundacions', 13: 'Pluja i inundacions' };
+    const LEVELS = { 2: ['groc', 'lvl-yellow'], 3: ['taronja', 'lvl-orange'], 4: ['vermell', 'lvl-red'] };
+    async function fetchFeed(url) {
+      try { return await getJson(url); }
+      catch (e) { return getJson('https://api.allorigins.win/raw?url=' + encodeURIComponent(url)); }   // si el navegador no hi pot accedir directament
+    }
+    async function refreshAlerts() {
+      const card = $('card-alert');
+      if (!lastLoc) return;
+      const { lat, lon, loc } = lastLoc;
+      const slug = MA_FEEDS[loc.countryCode];
+      let found = [];
+      try {
+        if (!slug) throw new Error('País sense avisos a MeteoAlarm');
+        // Noms en la llengua dels avisos (castellà per a l'AEMET) per poder-los comparar amb les zones
+        const lang = loc.countryCode === 'ES' ? 'es' : 'en';
+        const [feed, locL] = await Promise.all([
+          fetchFeed(`https://feeds.meteoalarm.org/api/v1/warnings/feeds-${slug}`),
+          getJson(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=${lang}`).catch(() => loc)
+        ]);
+        const admin = ((locL.localityInfo && locL.localityInfo.administrative) || []).map(a => a.name);
+        const keys = [...new Set([locL.city, locL.locality, ...admin.filter(n => n && n.length > 3)].filter(Boolean).map(normName))]
+          .filter(k => k !== normName(locL.countryName) && k !== 'ESPANA' && k !== 'SPAIN');
+        const now = Date.now();
+        (feed.warnings || []).forEach(w => {
+          const infos = (w.alert && w.alert.info) || [];
+          const info = infos.find(i => (i.language || '').startsWith(lang)) || infos[0];
+          if (!info || new Date(info.expires).getTime() < now) return;
+          const par = k => ((info.parameter || []).find(p => p.valueName === k) || {}).value || '';
+          const level = parseInt(par('awareness_level'), 10);
+          if (!(level >= 2)) return;
+          const areas = (info.area || []).map(a => a.areaDesc || '');
+          const hit = areas.find(a => keys.some(k => normName(a).includes(k)));
+          if (!hit) return;
+          const type = MA_TYPES[parseInt(par('awareness_type'), 10)] || info.event;
+          found.push({ level, type, area: hit, onset: new Date(info.onset), expires: new Date(info.expires) });
+        });
+      } catch (e) { found = []; }
+      // un avís per tipus i zona (el de nivell més alt)
+      const best = {};
+      found.forEach(f => { const k = f.type + '|' + f.area; if (!best[k] || best[k].level < f.level) best[k] = f; });
+      found = Object.values(best).sort((a, b) => b.level - a.level || a.onset - b.onset);
+      if (!found.length) { card.hidden = true; if (panel.classList.contains('show-data')) layoutCards(); return; }
+      const top = found[0].level;
+      card.hidden = false;
+      card.className = 'card card-alert ' + LEVELS[top][1];
+      $('alert-level').textContent = `Avís ${LEVELS[top][0]}`;
+      const hm = d => `${dayNamesCa[d.getDay()].slice(0, 2).toLowerCase()}. ${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
+      $('alert-list').replaceChildren(...found.slice(0, 3).map(f => {
+        const it = document.createElement('div');
+        it.className = 'alert-item';
+        it.innerHTML = `<b>${f.type} · nivell ${LEVELS[f.level][0]}</b><span>${f.area}</span><span>${f.onset > Date.now() ? 'Des de ' + hm(f.onset) + ' · ' : ''}fins ${hm(f.expires)}</span>`;
+        return it;
+      }));
+      if (panel.classList.contains('show-data')) layoutCards();
+    }
     async function getJson(url) { const r = await fetch(url); if (!r.ok) throw new Error(r.status); return r.json(); }
     function precipitationNextHours(w) {
       const h = w.hourly;
@@ -2177,19 +2380,32 @@
       return { prob: Math.round(max), type: snow > 0 ? 'neu' : 'pluja' };
     }
     async function refreshWeather(lat, lon) {
-      const w = await getJson(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature&hourly=precipitation_probability,snowfall&daily=sunrise,sunset&forecast_days=2&timezone=auto`).catch(() => null);
+      const w = await getJson(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,is_day&hourly=precipitation_probability,snowfall&daily=sunrise,sunset&forecast_days=2&timezone=auto`).catch(() => null);
       if (!w) return;
       if (w.current) {
         $('data-temp').textContent = `${Math.round(w.current.temperature_2m)}°C`;
         $('data-humidity').textContent = `${Math.round(w.current.relative_humidity_2m)}%`;
         if (w.current.apparent_temperature !== undefined) $('data-feels').textContent = `${Math.round(w.current.apparent_temperature)}°C`;
+        if (w.current.weather_code !== undefined) {
+          const sky = skyInfo(w.current.weather_code, w.current.is_day !== 0);
+          $('data-sky-icon').innerHTML = sky.icon;
+          $('data-sky-text').textContent = sky.text;
+        }
       }
       const p = precipitationNextHours(w);
       if (p) $('data-precip').textContent = p.type === 'neu' ? `${p.prob}% ❄` : `${p.prob}%`;
       if (w.daily && w.daily.sunrise) {
         sunTimes = { sunrise: new Date(w.daily.sunrise[0]), sunset: new Date(w.daily.sunset[0]) };
         const f = d => `${pad2(d.getHours())}:${pad2(d.getMinutes())}`;
-        $('data-sun').textContent = `↑${f(sunTimes.sunrise)} ↓${f(sunTimes.sunset)}`;
+        $('data-sunrise').textContent = f(sunTimes.sunrise);
+        $('data-sunset').textContent = f(sunTimes.sunset);
+        const len = (sunTimes.sunset - sunTimes.sunrise) / 60000;
+        $('data-daylen').textContent = `${Math.floor(len / 60)} h ${pad2(Math.round(len % 60))} min`;
+        if (w.daily.sunrise[1]) {
+          const len2 = (new Date(w.daily.sunset[1]) - new Date(w.daily.sunrise[1])) / 60000;
+          const d = Math.round(len2 - len);
+          $('data-daydiff').textContent = d === 0 ? 'Demà, gairebé igual' : `Demà, ${Math.abs(d)} min ${d > 0 ? 'més' : 'menys'} de llum`;
+        }
         applyTheme();
       }
     }
@@ -2206,6 +2422,10 @@
       if (elev && elev.elevation && elev.elevation.length) $('data-altitude').textContent = `${Math.round(elev.elevation[0])} m`;
       if (loc) {
         $('data-location').textContent = loc.city || loc.locality || loc.principalSubdivision || 'Ubicació desconeguda';
+        // A l'Estat espanyol, la comunitat autònoma; fora, l'estat (país)
+        $('data-region').textContent = loc.countryCode === 'ES' ? (loc.principalSubdivision || '') : (loc.countryName || '');
+        lastLoc = { lat, lon, loc };
+        refreshAlerts();
         // (els festius es mantenen sempre a Barcelona)
       } else $('data-location').textContent = 'Ubicació desconeguda';
     }
@@ -2232,7 +2452,9 @@
     setInterval(() => updateMoonDial(displayDate(new Date())), 10 * 60 * 1000);
     requestAnimationFrame(frame);
     initInstrumentData();
-    setInterval(() => { if (currentCoords) refreshWeather(currentCoords.lat, currentCoords.lon); }, 20 * 60 * 1000);
+    setInterval(() => { if (currentCoords) refreshWeather(currentCoords.lat, currentCoords.lon); refreshAlerts(); }, 20 * 60 * 1000);
+    updateYearCard();
+    setInterval(updateYearCard, 60 * 60 * 1000);
 
     // =================================================================
     //  APP (PWA): funcionament sense connexió i pantalla encesa
