@@ -1,7 +1,7 @@
-// Service worker dels Cronògrafs: l'app funciona sense connexió.
+// Service worker de Mediterrània: l'app funciona sense connexió.
 // - Fitxers propis: primer la xarxa (per rebre actualitzacions), si no, la còpia desada.
-// - API externes (temps, festius, ubicació): primer la xarxa, si no, l'última resposta desada.
-const VERSION = 'cronografs-v13';
+// - API externes (temps, mar, festius, ubicació): primer la xarxa, si no, l'última resposta desada.
+const VERSION = 'mediterrania-v1';
 const CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
 
 self.addEventListener('install', event => {
@@ -22,6 +22,8 @@ self.addEventListener('fetch', event => {
   const url = new URL(req.url);
   const own = url.origin === self.location.origin;
   const bucket = own ? VERSION : VERSION + '-api';
+  // àudio en directe i podcasts: directament de la xarxa
+  if (!own && (req.destination === 'audio' || /\.(mp3|m3u8|aac|ts)(\?|$)/i.test(url.pathname) || /radio-browser|streamtheworld|icecast|omny/.test(url.hostname))) return;
 
   // Fitxers propis: sempre es revalida amb el servidor (sense la memòria cau HTTP
   // de GitHub Pages, que pot servir una versió antiga durant 10 minuts)
