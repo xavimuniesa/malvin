@@ -12,7 +12,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="theme-color" content="#f5f9fe">
   <title>Mediterrània</title>
-  <meta name="description" content="Mediterrània: cronògrafs LONGINES i Glashütte, calendari, la mar, banderes, nusos, ràdio i notícies.">
+  <meta name="description" content="Mediterrània: cronògrafs MALVINES i Giulietta, calendari, la mar, banderes, nusos, ràdio i notícies.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,500&display=swap" rel="stylesheet">
@@ -997,16 +997,15 @@
     .knot-desc { font-size: min(4.6cqw, 6.6cqh); line-height: 1.25; color: var(--text); opacity: 0.85; }
     .knot-link { display: inline-block; margin-top: 4px; font-family: Cinzel, serif; font-weight: 700; font-size: min(3.6cqw, 5cqh); letter-spacing: 0.12em; color: var(--accent); padding: 8px 0; }
     /* Properament */
-    .prop-row { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 12px; text-align: left;
-      padding: min(1.8cqh, 9px) 12px; border-radius: 12px; background: var(--data-item-bg); border: 1px solid var(--panel-border); }
-    .prop-ic { font-size: min(8cqw, 11cqh); color: var(--accent); width: 1.3em; text-align: center; }
-    .prop-l, .prop-v, .prop-n { display: block; }
-    .prop-row > span:nth-child(2) { min-width: 0; }
-    .prop-v, .prop-n { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .prop-l { font-family: Cinzel, serif; font-weight: 700; font-size: min(3.4cqw, 5cqh); letter-spacing: 0.1em; color: var(--data-label-color); text-transform: uppercase; }
-    .prop-v { font-family: Cinzel, serif; font-weight: 700; font-size: min(6cqw, 8.6cqh); color: var(--data-value-color); }
+    .prop-row { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 12px; text-align: left;
+      padding: min(1.6cqh, 8px) 12px; border-radius: 12px; background: var(--data-item-bg); border: 1px solid var(--panel-border); }
+    .prop-ic { font-size: min(7cqw, 10cqh); color: var(--accent); width: 1.3em; text-align: center; }
+    .prop-c { min-width: 0; display: flex; flex-direction: column; }
+    .prop-top { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+    .prop-l { font-family: Cinzel, serif; font-weight: 700; font-size: min(3.2cqw, 4.6cqh); letter-spacing: 0.08em; color: var(--data-label-color); text-transform: uppercase; white-space: nowrap; }
+    .prop-d { font-family: "EB Garamond", Georgia, serif; font-style: italic; font-weight: 700; font-size: min(4cqw, 5.6cqh); color: var(--accent); white-space: nowrap; }
+    .prop-v { font-family: Cinzel, serif; font-weight: 700; font-size: min(5.4cqw, 7.6cqh); color: var(--data-value-color); line-height: 1.15; }
     .prop-n { font-size: min(4.2cqw, 6cqh); color: var(--muted); }
-    .prop-d { font-family: Cinzel, serif; font-weight: 700; font-size: min(4.2cqw, 6cqh); color: var(--accent); text-align: right; max-width: 6.5em; line-height: 1.15; }
     /* Ràdio */
     .r-grid { display: grid; grid-template-columns: 1fr 1fr; gap: min(1.6cqw, 6px); flex: 1 1 auto; min-height: 0; grid-auto-rows: 1fr; }
     .r-boto { display: flex; align-items: center; gap: 8px; min-width: 0; padding: 0 10px; border-radius: 12px; cursor: pointer;
@@ -1079,7 +1078,21 @@
     .al-sona-bell svg { width: 54px; height: 54px; fill: none; stroke: #1d3f7a; stroke-width: 1.6; animation: bellSwing 0.6s ease-in-out infinite alternate; transform-origin: 50% 10%; }
     @keyframes bellSwing { from { transform: rotate(-14deg); } to { transform: rotate(14deg); } }
     /* Punts del paginador: banderes de senyals */
-    .card-dots { gap: 4px; height: 16px; flex-wrap: nowrap; }
+    /* Les banderes del paginador ocupen la franja de sota, on hi ha la línia */
+    .card-dots { position: absolute; left: 0; right: 0; bottom: 7px; margin: 0; z-index: 2; gap: 4px; height: 14px; flex-wrap: nowrap; }
+    .calendar-section.show-data .pane-handle { display: none; }
+    .place-name { white-space: normal; line-height: 1.04; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .place-name.long { font-size: min(10.5cqw, 16cqh); }
+    .card .sub-note { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .p-boto { padding: 4px 2px; }
+    /* Informació del dia tocat al calendari (festivitat, fase lunar, eclipsi) */
+    .day-info { position: absolute; left: 10px; right: 10px; bottom: 6px; z-index: 4; padding: 8px 12px; border-radius: 12px;
+      background: var(--frame); color: #ffffff; font-size: 15px; line-height: 1.3; text-align: center;
+      opacity: 0; transform: translateY(6px); pointer-events: none; transition: opacity .25s, transform .25s; box-shadow: 0 6px 18px rgba(0,0,0,0.25); }
+    .day-info.on { opacity: 1; transform: none; pointer-events: auto; }
+    .day-info b { font-family: Cinzel, serif; }
+    .day-info .di-hol { color: #ffd98a; font-weight: 700; }
+    html[data-theme="zz"] .day-info { background: #062435; color: #7fe3ff; }
     .card-dots button { width: 15px; height: 10px; border-radius: 1px; background: transparent !important; opacity: 0.4; transition: opacity .2s, transform .2s; overflow: hidden; }
     .card-dots button svg { display: block; width: 100%; height: 100%; }
     .card-dots button.on { opacity: 1; transform: scale(1.3); }
@@ -1116,6 +1129,9 @@
     /* Zz: les agulles de les subesferes s'apaguen una mica per deixar llegir les xifres */
     html[data-theme="zz"] #m-cmin, html[data-theme="zz"] #m-chr, html[data-theme="zz"] #m-ssec, html[data-theme="zz"] #m-h24,
     html[data-theme="zz"] #g-ssec, html[data-theme="zz"] #g-cmin, html[data-theme="zz"] #m-date-hand { opacity: 0.4; }
+    /* Amb el calendari a la vista, les fitxes amagades no han de captar cap toc */
+    .calendar-section:not(.show-data) .data-page, .calendar-section:not(.show-data) .data-page * { pointer-events: none !important; }
+    .calendar-section.show-data .cal-page, .calendar-section.show-data .cal-page * { pointer-events: none !important; }
   </style>
 </head>
 <body>
@@ -1279,14 +1295,14 @@
           <div class="watch-shadow"></div>
           <div class="watch-container" id="watchFlip">
 
-            <!-- ================= CARA DAVANTERA: LONGINES ================= -->
+            <!-- ================= CARA DAVANTERA: MALVINES ================= -->
             <div class="body-ellipse" id="body-ellipse"></div>
             <div class="body-band" id="body-band"></div>
             <div class="face face-front" id="face-m">
               <button type="button" class="crown" aria-label="Corona: mostra o amaga el cronòmetre" title="Corona: cronòmetre"></button>
-              <button type="button" class="pusher p-top" data-watch="m" data-act="start" aria-label="LONGINES: engega o atura el cronògraf"></button>
-              <button type="button" class="pusher p-bot" data-watch="m" data-act="reset" aria-label="LONGINES: posa a zero el cronògraf"></button>
-              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf LONGINES amb triple calendari i fase lunar">
+              <button type="button" class="pusher p-top" data-watch="m" data-act="start" aria-label="MALVINES: engega o atura el cronògraf"></button>
+              <button type="button" class="pusher p-bot" data-watch="m" data-act="reset" aria-label="MALVINES: posa a zero el cronògraf"></button>
+              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf MALVINES amb triple calendari i fase lunar">
                 <defs>
                   <clipPath id="m-moon-clip"><path d="M88.4 140 A11.6 11.6 0 0 1 111.6 140 Z"/></clipPath>
                 </defs>
@@ -1339,12 +1355,12 @@
               </svg>
             </div>
 
-            <!-- ================= CARA POSTERIOR: Glashütte ================= -->
+            <!-- ================= CARA POSTERIOR: GIULIETTA ================= -->
             <div class="face face-back inactive hidden-face" id="face-g">
               <button type="button" class="crown" aria-label="Corona: mostra o amaga el cronòmetre" title="Corona: cronòmetre"></button>
-              <button type="button" class="pusher p-top" data-watch="g" data-act="start" aria-label="Glashütte: engega o atura el cronògraf"></button>
-              <button type="button" class="pusher p-bot" data-watch="g" data-act="reset" aria-label="Glashütte: LAP/0 (volta i zero en marxa, zero aturat)"></button>
-              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf Glashütte flyback amb gran data">
+              <button type="button" class="pusher p-top" data-watch="g" data-act="start" aria-label="Giulietta: engega o atura el cronògraf"></button>
+              <button type="button" class="pusher p-bot" data-watch="g" data-act="reset" aria-label="Giulietta: LAP/0 (volta i zero en marxa, zero aturat)"></button>
+              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf Giulietta flyback amb gran data">
                 <defs>
                   <clipPath id="g-date-clip-t"><rect x="88.2" y="121.6" width="11.8" height="14.8"/></clipPath>
                   <clipPath id="g-date-clip-u"><rect x="100" y="121.6" width="11.8" height="14.8"/></clipPath>
@@ -1523,9 +1539,9 @@
           </section>
           <section class="card" data-flag="N">
             <div class="card-kicker" data-t="tfe">Properament</div>
-            <div class="prop-row"><span class="prop-ic">✦</span><span><span class="prop-l" id="prop-hol-l"></span><span class="prop-v" id="data-holiday">—</span><span class="prop-n" id="data-holiday-name"></span></span><span class="prop-d" id="prop-hol-d"></span></div>
-            <div class="prop-row"><span class="prop-ic" id="prop-ecl-ic">☉</span><span><span class="prop-l" id="prop-ecl-l"></span><span class="prop-v" id="data-eclipse">—</span><span class="prop-n" id="data-eclipse-name"></span></span><span class="prop-d" id="prop-ecl-d"></span></div>
-            <div class="prop-row"><span class="prop-ic">○</span><span><span class="prop-l" id="prop-full-l"></span><span class="prop-v" id="prop-full">—</span><span class="prop-n" id="prop-full-n"></span></span><span class="prop-d" id="prop-full-d"></span></div>
+            <div class="prop-row"><span class="prop-ic">✦</span><span class="prop-c"><span class="prop-top"><span class="prop-l" id="prop-hol-l"></span><span class="prop-d" id="prop-hol-d"></span></span><span class="prop-v" id="data-holiday">—</span><span class="prop-n" id="data-holiday-name"></span></span></div>
+            <div class="prop-row"><span class="prop-ic" id="prop-ecl-ic">☉</span><span class="prop-c"><span class="prop-top"><span class="prop-l" id="prop-ecl-l"></span><span class="prop-d" id="prop-ecl-d"></span></span><span class="prop-v" id="data-eclipse">—</span><span class="prop-n" id="data-eclipse-name"></span></span></div>
+            <div class="prop-row"><span class="prop-ic">○</span><span class="prop-c"><span class="prop-top"><span class="prop-l" id="prop-full-l"></span><span class="prop-d" id="prop-full-d"></span></span><span class="prop-v" id="prop-full">—</span><span class="prop-n" id="prop-full-n"></span></span></div>
           </section>
           <section class="card list" data-flag="R">
             <div class="card-kicker" data-t="radio">Ràdio</div>
@@ -1552,6 +1568,7 @@
         <div class="card-dots" id="card-dots"></div>
       </div>
 
+      <div class="day-info" id="day-info" role="status" aria-live="polite"></div>
       <button type="button" class="pane-handle" id="pane-handle"></button>
     </div>
   </div>
@@ -2362,7 +2379,7 @@
     }
 
     // =================================================================
-    //  ESFERA LONGINES — cronògraf de triple calendari amb fase lunar.
+    //  ESFERA MALVINES — cronògraf de triple calendari amb fase lunar.
     //  Arquitectura del calibre tipus Valjoux 7751 (28.800 alt/h):
     //   · Centre: hores, minuts, segons del crono i agulla de la data
     //     (punta en mitja lluna) sobre l'escala perimetral 1–31.
@@ -2379,7 +2396,7 @@
     }
     const M = { c12: [100, 60], c9: [61, 100], c6: [100, 140] };
 
-    (function buildLONGINES() {
+    (function buildMalvines() {
       const sc = $('m-scales');
       // Escala de la data 1–31 (el 31 a dalt)
       el('circle', { cx: 100, cy: 100, r: 80.6, fill: 'none', class: 'tk-blue', 'stroke-width': 0.35 }, sc);
@@ -2451,7 +2468,7 @@
       const tx = $('m-text');
       // Àncora sobre el nom (pavonada de dia, lluminescent de nit)
       anchorUse(tx, 124.6, 70.4, 13.8, 19.3);
-      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'LONGINES');
+      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'MALVINES');
       // Petit emblema propi: rombe entre dues línies
       el('path', { d: 'M131.5 105.2 l1.1 1.1 l-1.1 1.1 l-1.1 -1.1 Z', class: 'ink' }, tx);
       el('line', { x1: 124.5, y1: 106.3, x2: 129.6, y2: 106.3, class: 'tk', 'stroke-width': 0.3 }, tx);
@@ -2490,7 +2507,7 @@
     })();
 
     // =================================================================
-    //  ESFERA Glashütte — cronògraf flyback amb gran data panoràmica.
+    //  ESFERA GIULIETTA — cronògraf flyback amb gran data panoràmica.
     //   · Centre: hores, minuts i segons del crono.
     //   · Les 9: petita segonera contínua (marxa del rellotge).
     //   · Les 3: comptador de 30 minuts que SALTA d'un cop cada minut.
@@ -2503,7 +2520,7 @@
     const G_R = 32.6;   // radi de les subesferes laterals (prou grans per mossegar II, IIII, VIII i X)
     const TACHY = [60, 65, 70, 75, 80, 85, 90, 95, 100, 110, 120, 130, 140, 150, 160, 170, 180, 200, 220, 240, 270, 300, 350, 400, 500];
 
-    (function buildGlashütte() {
+    (function buildGiulietta() {
       const sc = $('g-scales');
       // Taquímetre
       el('circle', { cx: 100, cy: 100, r: 87.4, fill: 'none', class: 'tk', 'stroke-width': 0.3 }, sc);
@@ -2565,7 +2582,7 @@
       const tx = $('g-text');
       // Àncora entre el XII i el nom
       anchorUse(tx, 93.4, 40.6, 13.2, 18.5);
-      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Glashütte');
+      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Giulietta');
       el('text', { x: 100, y: 76.6, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 2.9, 'letter-spacing': 0.6, class: 'ink sans' }, tx, 'FLYBACK');
       const bt = el('text', { 'font-size': 2.4, 'letter-spacing': 0.3, class: 'ink sans', 'text-anchor': 'middle' }, tx);
       bt.setAttribute('text-anchor', 'end');
@@ -2807,7 +2824,7 @@
         kinds.forEach(([f, sym, name]) => {
           const d = jdeToDate(moonPhaseJDE(k + f));
           if (d.getFullYear() === year && d.getMonth() === month) {
-            const ev = { sym, name, at: d };
+            const ev = { sym, name, at: d, f };
             if (f === 0.5) {
               const kind = fullMoonKind(d);
               if (kind === 'super') { ev.name = 'Superlluna plena'; ev.special = true; }
@@ -2918,7 +2935,7 @@
       const q = smooth ? e : Math.floor(e / (1000 / BEATS)) * (1000 / BEATS);
       const sec = (q / 1000 % 60) * 6;
       if (w === 'm') return { sec, min: (e / 60000 % 30) * 12, hr: (e / 3600000 % 12) * 30 };
-      return { sec, min: (Math.floor(e / 60000) % 30) * 12 };   // Glashütte: comptador de minuts que salta
+      return { sec, min: (Math.floor(e / 60000) % 30) * 12 };   // Giulietta: comptador de minuts que salta
     }
     function startCatch(fromMs, now, fixed) {
       const target = fixed !== null ? fixed : liveMs(now);
@@ -3114,7 +3131,7 @@
       rollDisc($('g-tens'), prev ? prev.t : null, tens, 4, !!prev);
       rollDisc($('g-units'), prev ? prev.u : null, units, 10, !!prev);
       bigDatePrev = { t: tens, u: units };
-      // Glashütte: diumenges i festius en burdeus a la finestra de la gran data
+      // Giulietta: diumenges i festius en burdeus a la finestra de la gran data
       document.querySelectorAll('#g-tens text, #g-units text').forEach(t => {
         t.classList.remove('festiu');
         t.classList.toggle('diumenge', hol || sun);
@@ -3202,7 +3219,7 @@
     function renderFlip(th) {
       const c = Math.cos(th), sn = Math.sin(th);
       const sx = Math.max(Math.abs(c), 0.001);
-      const front = c >= 0;                          // cara LONGINES cap a nosaltres
+      const front = c >= 0;                          // cara MALVINES cap a nosaltres
       const show = front ? faceM : faceG, hide = front ? faceG : faceM;
       const dx = halfT * sn;                         // desplaçament del centre de la cara visible
       show.classList.remove('hidden-face');
@@ -3281,21 +3298,24 @@
       return cell;
     }
 
+    let dayInfoT = null;
     function showDayInfo(iso) {
-      if (!$('day-info')) return;   // línia d'informació retirada (el nom del festiu queda al títol del dia)
+      const box = $('day-info');
       const [y, m, d] = iso.split('-').map(Number);
       const date = new Date(y, m - 1, d, 12);
-      const parts = [`<b>${cap(L.dies[date.getDay()])} ${dayMonth(d, m - 1)}</b>`];
-      if (getHolidaysSync(y).has(iso)) parts.push(`${iso.slice(5) === HOMAGE_MMDD ? '🎗️' : '🔴'} ${holidayName(iso)}`);
+      const esc = s => String(s).replace(/[&<>]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]);
+      const parts = [`<b>${esc(cap(L.dies[date.getDay()]))} ${esc(dayMonth(d, m - 1))}</b>`];
+      if (getHolidaysSync(y).has(iso)) parts.push(`<span class="di-hol">${esc(holidayName(iso))}</span>`);
       const ev = moonEventsOfMonth(y, m - 1)[iso];
-      if (ev) parts.push(`${ev.sym} ${ev.name} a les ${pad2(ev.at.getHours())}:${pad2(ev.at.getMinutes())}` + (ev.km ? ` (${ev.km.toLocaleString('ca-ES')} km)` : ''));
-      else { const s = moonState(date); parts.push(`${moonPhaseName(s.p)} (${Math.round(s.illum * 100)}%)`); }
+      if (ev) parts.push(`${ev.sym} ${esc(ev.special ? L.superl : L.fases[Math.round(ev.f * 8)])} ${pad2(ev.at.getHours())}:${pad2(ev.at.getMinutes())}`);
       const ecl = eclipseOn(iso);
-      if (ecl) parts.push(`${ecl.body === 'sol' ? '☉' : '◉'} ${ecl.name}` + (ecl.body === 'lluna' ? ` a les ${pad2(ecl.at.getHours())}:${pad2(ecl.at.getMinutes())}` : '') + ` — ${ecl.where}`);
-      let html = parts.join(' · ');
-      if (setDateIso === iso) html += '<span class="set-note">⌚ Rellotge ajustat a aquest dia · toca «Avui» per tornar al temps real</span>';
-      $('day-info').innerHTML = html;
+      if (ecl) parts.push(`${ecl.body === 'sol' ? '☉' : '◉'} ${esc(L.ecl((ecl.name.match(/Eclipsi (\w+)/) || [, 'total'])[1], ecl.body))}`);
+      box.innerHTML = parts.join(' · ');
+      box.classList.add('on');
+      clearTimeout(dayInfoT);
+      dayInfoT = setTimeout(() => box.classList.remove('on'), 5000);
     }
+    document.addEventListener('pointerdown', e => { if (!e.target.closest('#days-container, #day-info')) $('day-info').classList.remove('on'); });
 
     async function renderCalendar() {
       const token = ++calendarRenderToken;
@@ -3337,7 +3357,6 @@
       $('month-year-title').textContent = `${monthName(month)} ${year}`;
       $('weekday-row').replaceChildren(...L.curts.map(c => { const w = document.createElement('div'); w.className = 'weekday-header'; w.textContent = c; return w; }));
       $('days-container').replaceChildren(frag);
-      if (!selectedIso) showDayInfo(isoOf(real));
     }
 
     $('days-container').addEventListener('click', e => {
@@ -3346,7 +3365,6 @@
       selectedIso = cell.dataset.iso;
       document.querySelectorAll('.calendar-day-cell.selected').forEach(c => c.classList.remove('selected'));
       cell.classList.add('selected');
-      setWatchDate(selectedIso);   // com qui ajusta la corona: les complicacions salten a aquest dia
       showDayInfo(selectedIso);
     });
 
@@ -3383,12 +3401,14 @@
       el.style.fontSize = '';
       const base = parseFloat(getComputedStyle(el).fontSize);
       let f = base;
-      while (el.scrollWidth > el.clientWidth + 0.5 && f > base * 0.55) { f -= 0.5; el.style.fontSize = f + 'px'; }
+      const tw = () => { const r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect().width; };
+      const cw = () => el.getBoundingClientRect().width - parseFloat(getComputedStyle(el).paddingLeft) - parseFloat(getComputedStyle(el).paddingRight);
+      while (tw() > cw() + 0.05 && f > base * 0.42) { f -= 0.5; el.style.fontSize = f + 'px'; }
     }
     function fitAllValues() { document.querySelectorAll('.dv, .big-v, .place-name').forEach(fitValue); }
-    new MutationObserver(muts => muts.forEach(m => { const t = m.target.nodeType === 1 ? m.target : m.target.parentElement; if (t && (t.classList.contains('dv') || t.classList.contains('big-v') || t.classList.contains('place-name'))) fitValue(t); }))
+    new MutationObserver(muts => muts.forEach(m => { const t = m.target.nodeType === 1 ? m.target : m.target.parentElement; if (t && (t.classList.contains('dv') || t.classList.contains('big-v') || t.classList.contains('place-name'))) fitValue(t); }) || fitSoon())
       .observe($('data-page'), { subtree: true, childList: true, characterData: true });
-    window.addEventListener('resize', () => setTimeout(fitAllValues, 200));
+    window.addEventListener('resize', fitSoon);
     let lastSwipeAt = 0;
     const panel = document.querySelector('.calendar-section');
     // ---- Fitxes de dades (es passen lateralment) ----
@@ -3413,8 +3433,26 @@
         d.addEventListener('click', e => { e.stopPropagation(); cardIdx = i; layoutCards(); });
         return d;
       }));
-      requestAnimationFrame(fitAllValues);
+      fitSoon();
     }
+    // Si el contingut d'una fitxa no hi cap, s'encongeix (zoom) fins que hi cap sencer
+    function fitCard(card) {
+      if (card.hidden || card.querySelector('.r-grid, .n-list')) return;   // les llistes ja s'adapten soles
+      const kids = [...card.children].filter(k => !k.classList.contains('sea-waves') && getComputedStyle(k).position !== 'absolute');
+      kids.forEach(k => k.style.zoom = '');
+      const cs = getComputedStyle(card);
+      const avail = card.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom);
+      if (!avail || !kids.length) return;
+      for (let z = 1; z >= 0.5; z -= 0.04) {
+        kids.forEach(k => k.style.zoom = z < 1 ? z.toFixed(2) : '');
+        const rs = kids.map(k => k.getBoundingClientRect()).filter(r => r.height);
+        const span = Math.max(...rs.map(r => r.bottom)) - Math.min(...rs.map(r => r.top));
+        if (span <= avail - 2) break;
+      }
+    }
+    let fitT = null;
+    function fitSoon() { clearTimeout(fitT); fitT = setTimeout(() => requestAnimationFrame(() => { fitAllValues(); document.querySelectorAll('#cards .card').forEach(fitCard); fitAllValues(); }), 60); }
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitSoon);
     function goCard(dir) { cardIdx += dir; layoutCards(); }
     function showData(on) {
       if (on && !panel.classList.contains('show-data')) cardIdx = 0;
@@ -3576,7 +3614,9 @@
       if (currentCoords) $('data-coords').textContent = fmtCoords(currentCoords.lat, currentCoords.lon);
       if (!lastLoc) return;
       const loc = lastLoc.loc;
-      $('data-location').textContent = loc ? nordor(placeName || L.desconeguda) : L.desconeguda;
+      const nm = loc ? nordor(placeName || L.desconeguda) : L.desconeguda;
+      $('data-location').textContent = nm;
+      $('data-location').classList.toggle('long', nm.length > 13);
       // A l'Estat espanyol, la comunitat autònoma; fora, l'estat (país)
       $('data-region').textContent = loc ? nordor(loc.countryCode === 'ES' ? (loc.principalSubdivision || '') : (loc.countryName || '')) : '';
     }
@@ -3859,7 +3899,7 @@
       if (ne) {
         const kind = (ne.name.match(/Eclipsi (\w+)/) || [, 'total'])[1];
         $('prop-ecl-ic').textContent = ne.body === 'sol' ? '☉' : '☾';
-        $('data-eclipse').textContent = `${dayMonth(ne.at.getDate(), ne.at.getMonth())} ${ne.at.getFullYear()}`;
+        $('data-eclipse').textContent = dayMonth(ne.at.getDate(), ne.at.getMonth()) + (ne.at.getFullYear() !== now.getFullYear() ? ` ${ne.at.getFullYear()}` : '');
         $('data-eclipse-name').textContent = L.ecl(kind, ne.body);
         $('data-eclipse').parentElement.title = LANG === 'ca' ? `${ne.name} · ${ne.where}` : L.ecl(kind, ne.body);
         $('prop-ecl-d').textContent = L.enDies(daysUntil(ne.at));
@@ -3887,6 +3927,7 @@
       $('knot-link').href = KNOTS[ki].url;
     }
     function renderAllCards() {
+      fitSoon();
       renderPlace(); renderAlerts(); renderWeather(); renderSea(); renderToday(); renderSunMoon(); renderProp(); renderFlagKnot();
     }
 
