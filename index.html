@@ -12,7 +12,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="theme-color" content="#f5f9fe">
   <title>Mediterrània</title>
-  <meta name="description" content="Mediterrània: cronògrafs LONGINES i Glashütte, calendari, la mar, banderes, nusos, ràdio i notícies.">
+  <meta name="description" content="Mediterrània: cronògrafs MALVINES i Giulietta, calendari, la mar, banderes, nusos, ràdio i notícies.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,500&display=swap" rel="stylesheet">
@@ -1132,7 +1132,7 @@
     /* Amb el calendari a la vista, les fitxes amagades no han de captar cap toc */
     .calendar-section:not(.show-data) .data-page, .calendar-section:not(.show-data) .data-page * { pointer-events: none !important; }
     .calendar-section.show-data .cal-page, .calendar-section.show-data .cal-page * { pointer-events: none !important; }
-    /* Fase lunar del LONGINES: or de dia; gamma de blaus de nit i en Zz */
+    /* Fase lunar del MALVINES: or de dia; gamma de blaus de nit i en Zz */
     :root, html[data-theme="day"] { --sky-a: #2d5bc9; --sky-b: #112d78; --moon-a: #fff2b0; --moon-b: #f1c232; --moon-c: #b8860b; --moon-star: #f1c232; --loupe: #c8102e; }
     html[data-theme="night"] { --sky-a: #1b3d86; --sky-b: #07142f; --moon-a: #f2f8ff; --moon-b: #a9cdf7; --moon-c: #4f7fc4; --moon-star: #bcd8ff; --loupe: #e5485e; }
     html[data-theme="zz"] { --sky-a: #06283a; --sky-b: #010810; --moon-a: #e6fbff; --moon-b: #6fdcff; --moon-c: #1a7fa8; --moon-star: #5fd4ff; --loupe: #2fa8d8; }
@@ -1176,6 +1176,10 @@
       .app-container { padding-left: var(--side) !important; padding-right: var(--side) !important; padding-top: calc(var(--top) + 2px); gap: 12px; }
       .calendar-section { width: clamp(250px, 34vw, 290px) !important; max-width: 290px; }
     }
+    /* Polsadors del cronògraf: zona de toc més gran (el dibuix no es mou) */
+    .pusher { width: 15cqw; height: 12cqw; }
+    .pusher::before { left: 2cqw; top: 4.1cqw; }
+    .pusher::after { left: 7cqw; top: 2.5cqw; }
   </style>
 </head>
 <body>
@@ -1344,14 +1348,14 @@
           <div class="watch-shadow"></div>
           <div class="watch-container" id="watchFlip">
 
-            <!-- ================= CARA DAVANTERA: LONGINES ================= -->
+            <!-- ================= CARA DAVANTERA: MALVINES ================= -->
             <div class="body-ellipse" id="body-ellipse"></div>
             <div class="body-band" id="body-band"></div>
             <div class="face face-front" id="face-m">
               <button type="button" class="crown" aria-label="Corona: mostra o amaga el cronòmetre" title="Corona: cronòmetre"></button>
-              <button type="button" class="pusher p-top" data-watch="m" data-act="start" aria-label="LONGINES: engega o atura el cronògraf"></button>
-              <button type="button" class="pusher p-bot" data-watch="m" data-act="reset" aria-label="LONGINES: posa a zero el cronògraf"></button>
-              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf LONGINES amb triple calendari i fase lunar">
+              <button type="button" class="pusher p-top" data-watch="m" data-act="start" aria-label="MALVINES: engega o atura el cronògraf"></button>
+              <button type="button" class="pusher p-bot" data-watch="m" data-act="reset" aria-label="MALVINES: posa a zero el cronògraf"></button>
+              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf MALVINES amb triple calendari i fase lunar">
                 <defs>
                   <clipPath id="m-moon-clip"><path d="M88.4 140 A11.6 11.6 0 0 1 111.6 140 Z"/></clipPath>
                 </defs>
@@ -1404,12 +1408,12 @@
               </svg>
             </div>
 
-            <!-- ================= CARA POSTERIOR: Glashütte ================= -->
+            <!-- ================= CARA POSTERIOR: GIULIETTA ================= -->
             <div class="face face-back inactive hidden-face" id="face-g">
               <button type="button" class="crown" aria-label="Corona: mostra o amaga el cronòmetre" title="Corona: cronòmetre"></button>
-              <button type="button" class="pusher p-top" data-watch="g" data-act="start" aria-label="Glashütte: engega o atura el cronògraf"></button>
-              <button type="button" class="pusher p-bot" data-watch="g" data-act="reset" aria-label="Glashütte: LAP/0 (volta i zero en marxa, zero aturat)"></button>
-              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf Glashütte flyback amb gran data">
+              <button type="button" class="pusher p-top" data-watch="g" data-act="start" aria-label="Giulietta: engega o atura el cronògraf"></button>
+              <button type="button" class="pusher p-bot" data-watch="g" data-act="reset" aria-label="Giulietta: LAP/0 (volta i zero en marxa, zero aturat)"></button>
+              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf Giulietta flyback amb gran data">
                 <defs>
                   <clipPath id="g-date-clip-t"><rect x="88.2" y="121.6" width="11.8" height="14.8"/></clipPath>
                   <clipPath id="g-date-clip-u"><rect x="100" y="121.6" width="11.8" height="14.8"/></clipPath>
@@ -2428,7 +2432,7 @@
     }
 
     // =================================================================
-    //  ESFERA LONGINES — cronògraf de triple calendari amb fase lunar.
+    //  ESFERA MALVINES — cronògraf de triple calendari amb fase lunar.
     //  Arquitectura del calibre tipus Valjoux 7751 (28.800 alt/h):
     //   · Centre: hores, minuts, segons del crono i agulla de la data
     //     (punta en mitja lluna) sobre l'escala perimetral 1–31.
@@ -2445,7 +2449,7 @@
     }
     const M = { c12: [100, 60], c9: [61, 100], c6: [100, 140] };
 
-    (function buildLONGINES() {
+    (function buildMalvines() {
       const sc = $('m-scales');
       // Escala de la data 1–31 (el 31 a dalt)
       el('circle', { cx: 100, cy: 100, r: 80.6, fill: 'none', class: 'tk-blue', 'stroke-width': 0.35 }, sc);
@@ -2518,7 +2522,7 @@
       const tx = $('m-text');
       // Àncora sobre el nom (pavonada de dia, lluminescent de nit)
       anchorUse(tx, 124.6, 70.4, 13.8, 19.3);
-      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'LONGINES');
+      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'MALVINES');
       // Petit emblema propi: rombe entre dues línies
       el('path', { d: 'M131.5 105.2 l1.1 1.1 l-1.1 1.1 l-1.1 -1.1 Z', class: 'ink' }, tx);
       el('line', { x1: 124.5, y1: 106.3, x2: 129.6, y2: 106.3, class: 'tk', 'stroke-width': 0.3 }, tx);
@@ -2563,7 +2567,7 @@
     })();
 
     // =================================================================
-    //  ESFERA Glashütte — cronògraf flyback amb gran data panoràmica.
+    //  ESFERA GIULIETTA — cronògraf flyback amb gran data panoràmica.
     //   · Centre: hores, minuts i segons del crono.
     //   · Les 9: petita segonera contínua (marxa del rellotge).
     //   · Les 3: comptador de 30 minuts que SALTA d'un cop cada minut.
@@ -2576,7 +2580,7 @@
     const G_R = 32.6;   // radi de les subesferes laterals (prou grans per mossegar II, IIII, VIII i X)
     const TACHY = [60, 65, 70, 75, 80, 85, 90, 95, 100, 110, 120, 130, 140, 150, 160, 170, 180, 200, 220, 240, 270, 300, 350, 400, 500];
 
-    (function buildGlashütte() {
+    (function buildGiulietta() {
       const sc = $('g-scales');
       // Taquímetre
       el('circle', { cx: 100, cy: 100, r: 87.4, fill: 'none', class: 'tk', 'stroke-width': 0.3 }, sc);
@@ -2638,7 +2642,7 @@
       const tx = $('g-text');
       // Àncora entre el XII i el nom
       anchorUse(tx, 93.4, 40.6, 13.2, 18.5);
-      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Glashütte');
+      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Giulietta');
       el('text', { x: 100, y: 76.6, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 2.9, 'letter-spacing': 0.6, class: 'ink sans' }, tx, 'FLYBACK');
       const bt = el('text', { 'font-size': 2.4, 'letter-spacing': 0.3, class: 'ink sans', 'text-anchor': 'middle' }, tx);
       bt.setAttribute('text-anchor', 'end');
@@ -2995,7 +2999,7 @@
       const q = smooth ? e : Math.floor(e / (1000 / BEATS)) * (1000 / BEATS);
       const sec = (q / 1000 % 60) * 6;
       if (w === 'm') return { sec, min: (e / 60000 % 30) * 12, hr: (e / 3600000 % 12) * 30 };
-      return { sec, min: (Math.floor(e / 60000) % 30) * 12 };   // Glashütte: comptador de minuts que salta
+      return { sec, min: (Math.floor(e / 60000) % 30) * 12 };   // Giulietta: comptador de minuts que salta
     }
     function startCatch(fromMs, now, fixed) {
       const target = fixed !== null ? fixed : liveMs(now);
@@ -3186,7 +3190,7 @@
         t.setAttribute('opacity', n <= last ? '1' : '0.35');
       }
 
-      // Lupa del LONGINES
+      // Lupa del MALVINES
       const ln = $('m-loupe-num');
       ln.textContent = d.getDate();
       ln.classList.toggle('festiu', hol); ln.classList.toggle('diumenge', sun); ln.classList.toggle('dissabte', sat);
@@ -3198,7 +3202,7 @@
       rollDisc($('g-tens'), prev ? prev.t : null, tens, 4, !!prev);
       rollDisc($('g-units'), prev ? prev.u : null, units, 10, !!prev);
       bigDatePrev = { t: tens, u: units };
-      // Glashütte: diumenges i festius en burdeus a la finestra de la gran data
+      // Giulietta: diumenges i festius en burdeus a la finestra de la gran data
       document.querySelectorAll('#g-tens text, #g-units text').forEach(t => {
         t.classList.remove('festiu');
         t.classList.toggle('diumenge', hol || sun);
@@ -3241,13 +3245,15 @@
     function updateChronoBar(now) {
       // Les xifres segueixen les agulles: congelades amb LAP (en blau), i
       // atrapant el temps real quan s'alliberen
-      $('chrono-time').textContent = fmt(Math.max(0, displayMs(now)));
-      $('chrono-time').classList.toggle('flash', CH.frozen);
-      const bs = $('btn-start');
-      bs.textContent = CH.running ? 'Stop' : 'Start';
+      const ct = $('chrono-time'), tv = fmt(Math.max(0, displayMs(now)));
+      if (ct.textContent !== tv) ct.textContent = tv;
+      ct.classList.toggle('flash', CH.frozen);
+      // el text dels botons només es toca quan canvia (Safari perd el clic si es reescriu mentre es prem)
+      const bs = $('btn-start'), sv = CH.running ? 'Stop' : 'Start';
+      if (bs.textContent !== sv) bs.textContent = sv;
       bs.classList.toggle('on', CH.running);
       const br = $('btn-reset');
-      br.textContent = 'LAP/0';
+      if (br.textContent !== 'LAP/0') br.textContent = 'LAP/0';
       br.classList.toggle('on', CH.frozen);
     }
 
@@ -3286,7 +3292,7 @@
     function renderFlip(th) {
       const c = Math.cos(th), sn = Math.sin(th);
       const sx = Math.max(Math.abs(c), 0.001);
-      const front = c >= 0;                          // cara LONGINES cap a nosaltres
+      const front = c >= 0;                          // cara MALVINES cap a nosaltres
       const show = front ? faceM : faceG, hide = front ? faceG : faceM;
       const dx = halfT * sn;                         // desplaçament del centre de la cara visible
       show.classList.remove('hidden-face');
@@ -3331,12 +3337,24 @@
       faceG.classList.toggle('inactive', visible !== 'g');
       renderFlip(theta);
     }
-    watchFlip.addEventListener('click', () => { if (Date.now() - lastSwipeAt > 400) flip(); });
+    watchFlip.addEventListener('click', e => {
+      if (Date.now() - lastSwipeAt <= 400) return;
+      const r = watchFlip.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2), dy = e.clientY - (r.top + r.height / 2);
+      if (e.detail && Math.hypot(dx, dy) > r.width * 0.45) return;   // caixa i polsadors: no gira
+      flip();
+    });
     document.querySelectorAll('.pusher').forEach(b => {
       b.addEventListener('click', e => { e.stopPropagation(); chronoAction(b.dataset.watch, b.dataset.act); });
     });
-    $('btn-start').addEventListener('click', () => chronoAction(visible, 'start'));
-    $('btn-reset').addEventListener('click', () => chronoAction(visible, 'reset'));
+    // S'activen en prémer (pointerdown), com un polsador real; el clic només serveix per al teclat
+    function bindPress(btn, fn) {
+      let last = 0;
+      btn.addEventListener('pointerdown', e => { if (e.button !== 0) return; last = Date.now(); e.preventDefault(); fn(); });
+      btn.addEventListener('click', e => { if (Date.now() - last < 1000) return; fn(); });
+    }
+    bindPress($('btn-start'), () => chronoAction(visible, 'start'));
+    bindPress($('btn-reset'), () => chronoAction(visible, 'reset'));
     $('btn-flip').addEventListener('click', flip);
     document.addEventListener('keydown', e => {
       if (e.target.closest && e.target.closest('input, textarea')) return;
