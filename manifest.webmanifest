@@ -1,17 +1,21 @@
 {
-  "name": "Mediterrània",
-  "short_name": "Mediterrània",
-  "description": "Cronògrafs MALVINES i Giulietta amb calendari, la mar, bandera i nus del dia, ràdio, podcasts, notícies i alarmes.",
+  "name": "Woodenson i Lotus · Cronògrafs i calendari",
+  "short_name": "Cronògrafs",
+  "description": "Cronògrafs Woodenson i Lotus animats, amb calendari de festius de Catalunya i dades meteorològiques del lloc on ets.",
   "lang": "ca",
+  "dir": "ltr",
+  "id": "./",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
-  "background_color": "#f5f9fe",
-  "theme_color": "#1d3f7a",
+  "background_color": "#090b11",
+  "theme_color": "#090b11",
+  "categories": ["utilities", "lifestyle"],
   "icons": [
-    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
-    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
-    { "src": "icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
   ]
 }

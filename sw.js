@@ -1,41 +1,73 @@
-// Service worker de Mediterrània: l'app funciona sense connexió.
-// - Fitxers propis: primer la xarxa (per rebre actualitzacions), si no, la còpia desada.
-// - API externes (temps, mar, festius, ubicació): primer la xarxa, si no, l'última resposta desada.
-const VERSION = 'mediterrania-v9';
-const CORE = ['./', 'index.html', 'manifest.webmanifest', 'icon-192.png', 'icon-512.png', 'icon-maskable-512.png', 'apple-touch-icon.png'];
+// Service worker de l'app Woodenson i Lotus
+// - L'app (HTML, manifest, icones) queda desada perquè s'obri sense connexió.
+// - La pàgina es demana primer a la xarxa, així les actualitzacions arriben
+//   de seguida; si no hi ha connexió, es fa servir la còpia desada.
+// - Les APIs externes (Open-Meteo, Generalitat, BigDataCloud) no es toquen:
+//   sempre van a la xarxa i l'app ja té la seva pròpia memòria per als festius.
+// Canvia CACHE_VERSION quan modifiquis els fitxers per forçar una còpia nova.
 
-self.addEventListener('install', event => {
-  event.waitUntil(caches.open(VERSION).then(c => c.addAll(CORE)).then(() => self.skipWaiting()));
+const CACHE_VERSION = 'wdlt-v4';
+const APP_SHELL = [
+  './',
+  './index.html',
+  './manifest.webmanifest',
+  './icons/icon-192.png',
+  './icons/icon-512.png',
+  './icons/icon-maskable-192.png',
+  './icons/icon-maskable-512.png',
+  './icons/apple-touch-icon.png',
+  './icons/favicon-64.png'
+];
+
+self.addEventListener('install', (event) => {
+  event.waitUntil(
+    caches.open(CACHE_VERSION)
+      .then((cache) => cache.addAll(APP_SHELL))
+      .then(() => self.skipWaiting())
+  );
 });
 
-self.addEventListener('activate', event => {
+self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(k => k !== VERSION && k !== VERSION + '-api').map(k => caches.delete(k))))
+      .then((keys) => Promise.all(keys.filter((k) => k !== CACHE_VERSION).map((k) => caches.delete(k))))
       .then(() => self.clients.claim())
   );
 });
 
-self.addEventListener('fetch', event => {
-  const req = event.request;
-  if (req.method !== 'GET') return;
-  const url = new URL(req.url);
-  const own = url.origin === self.location.origin;
-  const bucket = own ? VERSION : VERSION + '-api';
-  // àudio en directe i podcasts: directament de la xarxa
-  if (!own && (req.destination === 'audio' || /\.(mp3|m3u8|aac|ts)(\?|$)/i.test(url.pathname) || /radio-browser|streamtheworld|icecast|omny/.test(url.hostname))) return;
+self.addEventListener('fetch', (event) => {
+  const request = event.request;
+  if (request.method !== 'GET') return;
+  const url = new URL(request.url);
+  if (url.origin !== self.location.origin) return; // APIs externes: sempre xarxa
 
-  // Fitxers propis: sempre es revalida amb el servidor (sense la memòria cau HTTP
-  // de GitHub Pages, que pot servir una versió antiga durant 10 minuts)
+  // Pàgina: primer xarxa, si falla la còpia desada
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          const copy = response.clone();
+          caches.open(CACHE_VERSION).then((cache) => cache.put('./index.html', copy));
+          return response;
+        })
+        .catch(() => caches.match('./index.html'))
+    );
+    return;
+  }
+
+  // Icones i manifest: còpia desada a l'instant i actualització en segon pla
   event.respondWith(
-    fetch(own ? new Request(req, { cache: 'no-cache' }) : req)
-      .then(res => {
-        if (res && res.ok) {
-          const copy = res.clone();
-          caches.open(bucket).then(c => c.put(req, copy));
-        }
-        return res;
-      })
-      .catch(() => caches.match(req).then(hit => hit || (own && req.mode === 'navigate' ? caches.match('index.html') : Response.error())))
+    caches.match(request).then((cached) => {
+      const network = fetch(request)
+        .then((response) => {
+          if (response.ok) {
+            const copy = response.clone();
+            caches.open(CACHE_VERSION).then((cache) => cache.put(request, copy));
+          }
+          return response;
+        })
+        .catch(() => cached);
+      return cached || network;
+    })
   );
 });
