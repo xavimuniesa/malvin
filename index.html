@@ -12,7 +12,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="theme-color" content="#f5f9fe">
   <title>Mediterrània</title>
-  <meta name="description" content="Mediterrània: cronògrafs LONGINES i Glashütte, calendari, la mar, banderes, nusos, ràdio i notícies.">
+  <meta name="description" content="Mediterrània: cronògrafs MALVINES i Giulietta, calendari, la mar, banderes, nusos, ràdio i notícies.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,500&display=swap" rel="stylesheet">
@@ -1132,7 +1132,7 @@
     /* Amb el calendari a la vista, les fitxes amagades no han de captar cap toc */
     .calendar-section:not(.show-data) .data-page, .calendar-section:not(.show-data) .data-page * { pointer-events: none !important; }
     .calendar-section.show-data .cal-page, .calendar-section.show-data .cal-page * { pointer-events: none !important; }
-    /* Fase lunar del LONGINES: or de dia; gamma de blaus de nit i en Zz */
+    /* Fase lunar del MALVINES: or de dia; gamma de blaus de nit i en Zz */
     :root, html[data-theme="day"] { --sky-a: #2d5bc9; --sky-b: #112d78; --moon-a: #fff2b0; --moon-b: #f1c232; --moon-c: #b8860b; --moon-star: #f1c232; --loupe: #c8102e; }
     html[data-theme="night"] { --sky-a: #1b3d86; --sky-b: #07142f; --moon-a: #f2f8ff; --moon-b: #a9cdf7; --moon-c: #4f7fc4; --moon-star: #bcd8ff; --loupe: #e5485e; }
     html[data-theme="zz"] { --sky-a: #06283a; --sky-b: #010810; --moon-a: #e6fbff; --moon-b: #6fdcff; --moon-c: #1a7fa8; --moon-star: #5fd4ff; --loupe: #2fa8d8; }
@@ -1229,6 +1229,26 @@
     .placa .placa-tm.on { background: rgba(255,255,255,0.92); color: var(--accent); }
     .placa .placa-tm:not(.on) .tm-z { opacity: 0.5; }
     .placa .placa-tm.fading { animation: tbPulse 1s ease-in-out infinite; }
+    /* ---- Brúixola ---- */
+    .cmp-wrap { display: flex; align-items: center; justify-content: center; gap: min(4cqw, 16px); }
+    #cmp-svg { width: min(52cqw, 66cqh); height: min(52cqw, 66cqh); flex: none; }
+    .cmp-bezel { fill: var(--panel-bg); stroke: var(--frame); stroke-width: 2.2; }
+    .cmp-t { stroke: var(--muted); } .cmp-t.big { stroke: var(--frame); }
+    .cmp-l { fill: var(--accent); font-family: Cinzel, serif; font-weight: 700; }
+    .cmp-l.n { fill: #c8102e; }
+    .cmp-deg-l { fill: var(--muted); font-family: Cinzel, serif; }
+    .cmp-star-a { fill: var(--frame); } .cmp-star-b { fill: var(--panel-bg); stroke: var(--frame); stroke-width: 0.6; }
+    .cmp-north { fill: #c8102e; }
+    .cmp-windarrow { fill: #2e9be0; }
+    .cmp-lubber { fill: #c8102e; }
+    .cmp-pin { fill: var(--frame); }
+    html[data-theme="zz"] .cmp-l.n, html[data-theme="zz"] .cmp-north, html[data-theme="zz"] .cmp-lubber { fill: #3fc8ff; }
+    .cmp-info { display: flex; flex-direction: column; align-items: flex-start; gap: 4px; text-align: left; min-width: 0; }
+    .cmp-deg { font-family: Cinzel, serif; font-weight: 700; font-size: min(11cqw, 15cqh); color: var(--month-title-color); line-height: 1; font-variant-numeric: tabular-nums; }
+    .cmp-name { font-family: Cinzel, serif; font-weight: 700; font-size: min(6cqw, 8.5cqh); color: var(--accent); }
+    .cmp-wind { font-size: min(4.2cqw, 6cqh); color: #2e9be0; }
+    .cmp-note { font-size: min(3.6cqw, 5cqh); color: var(--muted); font-style: italic; max-width: 16em; }
+    .cmp-wrap.live #cmp-btn { display: none; }
   </style>
 </head>
 <body>
@@ -1400,14 +1420,14 @@
           <div class="watch-shadow"></div>
           <div class="watch-container" id="watchFlip">
 
-            <!-- ================= CARA DAVANTERA: LONGINES ================= -->
+            <!-- ================= CARA DAVANTERA: MALVINES ================= -->
             <div class="body-ellipse" id="body-ellipse"></div>
             <div class="body-band" id="body-band"></div>
             <div class="face face-front" id="face-m">
               <button type="button" class="crown" aria-label="Corona: mostra o amaga el cronòmetre" title="Corona: cronòmetre"></button>
-              <button type="button" class="pusher p-top" data-watch="m" data-act="start" aria-label="LONGINES: engega o atura el cronògraf"></button>
-              <button type="button" class="pusher p-bot" data-watch="m" data-act="reset" aria-label="LONGINES: posa a zero el cronògraf"></button>
-              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf LONGINES amb triple calendari i fase lunar">
+              <button type="button" class="pusher p-top" data-watch="m" data-act="start" aria-label="MALVINES: engega o atura el cronògraf"></button>
+              <button type="button" class="pusher p-bot" data-watch="m" data-act="reset" aria-label="MALVINES: posa a zero el cronògraf"></button>
+              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf MALVINES amb triple calendari i fase lunar">
                 <defs>
                   <clipPath id="m-moon-clip"><path d="M88.4 140 A11.6 11.6 0 0 1 111.6 140 Z"/></clipPath>
                 </defs>
@@ -1460,12 +1480,12 @@
               </svg>
             </div>
 
-            <!-- ================= CARA POSTERIOR: Glashütte ================= -->
+            <!-- ================= CARA POSTERIOR: GIULIETTA ================= -->
             <div class="face face-back inactive hidden-face" id="face-g">
               <button type="button" class="crown" aria-label="Corona: mostra o amaga el cronòmetre" title="Corona: cronòmetre"></button>
-              <button type="button" class="pusher p-top" data-watch="g" data-act="start" aria-label="Glashütte: engega o atura el cronògraf"></button>
-              <button type="button" class="pusher p-bot" data-watch="g" data-act="reset" aria-label="Glashütte: LAP/0 (volta i zero en marxa, zero aturat)"></button>
-              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf Glashütte flyback amb gran data">
+              <button type="button" class="pusher p-top" data-watch="g" data-act="start" aria-label="Giulietta: engega o atura el cronògraf"></button>
+              <button type="button" class="pusher p-bot" data-watch="g" data-act="reset" aria-label="Giulietta: LAP/0 (volta i zero en marxa, zero aturat)"></button>
+              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf Giulietta flyback amb gran data">
                 <defs>
                   <clipPath id="g-date-clip-t"><rect x="88.2" y="121.6" width="11.8" height="14.8"/></clipPath>
                   <clipPath id="g-date-clip-u"><rect x="100" y="121.6" width="11.8" height="14.8"/></clipPath>
@@ -1589,6 +1609,24 @@
             <div class="wind-row">
               <svg viewBox="-50 -50 100 100" id="wind-rose" role="img"></svg>
               <div><span class="dl" data-t="vent">Vent</span><div class="wv" id="wind-v">—</div><div class="ws" id="wind-s"></div></div>
+            </div>
+          </section>
+          <section class="card card-cmp" data-flag="C">
+            <div class="card-kicker" data-t="cmp">Brúixola</div>
+            <div class="cmp-wrap">
+              <svg viewBox="-60 -60 120 120" id="cmp-svg" role="img">
+                <circle r="57" class="cmp-bezel"/>
+                <g id="cmp-rose"></g>
+                <path d="M0 -58 L-4 -50 L4 -50 Z" class="cmp-lubber"/>
+                <circle r="2.4" class="cmp-pin"/>
+              </svg>
+              <div class="cmp-info">
+                <div class="cmp-deg" id="cmp-deg">—</div>
+                <div class="cmp-name" id="cmp-name"></div>
+                <div class="cmp-wind" id="cmp-wind"></div>
+                <button type="button" class="chip-btn" id="cmp-btn" data-t="cmpOn">Activa la brúixola</button>
+                <div class="cmp-note" id="cmp-note"></div>
+              </div>
             </div>
           </section>
           <section class="card" data-flag="T">
@@ -2178,6 +2216,7 @@
         hint: "Toca l'esfera per girar · Corona: cronòmetre · Llisca amunt: dades · Espai: start/stop · R: LAP/0 · F: girar",
         aire: "Qualitat de l'aire", aqLv: ["Bona", "Raonable", "Moderada", "Dolenta", "Molt dolenta", "Extremadament dolenta"], uvEtq: "Índex UV", uvLv: ["baix", "moderat", "alt", "molt alt", "extrem"], aqIdx: "Índex europeu", avuiMin: "avui",
         sleep: "Temporitzador", sleepOff: "Temporitzador desactivat", sleepOn: n => `La ràdio s'apagarà d'aquí a ${n} min`,
+        cmp: "Brúixola", cmpOn: "Activa la brúixola", cmpNo: "Aquest aparell no té brúixola", cmpCal: "Si dubta, mou el mòbil fent un vuit per calibrar-la", ventDe: "Vent de",
         fitxa: n => `Fitxa ${n}`
       },
       gl: {
@@ -2205,6 +2244,7 @@
         hint: 'Toca a esfera para xirar · Coroa: cronómetro · Esvara arriba: datos · Espazo: start/stop · R: LAP/0 · F: xirar',
         aire: "Calidade do aire", aqLv: ["Boa", "Razoable", "Moderada", "Mala", "Moi mala", "Extremadamente mala"], uvEtq: "Índice UV", uvLv: ["baixo", "moderado", "alto", "moi alto", "extremo"], aqIdx: "Índice europeo", avuiMin: "hoxe",
         sleep: "Temporizador", sleepOff: "Temporizador desactivado", sleepOn: n => `A radio apagarase dentro de ${n} min`,
+        cmp: "Compás", cmpOn: "Activa o compás", cmpNo: "Este aparello non ten compás", cmpCal: "Se dubida, move o móbil facendo un oito para calibralo", ventDe: "Vento de",
         fitxa: n => `Ficha ${n}`
       },
       eu: {
@@ -2232,6 +2272,7 @@
         hint: 'Sakatu esfera biratzeko · Koroa: kronometroa · Irristatu gora: datuak · Zuriunea: start/stop · R: LAP/0 · F: biratu',
         aire: "Airearen kalitatea", aqLv: ["Ona", "Onargarria", "Moderatua", "Txarra", "Oso txarra", "Muturreko txarra"], uvEtq: "UV indizea", uvLv: ["baxua", "moderatua", "altua", "oso altua", "muturrekoa"], aqIdx: "Europako indizea", avuiMin: "gaur",
         sleep: "Tenporizadorea", sleepOff: "Tenporizadorea desaktibatuta", sleepOn: n => `Irratia ${n} min barru itzaliko da`,
+        cmp: "Iparrorratza", cmpOn: "Aktibatu iparrorratza", cmpNo: "Gailu honek ez du iparrorratzik", cmpCal: "Zalantzarik badu, mugitu mugikorra zortzi bat eginez kalibratzeko", ventDe: "Haizea:",
         fitxa: n => `${n}. fitxa`
       },
       fr: {
@@ -2259,6 +2300,7 @@
         hint: 'Touchez le cadran pour le retourner · Couronne : chrono · Glisser vers le haut : données · Espace : start/stop · R : LAP/0 · F : retourner',
         aire: "Qualité de l'air", aqLv: ["Bonne", "Correcte", "Moyenne", "Dégradée", "Mauvaise", "Extrêmement mauvaise"], uvEtq: "Indice UV", uvLv: ["faible", "modéré", "élevé", "très élevé", "extrême"], aqIdx: "Indice européen", avuiMin: "aujourd'hui",
         sleep: "Minuterie", sleepOff: "Minuterie désactivée", sleepOn: n => `La radio s'éteindra dans ${n} min`,
+        cmp: "Boussole", cmpOn: "Activer la boussole", cmpNo: "Cet appareil n'a pas de boussole", cmpCal: "En cas de doute, décrivez un huit avec le téléphone pour la calibrer", ventDe: "Vent de",
         fitxa: n => `Fiche ${n}`
       },
       en: {
@@ -2286,6 +2328,7 @@
         hint: 'Tap the dial to turn it · Crown: stopwatch · Swipe up: data · Space: start/stop · R: LAP/0 · F: turn',
         aire: "Air quality", aqLv: ["Good", "Fair", "Moderate", "Poor", "Very poor", "Extremely poor"], uvEtq: "UV index", uvLv: ["low", "moderate", "high", "very high", "extreme"], aqIdx: "European index", avuiMin: "today",
         sleep: "Sleep timer", sleepOff: "Sleep timer off", sleepOn: n => `The radio will turn off in ${n} min`,
+        cmp: "Compass", cmpOn: "Turn on the compass", cmpNo: "This device has no compass", cmpCal: "If it wavers, move the phone in a figure eight to calibrate it", ventDe: "Wind from",
         fitxa: n => `Card ${n}`
       },
       de: {
@@ -2313,6 +2356,7 @@
         hint: 'Zifferblatt antippen zum Drehen · Krone: Stoppuhr · Nach oben wischen: Daten · Leertaste: Start/Stopp · R: LAP/0 · F: drehen',
         aire: "Luftqualität", aqLv: ["Gut", "Mäßig", "Mittel", "Schlecht", "Sehr schlecht", "Extrem schlecht"], uvEtq: "UV-Index", uvLv: ["niedrig", "mäßig", "hoch", "sehr hoch", "extrem"], aqIdx: "Europäischer Index", avuiMin: "heute",
         sleep: "Sleep-Timer", sleepOff: "Sleep-Timer aus", sleepOn: n => `Das Radio schaltet sich in ${n} Min. aus`,
+        cmp: "Kompass", cmpOn: "Kompass aktivieren", cmpNo: "Dieses Gerät hat keinen Kompass", cmpCal: "Wenn er schwankt, bewege das Handy in einer Acht, um ihn zu kalibrieren", ventDe: "Wind aus",
         fitxa: n => `Karte ${n}`
       },
       it: {
@@ -2340,6 +2384,7 @@
         hint: 'Tocca il quadrante per girarlo · Corona: cronometro · Scorri in su: dati · Spazio: start/stop · R: LAP/0 · F: girare',
         aire: "Qualità dell'aria", aqLv: ["Buona", "Discreta", "Moderata", "Scadente", "Molto scadente", "Estremamente scadente"], uvEtq: "Indice UV", uvLv: ["basso", "moderato", "alto", "molto alto", "estremo"], aqIdx: "Indice europeo", avuiMin: "oggi",
         sleep: "Timer di spegnimento", sleepOff: "Timer disattivato", sleepOn: n => `La radio si spegnerà tra ${n} min`,
+        cmp: "Bussola", cmpOn: "Attiva la bussola", cmpNo: "Questo dispositivo non ha una bussola", cmpCal: "Se oscilla, muovi il telefono disegnando un otto per calibrarla", ventDe: "Vento da",
         fitxa: n => `Scheda ${n}`
       },
       pt: {
@@ -2367,6 +2412,7 @@
         hint: 'Toque no mostrador para o virar · Coroa: cronómetro · Deslizar para cima: dados · Espaço: start/stop · R: LAP/0 · F: virar',
         aire: "Qualidade do ar", aqLv: ["Boa", "Razoável", "Moderada", "Má", "Muito má", "Extremamente má"], uvEtq: "Índice UV", uvLv: ["baixo", "moderado", "alto", "muito alto", "extremo"], aqIdx: "Índice europeu", avuiMin: "hoje",
         sleep: "Temporizador", sleepOff: "Temporizador desligado", sleepOn: n => `A rádio desliga-se daqui a ${n} min`,
+        cmp: "Bússola", cmpOn: "Ativar a bússola", cmpNo: "Este aparelho não tem bússola", cmpCal: "Se oscilar, mova o telemóvel num oito para a calibrar", ventDe: "Vento de",
         fitxa: n => `Ficha ${n}`
       }
     };
@@ -2512,7 +2558,7 @@
     }
 
     // =================================================================
-    //  ESFERA LONGINES — cronògraf de triple calendari amb fase lunar.
+    //  ESFERA MALVINES — cronògraf de triple calendari amb fase lunar.
     //  Arquitectura del calibre tipus Valjoux 7751 (28.800 alt/h):
     //   · Centre: hores, minuts, segons del crono i agulla de la data
     //     (punta en mitja lluna) sobre l'escala perimetral 1–31.
@@ -2529,7 +2575,7 @@
     }
     const M = { c12: [100, 60], c9: [61, 100], c6: [100, 140] };
 
-    (function buildLONGINES() {
+    (function buildMalvines() {
       const sc = $('m-scales');
       // Escala de la data 1–31 (el 31 a dalt)
       el('circle', { cx: 100, cy: 100, r: 80.6, fill: 'none', class: 'tk-blue', 'stroke-width': 0.35 }, sc);
@@ -2602,7 +2648,7 @@
       const tx = $('m-text');
       // Àncora sobre el nom (pavonada de dia, lluminescent de nit)
       anchorUse(tx, 124.6, 70.4, 13.8, 19.3);
-      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'LONGINES');
+      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'MALVINES');
       // Petit emblema propi: rombe entre dues línies
       el('path', { d: 'M131.5 105.2 l1.1 1.1 l-1.1 1.1 l-1.1 -1.1 Z', class: 'ink' }, tx);
       el('line', { x1: 124.5, y1: 106.3, x2: 129.6, y2: 106.3, class: 'tk', 'stroke-width': 0.3 }, tx);
@@ -2647,7 +2693,7 @@
     })();
 
     // =================================================================
-    //  ESFERA Glashütte — cronògraf flyback amb gran data panoràmica.
+    //  ESFERA GIULIETTA — cronògraf flyback amb gran data panoràmica.
     //   · Centre: hores, minuts i segons del crono.
     //   · Les 9: petita segonera contínua (marxa del rellotge).
     //   · Les 3: comptador de 30 minuts que SALTA d'un cop cada minut.
@@ -2660,7 +2706,7 @@
     const G_R = 32.6;   // radi de les subesferes laterals (prou grans per mossegar II, IIII, VIII i X)
     const TACHY = [60, 65, 70, 75, 80, 85, 90, 95, 100, 110, 120, 130, 140, 150, 160, 170, 180, 200, 220, 240, 270, 300, 350, 400, 500];
 
-    (function buildGlashütte() {
+    (function buildGiulietta() {
       const sc = $('g-scales');
       // Taquímetre
       el('circle', { cx: 100, cy: 100, r: 87.4, fill: 'none', class: 'tk', 'stroke-width': 0.3 }, sc);
@@ -2722,7 +2768,7 @@
       const tx = $('g-text');
       // Àncora entre el XII i el nom
       anchorUse(tx, 93.4, 40.6, 13.2, 18.5);
-      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Glashütte');
+      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Giulietta');
       el('text', { x: 100, y: 76.6, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 2.9, 'letter-spacing': 0.6, class: 'ink sans' }, tx, 'FLYBACK');
       const bt = el('text', { 'font-size': 2.4, 'letter-spacing': 0.3, class: 'ink sans', 'text-anchor': 'middle' }, tx);
       bt.setAttribute('text-anchor', 'end');
@@ -3113,7 +3159,7 @@
       const q = smooth ? e : Math.floor(e / (1000 / BEATS)) * (1000 / BEATS);
       const sec = (q / 1000 % 60) * 6;
       if (w === 'm') return { sec, min: (e / 60000 % 30) * 12, hr: (e / 3600000 % 12) * 30 };
-      return { sec, min: (Math.floor(e / 60000) % 30) * 12 };   // Glashütte: comptador de minuts que salta
+      return { sec, min: (Math.floor(e / 60000) % 30) * 12 };   // Giulietta: comptador de minuts que salta
     }
     function startCatch(fromMs, now, fixed) {
       const target = fixed !== null ? fixed : liveMs(now);
@@ -3304,7 +3350,7 @@
         t.setAttribute('opacity', n <= last ? '1' : '0.35');
       }
 
-      // Lupa del LONGINES
+      // Lupa del MALVINES
       const ln = $('m-loupe-num');
       ln.textContent = d.getDate();
       ln.classList.toggle('festiu', hol); ln.classList.toggle('diumenge', sun); ln.classList.toggle('dissabte', sat);
@@ -3316,7 +3362,7 @@
       rollDisc($('g-tens'), prev ? prev.t : null, tens, 4, !!prev);
       rollDisc($('g-units'), prev ? prev.u : null, units, 10, !!prev);
       bigDatePrev = { t: tens, u: units };
-      // Glashütte: diumenges i festius en burdeus a la finestra de la gran data
+      // Giulietta: diumenges i festius en burdeus a la finestra de la gran data
       document.querySelectorAll('#g-tens text, #g-units text').forEach(t => {
         t.classList.remove('festiu');
         t.classList.toggle('diumenge', hol || sun);
@@ -3406,7 +3452,7 @@
     function renderFlip(th) {
       const c = Math.cos(th), sn = Math.sin(th);
       const sx = Math.max(Math.abs(c), 0.001);
-      const front = c >= 0;                          // cara LONGINES cap a nosaltres
+      const front = c >= 0;                          // cara MALVINES cap a nosaltres
       const show = front ? faceM : faceG, hide = front ? faceG : faceM;
       const dx = halfT * sn;                         // desplaçament del centre de la cara visible
       show.classList.remove('hidden-face');
@@ -3926,6 +3972,7 @@
         wxSun = { len, diff: prev === null ? null : Math.round(len - prev) };
       }
       renderWeather(); renderSea(); renderSunMoon(); applyTheme();
+      if (typeof paintCmp === 'function') paintCmp(true);
     }
     function renderWeather() {
       const w = lastWx; if (!w) return;
@@ -4379,6 +4426,7 @@
       if (currentCoords) geocode(currentCoords.lat, currentCoords.lon);
       if (window.__mediaLang) window.__mediaLang();
       if (window.__alarmsLang) window.__alarmsLang();
+      if (window.__cmpLang) window.__cmpLang();
       if (panel.classList.contains('show-data')) layoutCards();
     }
 
@@ -5095,6 +5143,85 @@
     })();
 
 
+
+    // =================================================================
+    //  BRÚIXOLA (fitxa): la rosa gira amb el mòbil; la fletxa blava marca d'on ve el vent
+    // =================================================================
+    const cmp = { on: false, target: null, shown: 0, raf: 0, got: false };
+    function buildRose() {
+      const g = $('cmp-rose');
+      let s = '';
+      for (let d = 0; d < 360; d += 5) {
+        const big = d % 45 === 0, mid = d % 15 === 0, r1 = big ? 44 : mid ? 47 : 49.5, a = d * Math.PI / 180;
+        s += `<line x1="${(r1 * Math.sin(a)).toFixed(2)}" y1="${(-r1 * Math.cos(a)).toFixed(2)}" x2="${(53 * Math.sin(a)).toFixed(2)}" y2="${(-53 * Math.cos(a)).toFixed(2)}" class="cmp-t${big ? ' big' : ''}" stroke-width="${big ? 1.4 : 0.6}"/>`;
+      }
+      for (let d = 30; d < 360; d += 30) if (d % 90) { const a = d * Math.PI / 180; s += `<text x="${(39 * Math.sin(a)).toFixed(2)}" y="${(-39 * Math.cos(a)).toFixed(2)}" class="cmp-deg-l" font-size="4.6" text-anchor="middle" dominant-baseline="central" transform="rotate(${d} ${(39 * Math.sin(a)).toFixed(2)} ${(-39 * Math.cos(a)).toFixed(2)})">${d}</text>`; }
+      // estrella de 8 puntes
+      for (let k = 0; k < 8; k++) {
+        const L1 = k % 2 ? 22 : 34, w = k % 2 ? 4 : 6;
+        s += `<g transform="rotate(${k * 45})"><path d="M0 ${-L1} L${w} 0 L0 0 Z" class="cmp-star-a"/><path d="M0 ${-L1} L${-w} 0 L0 0 Z" class="cmp-star-b"/></g>`;
+      }
+      s += `<path d="M0 -34 L6 0 L0 0 Z" class="cmp-north"/><path d="M0 -34 L-6 0 L0 0 Z" class="cmp-north" opacity="0.7"/>`;
+      L.ROSA1.forEach((t, i) => {
+        const a = i * 45 * Math.PI / 180, r = i % 2 ? 31.5 : 30;
+        s += `<text x="${(r * Math.sin(a)).toFixed(2)}" y="${(-r * Math.cos(a)).toFixed(2)}" class="cmp-l${i === 0 ? ' n' : ''}" font-size="${t.length > 1 ? 5.2 : 7}" text-anchor="middle" dominant-baseline="central"></text>`;
+      });
+      s += `<g id="cmp-windg"></g>`;
+      g.innerHTML = s;
+      // les lletres de la rosa (en la llengua triada) no giren: es queden dretes respecte de la pantalla
+      [...g.querySelectorAll('.cmp-l')].forEach((n, i) => n.textContent = L.ROSA1[i]);
+      paintCmp(true);
+    }
+    function paintCmp(force) {
+      const rose = $('cmp-rose');
+      const h = cmp.shown;
+      rose.setAttribute('transform', `rotate(${(-h).toFixed(2)})`);
+      rose.querySelectorAll('.cmp-l').forEach(n => n.setAttribute('transform', `rotate(${h.toFixed(2)} ${n.getAttribute('x')} ${n.getAttribute('y')})`));
+      if (cmp.got) {
+        const hh = ((Math.round(h) % 360) + 360) % 360;
+        $('cmp-deg').textContent = `${String(hh).padStart(3, '0')}°`;
+        $('cmp-name').textContent = L.ROSA[rose8(hh)];
+      }
+      const wg = $('cmp-windg');
+      if (windState && (force || !wg.firstChild)) {
+        wg.innerHTML = `<g transform="rotate(${windState.dir.toFixed(0)})"><path d="M0 -55 L4.5 -46 L1.5 -46 L1.5 -40 L-1.5 -40 L-1.5 -46 L-4.5 -46 Z" class="cmp-windarrow" transform="rotate(180 0 -47.5)"/></g>`;
+        $('cmp-wind').textContent = `${L.ventDe} ${L.ROSA[rose8(windState.dir)]} · ${Math.round(windState.speed)} km/h`;
+      }
+    }
+    function cmpLoop() {
+      if (cmp.target != null) {
+        let d = ((cmp.target - cmp.shown + 540) % 360) - 180;   // pel camí curt
+        cmp.shown = (cmp.shown + d * 0.18 + 360) % 360;
+        paintCmp(false);
+      }
+      cmp.raf = requestAnimationFrame(cmpLoop);
+    }
+    function screenAngle() { return (screen.orientation && screen.orientation.angle) || window.orientation || 0; }
+    function onOrient(e) {
+      let h = null;
+      if (e.webkitCompassHeading != null) h = e.webkitCompassHeading;                       // iPhone
+      else if (e.absolute !== false && e.alpha != null) h = 360 - e.alpha;                 // Android
+      if (h == null || isNaN(h)) return;
+      cmp.target = (h + screenAngle() + 360) % 360;
+      if (!cmp.got) { cmp.got = true; $('cmp-note').textContent = L.cmpCal; $('cmp-svg').closest('.cmp-wrap').classList.add('live'); }
+    }
+    async function startCompass() {
+      if (cmp.on) return;
+      try {
+        if (window.DeviceOrientationEvent && typeof DeviceOrientationEvent.requestPermission === 'function') {
+          const r = await DeviceOrientationEvent.requestPermission();
+          if (r !== 'granted') { $('cmp-note').textContent = L.cmpNo; return; }
+        }
+      } catch (e) {}
+      cmp.on = true;
+      window.addEventListener('deviceorientationabsolute', onOrient, true);
+      window.addEventListener('deviceorientation', onOrient, true);
+      cancelAnimationFrame(cmp.raf); cmpLoop();
+      setTimeout(() => { if (!cmp.got) $('cmp-note').textContent = L.cmpNo; }, 2500);
+    }
+    $('cmp-btn').addEventListener('click', e => { e.stopPropagation(); startCompass(); });
+    window.__cmpLang = buildRose;
+
     // =================================================================
     //  PLUJA DE CODI (estil Matrix / DOS), amb els blaus de Mediterrània.
     //  Surt en obrir l'app i s'esvaeix sola; doble toc al lema per tornar-la a veure;
@@ -5249,7 +5376,7 @@
     })();
     setInterval(() => { updateMoonDial(displayDate(new Date())); }, 10 * 60 * 1000);
     requestAnimationFrame(frame);
-    renderToday(); renderSunMoon(); renderProp(); renderFlagKnot(); renderSea();
+    renderToday(); renderSunMoon(); renderProp(); renderFlagKnot(); renderSea(); buildRose();
     initInstrumentData();
     setInterval(() => {
       if (currentCoords) { refreshWeather(currentCoords.lat, currentCoords.lon); refreshSea(currentCoords.lat, currentCoords.lon); refreshAir(currentCoords.lat, currentCoords.lon); }
