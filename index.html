@@ -12,7 +12,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <meta name="theme-color" content="#f5f9fe">
   <title>Mediterrània</title>
-  <meta name="description" content="Mediterrània: cronògrafs LONGINES i Glashütte, calendari, la mar, banderes, nusos, ràdio i notícies.">
+  <meta name="description" content="Mediterrània: cronògrafs MALVINES i Giulietta, calendari, la mar, banderes, nusos, ràdio i notícies.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=EB+Garamond:ital,wght@0,400;0,500;0,700;1,500&display=swap" rel="stylesheet">
@@ -1132,7 +1132,7 @@
     /* Amb el calendari a la vista, les fitxes amagades no han de captar cap toc */
     .calendar-section:not(.show-data) .data-page, .calendar-section:not(.show-data) .data-page * { pointer-events: none !important; }
     .calendar-section.show-data .cal-page, .calendar-section.show-data .cal-page * { pointer-events: none !important; }
-    /* Fase lunar del LONGINES: or de dia; gamma de blaus de nit i en Zz */
+    /* Fase lunar del MALVINES: or de dia; gamma de blaus de nit i en Zz */
     :root, html[data-theme="day"] { --sky-a: #2d5bc9; --sky-b: #112d78; --moon-a: #fff2b0; --moon-b: #f1c232; --moon-c: #b8860b; --moon-star: #f1c232; --loupe: #c8102e; }
     html[data-theme="night"] { --sky-a: #1b3d86; --sky-b: #07142f; --moon-a: #f2f8ff; --moon-b: #a9cdf7; --moon-c: #4f7fc4; --moon-star: #bcd8ff; --loupe: #e5485e; }
     html[data-theme="zz"] { --sky-a: #06283a; --sky-b: #010810; --moon-a: #e6fbff; --moon-b: #6fdcff; --moon-c: #1a7fa8; --moon-star: #5fd4ff; --loupe: #2fa8d8; }
@@ -1282,6 +1282,14 @@
     .card-dots { left: 10px; right: 10px; gap: 3px; }
     .card-dots button { flex: 0 1 15px; min-width: 6px; height: auto; aspect-ratio: 3 / 2; }
     .card-dots button.on { transform: scale(1.25); }
+
+    /* Zz: colors del fòsfor triables (lliscar a l'esfera) i intensitat de llum (lliscar amunt/avall a l'esfera) */
+    html[data-theme="zz"] .hands-fx { filter: url(#lumeZzH); }
+    html[data-theme="zz"] .win-ink.diumenge, html[data-theme="zz"] .win-ink.festiu, html[data-theme="zz"] .win-ink.dissabte { fill: var(--win-ink) !important; }
+    html[data-theme="zz"] .app-container, html[data-theme="zz"] .topbar { opacity: var(--zzlum, 1); transition: opacity .12s linear; }
+    .zz-swatch { display: inline-block; width: 12px; height: 12px; border-radius: 50%; vertical-align: -1px; margin: 0 2px; box-shadow: 0 0 6px currentColor; }
+    /* L'esfera no se selecciona ni s'arrossega com a text en lliscar-hi el ratolí */
+    .watch-section, .watch-section * { -webkit-user-select: none; user-select: none; -webkit-user-drag: none; }
   </style>
 </head>
 <body>
@@ -1435,7 +1443,14 @@
       <filter id="lumeZz" x="-60%" y="-60%" width="220%" height="220%">
         <feGaussianBlur in="SourceGraphic" stdDeviation="2.2" result="b1"/>
         <feGaussianBlur in="SourceGraphic" stdDeviation="0.7" result="b2"/>
-        <feColorMatrix in="b1" type="matrix" values="0 0 0 0 0.2  0 0 0 0 0.72  0 0 0 0 1  0 0 0 0.85 0" result="h1"/>
+        <feColorMatrix id="lumeZzM" in="b1" type="matrix" values="0 0 0 0 0.2  0 0 0 0 0.72  0 0 0 0 1  0 0 0 0.85 0" result="h1"/>
+        <feMerge><feMergeNode in="h1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
+      </filter>
+      <!-- el mateix halo per a les agulles, amb el seu propi color (combinacions de dos tons) -->
+      <filter id="lumeZzH" x="-60%" y="-60%" width="220%" height="220%">
+        <feGaussianBlur in="SourceGraphic" stdDeviation="2.2" result="b1"/>
+        <feGaussianBlur in="SourceGraphic" stdDeviation="0.7" result="b2"/>
+        <feColorMatrix id="lumeZzHM" in="b1" type="matrix" values="0 0 0 0 0.2  0 0 0 0 0.72  0 0 0 0 1  0 0 0 0.85 0" result="h1"/>
         <feMerge><feMergeNode in="h1"/><feMergeNode in="b2"/><feMergeNode in="SourceGraphic"/></feMerge>
       </filter>
       <radialGradient id="moonLit" cx="40%" cy="35%" r="75%">
@@ -1453,14 +1468,14 @@
           <div class="watch-shadow"></div>
           <div class="watch-container" id="watchFlip">
 
-            <!-- ================= CARA DAVANTERA: LONGINES ================= -->
+            <!-- ================= CARA DAVANTERA: MALVINES ================= -->
             <div class="body-ellipse" id="body-ellipse"></div>
             <div class="body-band" id="body-band"></div>
             <div class="face face-front" id="face-m">
               <button type="button" class="crown" aria-label="Corona: mostra o amaga el cronòmetre" title="Corona: cronòmetre"></button>
-              <button type="button" class="pusher p-top" data-watch="m" data-act="start" aria-label="LONGINES: engega o atura el cronògraf"></button>
-              <button type="button" class="pusher p-bot" data-watch="m" data-act="reset" aria-label="LONGINES: posa a zero el cronògraf"></button>
-              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf LONGINES amb triple calendari i fase lunar">
+              <button type="button" class="pusher p-top" data-watch="m" data-act="start" aria-label="MALVINES: engega o atura el cronògraf"></button>
+              <button type="button" class="pusher p-bot" data-watch="m" data-act="reset" aria-label="MALVINES: posa a zero el cronògraf"></button>
+              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf MALVINES amb triple calendari i fase lunar">
                 <defs>
                   <clipPath id="m-moon-clip"><path d="M88.4 140 A11.6 11.6 0 0 1 111.6 140 Z"/></clipPath>
                 </defs>
@@ -1513,12 +1528,12 @@
               </svg>
             </div>
 
-            <!-- ================= CARA POSTERIOR: Glashütte ================= -->
+            <!-- ================= CARA POSTERIOR: GIULIETTA ================= -->
             <div class="face face-back inactive hidden-face" id="face-g">
               <button type="button" class="crown" aria-label="Corona: mostra o amaga el cronòmetre" title="Corona: cronòmetre"></button>
-              <button type="button" class="pusher p-top" data-watch="g" data-act="start" aria-label="Glashütte: engega o atura el cronògraf"></button>
-              <button type="button" class="pusher p-bot" data-watch="g" data-act="reset" aria-label="Glashütte: LAP/0 (volta i zero en marxa, zero aturat)"></button>
-              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf Glashütte flyback amb gran data">
+              <button type="button" class="pusher p-top" data-watch="g" data-act="start" aria-label="Giulietta: engega o atura el cronògraf"></button>
+              <button type="button" class="pusher p-bot" data-watch="g" data-act="reset" aria-label="Giulietta: LAP/0 (volta i zero en marxa, zero aturat)"></button>
+              <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Cronògraf Giulietta flyback amb gran data">
                 <defs>
                   <clipPath id="g-date-clip-t"><rect x="88.2" y="121.6" width="11.8" height="14.8"/></clipPath>
                   <clipPath id="g-date-clip-u"><rect x="100" y="121.6" width="11.8" height="14.8"/></clipPath>
@@ -2607,7 +2622,7 @@
     }
 
     // =================================================================
-    //  ESFERA LONGINES — cronògraf de triple calendari amb fase lunar.
+    //  ESFERA MALVINES — cronògraf de triple calendari amb fase lunar.
     //  Arquitectura del calibre tipus Valjoux 7751 (28.800 alt/h):
     //   · Centre: hores, minuts, segons del crono i agulla de la data
     //     (punta en mitja lluna) sobre l'escala perimetral 1–31.
@@ -2624,7 +2639,7 @@
     }
     const M = { c12: [100, 60], c9: [61, 100], c6: [100, 140] };
 
-    (function buildLONGINES() {
+    (function buildMalvines() {
       const sc = $('m-scales');
       // Escala de la data 1–31 (el 31 a dalt)
       el('circle', { cx: 100, cy: 100, r: 80.6, fill: 'none', class: 'tk-blue', 'stroke-width': 0.35 }, sc);
@@ -2697,7 +2712,7 @@
       const tx = $('m-text');
       // Àncora sobre el nom (pavonada de dia, lluminescent de nit)
       anchorUse(tx, 124.6, 70.4, 13.8, 19.3);
-      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'LONGINES');
+      el('text', { x: 131.5, y: 100.4, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 6.8, 'letter-spacing': 0.55, class: 'ink' }, tx, 'MALVINES');
       // Petit emblema propi: rombe entre dues línies
       el('path', { d: 'M131.5 105.2 l1.1 1.1 l-1.1 1.1 l-1.1 -1.1 Z', class: 'ink' }, tx);
       el('line', { x1: 124.5, y1: 106.3, x2: 129.6, y2: 106.3, class: 'tk', 'stroke-width': 0.3 }, tx);
@@ -2742,7 +2757,7 @@
     })();
 
     // =================================================================
-    //  ESFERA Glashütte — cronògraf flyback amb gran data panoràmica.
+    //  ESFERA GIULIETTA — cronògraf flyback amb gran data panoràmica.
     //   · Centre: hores, minuts i segons del crono.
     //   · Les 9: petita segonera contínua (marxa del rellotge).
     //   · Les 3: comptador de 30 minuts que SALTA d'un cop cada minut.
@@ -2755,7 +2770,7 @@
     const G_R = 32.6;   // radi de les subesferes laterals (prou grans per mossegar II, IIII, VIII i X)
     const TACHY = [60, 65, 70, 75, 80, 85, 90, 95, 100, 110, 120, 130, 140, 150, 160, 170, 180, 200, 220, 240, 270, 300, 350, 400, 500];
 
-    (function buildGlashütte() {
+    (function buildGiulietta() {
       const sc = $('g-scales');
       // Taquímetre
       el('circle', { cx: 100, cy: 100, r: 87.4, fill: 'none', class: 'tk', 'stroke-width': 0.3 }, sc);
@@ -2817,7 +2832,7 @@
       const tx = $('g-text');
       // Àncora entre el XII i el nom
       anchorUse(tx, 93.4, 40.6, 13.2, 18.5);
-      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Glashütte');
+      el('text', { x: 100, y: 68, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 11.5, class: 'ink script' }, tx, 'Giulietta');
       el('text', { x: 100, y: 76.6, 'text-anchor': 'middle', 'dominant-baseline': 'central', 'font-size': 2.9, 'letter-spacing': 0.6, class: 'ink sans' }, tx, 'FLYBACK');
       const bt = el('text', { 'font-size': 2.4, 'letter-spacing': 0.3, class: 'ink sans', 'text-anchor': 'middle' }, tx);
       bt.setAttribute('text-anchor', 'end');
@@ -3208,7 +3223,7 @@
       const q = smooth ? e : Math.floor(e / (1000 / BEATS)) * (1000 / BEATS);
       const sec = (q / 1000 % 60) * 6;
       if (w === 'm') return { sec, min: (e / 60000 % 30) * 12, hr: (e / 3600000 % 12) * 30 };
-      return { sec, min: (Math.floor(e / 60000) % 30) * 12 };   // Glashütte: comptador de minuts que salta
+      return { sec, min: (Math.floor(e / 60000) % 30) * 12 };   // Giulietta: comptador de minuts que salta
     }
     function startCatch(fromMs, now, fixed) {
       const target = fixed !== null ? fixed : liveMs(now);
@@ -3399,7 +3414,7 @@
         t.setAttribute('opacity', n <= last ? '1' : '0.35');
       }
 
-      // Lupa del LONGINES
+      // Lupa del MALVINES
       const ln = $('m-loupe-num');
       ln.textContent = d.getDate();
       ln.classList.toggle('festiu', hol); ln.classList.toggle('diumenge', sun); ln.classList.toggle('dissabte', sat);
@@ -3411,7 +3426,7 @@
       rollDisc($('g-tens'), prev ? prev.t : null, tens, 4, !!prev);
       rollDisc($('g-units'), prev ? prev.u : null, units, 10, !!prev);
       bigDatePrev = { t: tens, u: units };
-      // Glashütte: diumenges i festius en burdeus a la finestra de la gran data
+      // Giulietta: diumenges i festius en burdeus a la finestra de la gran data
       document.querySelectorAll('#g-tens text, #g-units text').forEach(t => {
         t.classList.remove('festiu');
         t.classList.toggle('diumenge', hol || sun);
@@ -3501,7 +3516,7 @@
     function renderFlip(th) {
       const c = Math.cos(th), sn = Math.sin(th);
       const sx = Math.max(Math.abs(c), 0.001);
-      const front = c >= 0;                          // cara LONGINES cap a nosaltres
+      const front = c >= 0;                          // cara MALVINES cap a nosaltres
       const show = front ? faceM : faceG, hide = front ? faceG : faceM;
       const dx = halfT * sn;                         // desplaçament del centre de la cara visible
       show.classList.remove('hidden-face');
@@ -3769,13 +3784,22 @@
       if (e.key === 'ArrowRight') goCard(1); else if (e.key === 'ArrowLeft') goCard(-1);
     });
     (function setupSwipe() {
-      let sx = 0, sy = 0, tracking = false, onPanel = false, inScroll = false;
+      let sx = 0, sy = 0, tracking = false, onPanel = false, inScroll = false, onWatchZz = false, zzMode = '';
       const onStart = (x, y, t) => {
         // els controls que no són de les fitxes no inicien gestos
         if (t && t.closest && (t.closest('input, select, .lang-menu, .modal, .topbar, .chrono-bar, .crown, .pusher, .card-dots, .pane-handle, .calendar-header'))) { tracking = false; return; }
         sx = x; sy = y; tracking = true;
         onPanel = !!(t && t.closest && t.closest('.calendar-section'));
         inScroll = !!(t && t.closest && t.closest('.scrolly'));
+        onWatchZz = currentTheme === 'zz' && !!(t && t.closest && t.closest('.watch-stage'));
+        zzMode = '';
+        if (onWatchZz) zzLumStart();
+      };
+      const onMove = (x, y) => {
+        if (!tracking || !onWatchZz) return;
+        const dx = x - sx, dy = y - sy;
+        if (!zzMode && Math.abs(dy) > 12 && Math.abs(dy) > Math.abs(dx)) zzMode = 'lum';
+        if (zzMode === 'lum') zzLumDrag(dy);
       };
       const blockClick = () => {
         const b = ev => { ev.stopPropagation(); ev.preventDefault(); };
@@ -3786,6 +3810,10 @@
         if (!tracking) return; tracking = false;
         const dx = x - sx, dy = y - sy;
         const dataOpen = panel.classList.contains('show-data');
+        if (onWatchZz) {
+          if (zzMode === 'lum') { zzLumEnd(); lastSwipeAt = Date.now(); blockClick(); return; }
+          if (Math.abs(dx) >= 40 && Math.abs(dx) > Math.abs(dy)) { lastSwipeAt = Date.now(); blockClick(); zzColor(dx < 0 ? 1 : -1); return; }
+        }
         if (!inScroll && Math.abs(dy) >= 45 && Math.abs(dy) > Math.abs(dx) * 1.2) {
           lastSwipeAt = Date.now(); blockClick();
           showData(dy < 0);                                     // amunt: dades · avall: calendari
@@ -3801,7 +3829,10 @@
       document.addEventListener('touchmove', e => {
         if (e.touches.length > 1) { e.preventDefault(); return; }
         if (!(e.target.closest && e.target.closest('.scrolly, .lang-menu'))) e.preventDefault();
+        const t = e.touches[0]; if (t) onMove(t.clientX, t.clientY);
       }, { passive: false });
+      document.addEventListener('mousemove', e => { if (e.buttons === 1) onMove(e.clientX, e.clientY); });
+      document.addEventListener('dragstart', e => { if (e.target.closest && e.target.closest('.watch-section')) e.preventDefault(); });
       document.addEventListener('mousedown', e => onStart(e.clientX, e.clientY, e.target));
       document.addEventListener('mouseup', e => onEnd(e.clientX, e.clientY));
       // Doble toc al títol (iOS no sempre envia dblclick)
@@ -3842,7 +3873,12 @@
       btn.innerHTML = (theme === 'day' ? SUN_ICON : theme === 'zz' ? ZZ_ICON : MOON_ICON) + (mode === 'auto' ? '<span class="theme-auto-badge">A</span>' : '');
       const t = L.modeTitle(L.modes[theme], mode === 'auto');
       btn.title = t; btn.setAttribute('aria-label', t);
-      if (theme !== currentTheme) { currentTheme = theme; keepAwake(); }
+      if (theme !== currentTheme) {
+        const enteringZz = theme === 'zz' && currentTheme !== null;
+        currentTheme = theme; keepAwake();
+        if (enteringZz) setTimeout(() => toast('↔ ● · ↕ ☀', 3000), 1700);
+      }
+      applyZz();
     }
     function cycleTheme() {
       setMode(MODES[(MODES.indexOf(getMode()) + 1) % MODES.length]);
@@ -3870,6 +3906,66 @@
       t.textContent = txt; t.classList.add('on');
       clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), ms || 4000);
     }
+
+
+    // =================================================================
+    //  MODE Zz: 6 tons de fòsfor (blaus, verds i grisos clars) + 6 combinacions de dos tons
+    //  (números d'un to i agulles d'un altre). Lliscar a l'esfera: ↔ canvia el color, ↕ la intensitat.
+    // =================================================================
+    const ZZ_TONES = ['#5fd4ff', '#9cc4ff', '#40e0d0', '#66e3a8', '#d2dae2', '#9fb6cc'];
+    const ZZ_KEY = 'mediterrania_zz';
+    const zz = (() => {
+      let s = null;
+      try { s = JSON.parse(localStorage.getItem(ZZ_KEY) || 'null'); } catch (e) {}
+      if (!s || !Array.isArray(s.pairs) || s.pairs.length !== 6) {
+        // 6 parelles triades a l'atzar (dos tons diferents), sense repetir-ne cap
+        const all = [];
+        for (let a = 0; a < 6; a++) for (let b = 0; b < 6; b++) if (a !== b) all.push([a, b]);
+        const pairs = [];
+        while (pairs.length < 6) { const p = all.splice(Math.floor(Math.random() * all.length), 1)[0]; if (!pairs.some(q => q[0] === p[1] && q[1] === p[0])) pairs.push(p); }
+        s = { i: 0, lum: 1, pairs };
+      }
+      return s;
+    })();
+    const saveZz = () => { try { localStorage.setItem(ZZ_KEY, JSON.stringify(zz)); } catch (e) {} };
+    const hexRgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+    const mixHex = (h, k, toWhite) => { const c = hexRgb(h).map(v => Math.round(toWhite ? v + (255 - v) * k : v * k)); return '#' + c.map(v => v.toString(16).padStart(2, '0')).join(''); };
+    function zzTones() { return zz.i < 6 ? [ZZ_TONES[zz.i], ZZ_TONES[zz.i]] : zz.pairs[zz.i - 6].map(k => ZZ_TONES[k]); }
+    const ZZ_VARS = ['--ink-blue', '--ink', '--ink-soft', '--text', '--cell-color', '--weekend-color', '--month-title-color', '--data-value-color', '--accent', '--btn-ink',
+      '--muted', '--weekday-color', '--data-label-color', '--festiu', '--diumenge', '--dissabte', '--win-ink', '--today-ring', '--lume-a', '--lume-b', '--hand-a', '--hand-b', '--glow', '--loupe', '--zzlum', '--moon-a', '--moon-b', '--moon-c', '--moon-star'];
+    function applyZz() {
+      const root = document.documentElement.style;
+      if (currentTheme !== 'zz') { ZZ_VARS.forEach(v => root.removeProperty(v)); return; }
+      const [A, B] = zzTones();
+      const set = (k, v) => root.setProperty(k, v);
+      set('--ink-blue', A); set('--ink', mixHex(A, 0.42)); set('--ink-soft', mixHex(A, 0.26));
+      set('--text', mixHex(A, 0.7)); set('--cell-color', mixHex(A, 0.62)); set('--weekend-color', mixHex(A, 0.8));
+      set('--month-title-color', mixHex(A, 0.85)); set('--data-value-color', A); set('--accent', A); set('--btn-ink', mixHex(A, 0.75));
+      set('--muted', mixHex(A, 0.5)); set('--weekday-color', mixHex(A, 0.6)); set('--data-label-color', mixHex(A, 0.6));
+      set('--festiu', mixHex(A, 0.45, true)); set('--diumenge', mixHex(A, 0.85)); set('--dissabte', mixHex(A, 0.72)); set('--win-ink', A); set('--today-ring', A);
+      set('--lume-a', mixHex(B, 0.6, true)); set('--lume-b', B); set('--hand-a', mixHex(B, 0.65, true)); set('--hand-b', B); set('--glow', B); set('--loupe', B);
+      set('--moon-a', mixHex(B, 0.8, true)); set('--moon-b', B); set('--moon-c', mixHex(B, 0.4)); set('--moon-star', A);
+      set('--zzlum', String(zz.lum));
+      const m = h => { const [r, g, b] = hexRgb(h).map(v => (v / 255).toFixed(3)); return `0 0 0 0 ${r}  0 0 0 0 ${g}  0 0 0 0 ${b}  0 0 0 0.85 0`; };
+      const fa = $('lumeZzM'), fb = $('lumeZzHM');
+      if (fa) fa.setAttribute('values', m(A));
+      if (fb) fb.setAttribute('values', m(B));
+    }
+    function zzColor(dir) {
+      zz.i = (zz.i + dir + 12) % 12; saveZz(); applyZz();
+      const [A, B] = zzTones();
+      const t = $('toast');
+      t.innerHTML = `<span class="zz-swatch" style="background:${A};color:${A}"></span>${A !== B ? `<span class="zz-swatch" style="background:${B};color:${B}"></span>` : ''} ${zz.i + 1} / 12`;
+      t.classList.add('on'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('on'), 1600);
+    }
+    let zzLum0 = 1;
+    function zzLumStart() { zzLum0 = zz.lum; }
+    function zzLumDrag(dy) {
+      zz.lum = Math.max(0.12, Math.min(1, zzLum0 - dy / 260));
+      document.documentElement.style.setProperty('--zzlum', zz.lum.toFixed(3));
+      toast(`☀ ${Math.round(zz.lum * 100)} %`, 900);
+    }
+    function zzLumEnd() { saveZz(); }
 
     // =================================================================
     //  DADES: lloc, avisos, temps, 12 h, 5 dies, la mar, avui, sol i lluna,
